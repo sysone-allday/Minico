@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+
+.login-root {
+    -fx-background-color: #f5f5f5;
+    -fx-background-image: url("../images/login-background.png");
+    -fx-background-size: cover;
+    -fx-font-family: "NeoDunggeunmo";
+}
+
+/* 로그인 폼 컨테이너 */
+.login-form-container {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-max-height: 470px;
+    -fx-max-width: 635px;
+    -fx-padding: 39;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
+
+/* 로그인 타이틀 */
+.login-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 입력 필드 스타일 */
+.login-input {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-border-color: #CFCFCF;
+    -fx-border-radius: 30;
+    -fx-border-width: 3;
+    -fx-alignment: center;
+    -fx-max-width: 373;
+    -fx-max-height: 72;
+    -fx-font-size: 35px;
+    -fx-prompt-text-fill: #aaa;
+}
+
+.login-input:focused {
+    -fx-border-color: #ff69b4;
+    -fx-effect: dropshadow(gaussian, rgba(255,105,180,0.3), 5, 0, 0, 0);
+}
+
+/* 로그인 버튼 */
+.login-btn {
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-font-size: 35px;
+    -fx-font-weight: bold;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.login-btn:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255,20,147,0.4), 8, 0, 0, 2);
+}
+
+.login-btn:pressed {
+    -fx-background-color: #dc143c;
+}
+
+.sub-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #A0A0A0;
+    -fx-font-size: 25px;
+    -fx-cursor: hand;
+}
+
+.sub-btn:hover {
+    -fx-text-fill: #ff69b4;
+    -fx-underline: true;
+}
+
+
+/* .fade-out {
+    -fx-opacity: 0;
+    -fx-transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+    -fx-opacity: 1;
+    -fx-transition: opacity 0.5s ease-in-out;
+}
+
+.fade-transition {
+    -fx-transition: opacity 0.5s ease-in-out;
+} */

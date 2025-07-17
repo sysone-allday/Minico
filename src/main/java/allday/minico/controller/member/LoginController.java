@@ -3,6 +3,7 @@ package allday.minico.controller.member;
 
 import allday.minico.Main;
 import allday.minico.utils.member.SceneManager;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -30,8 +32,6 @@ public class LoginController {
 
     @FXML
     public void initialize() { // 이 컨트롤러와 연결된 fxml 이 로딩될 때 자동으로 실행되는 메서드
-        Image image = new Image(getClass().getResource("/allday/minico/images/member/Logincharacter.png").toExternalForm());
-        characterImage.setImage(image); // 로그인 화면 이미지 삽입
     }
 
     @FXML
@@ -40,15 +40,36 @@ public class LoginController {
     } // 회원가입 창으로 이동
 
     @FXML
-    void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동 (지금 하드코딩해서 나중에 SceneManager 메서드로 바뀌게 변경하는 것이 좋아보임)
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/main.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root, 1280, 800);
-            SceneManager.getPrimaryStage().setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동
+        // 현재 화면에 페이드아웃 효과 적용
+        Parent currentRoot = loginButton.getScene().getRoot();
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), currentRoot);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        
+        fadeOut.setOnFinished(e -> {
+            try {
+                // 메인 화면 로드
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/main.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root, 1280, 800);
+                
+                // 새 화면을 투명하게 시작
+                root.setOpacity(0.0);
+                SceneManager.getPrimaryStage().setScene(scene);
+                
+                // 새 화면에 페이드인 효과 적용
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), root);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+                
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        fadeOut.play();
     }
 
 

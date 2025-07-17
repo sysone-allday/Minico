@@ -27,7 +27,6 @@ public class MainController {
     @FXML
     protected void onGuestbookClick() {
         System.out.println("게시판 버튼 클릭");
-        // 게시판 기능 구현
     }
     
     @FXML
