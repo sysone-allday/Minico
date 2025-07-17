@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="chore: project setting">
+    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="design : setting layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/images/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/background.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/images/menu-btn.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,18 +18,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "DHowor1d"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DHowor1d&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/sysone-allday/Minico.git",
-    "accountId": "c304b3f8-a195-4de5-8884-ac9b8a62f91f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sysone-allday/Minico.git&quot;,
+    &quot;accountId&quot;: &quot;c304b3f8-a195-4de5-8884-ac9b8a62f91f&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -53,26 +51,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/project/sysone/minico/src/main/resources/allday/minico/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/project/sysone/minico/src/main/resources/allday/minico/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\images" />
@@ -115,7 +113,8 @@
       <workItem from="1752575112670" duration="1258000" />
       <workItem from="1752710551001" duration="10000" />
       <workItem from="1752710771187" duration="49000" />
-      <workItem from="1752711487944" duration="10380000" />
+      <workItem from="1752711487944" duration="10600000" />
+      <workItem from="1752723009916" duration="4264000" />
     </task>
     <task id="LOCAL-00001" summary="chore: project setting">
       <option name="closed" value="true" />
@@ -133,14 +132,25 @@
       <option name="project" value="LOCAL" />
       <updated>1752716024679</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="design : setting layout">
+      <option name="closed" value="true" />
+      <created>1752722587058</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1752722587058</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="chore: project setting" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: project setting" />
+    <MESSAGE value="design : setting layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="design : setting layout" />
   </component>
 </project>

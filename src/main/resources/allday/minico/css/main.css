@@ -20,11 +20,12 @@
 /* 미니룸 메인 영역 */
 .miniroom-pane {
   -fx-background-color: #ffffffff;
-  -fx-border-color: #000000;
+  -fx-border-color: pink;
   -fx-border-width: 8;
-  -fx-border-radius: 14;
+  -fx-border-radius: 10;
   -fx-background-radius: 14;
   -fx-padding: 6;
+  -fx-effect: dropshadow(gaussian, pink, 5, 0.2, 0, 0);
   /*0 15px 0 0 black;*/
 
 }
@@ -48,8 +49,7 @@
 }
 
 .menu-btn:hover {
-  -fx-background-color: transparent;
-  -fx-effect: null;
+  -fx-effect: dropshadow(gaussian, #06bfff, 10, 0, 0, 0);
 }
 
 .menu-btn:pressed {
