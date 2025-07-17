@@ -4,13 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="design : miniroom">
+    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="chore: project setting">
+      <change afterPath="$PROJECT_DIR$/lib/ojdbc11.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/CharacterSelectController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/FindPasswordController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/SignUpCompleteController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/SignUpController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dao/member/MemberDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dto/member/Member.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberServiceInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/sql/member/MemberSQL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/utils/member/SceneManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/utils/member/Validator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/Logincharacter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/Minimi_Female.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/Minimi_Male.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/CharacterSelect.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/FindPassword.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/Login.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/SignUp.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/SignUpComplete.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -21,37 +53,12 @@
     &quot;assignee&quot;: &quot;DHowor1d&quot;
   }
 }</component>
-  <component name="GitToolBoxStore">
-    <option name="recentBranches">
-      <RecentBranches>
-        <option name="branchesForRepo">
-          <list>
-            <RecentBranchesForRepo>
-              <option name="branches">
-                <list>
-                  <RecentBranch>
-                    <option name="branchName" value="dev-fe/miniroom" />
-                    <option name="lastUsedInstant" value="1752730578" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1752730577" />
-                  </RecentBranch>
-                </list>
-              </option>
-              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
-            </RecentBranchesForRepo>
-          </list>
-        </option>
-      </RecentBranches>
-    </option>
-  </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/sysone-allday/Minico.git",
-    "accountId": "941fa81a-092c-49d9-ba95-e7a8d7f902be"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sysone-allday/Minico.git&quot;,
+    &quot;accountId&quot;: &quot;c304b3f8-a195-4de5-8884-ac9b8a62f91f&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -66,7 +73,7 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2ztShwWWtRSjjBfFeGjFYrsdNRQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -83,23 +90,31 @@
     "git-widget-placeholder": "dev-fe/miniroom",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/project/sysone/minico/src/main/resources/allday/minico/images",
+    "last_opened_file_path": "C:/Users/KOSA/IdeaProjects/Minico/src/main/resources/allday/minico",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
+
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico" />
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\lib" />
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico\images\member" />
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\images" />
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico" />
-      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico\view" />
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico\view\member" />
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\view" />
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\css" />
     </key>
