@@ -16,11 +16,11 @@
 <center>
     <AnchorPane styleClass="miniroom-container">
 
-        <Pane layoutX="30" layoutY="25" prefWidth="1100" prefHeight="750"
-              style="-fx-background-color: rgba(255,255,255,0.3); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, #cccccc, 20, 0.5, 0, 0.5);">
+        <Pane layoutX="30" layoutY="25" prefWidth="1147" prefHeight="750"
+              style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 20;">
 
 <!--            메뉴 버튼-->
-            <VBox fx:id="menuButtons" layoutX="1000" layoutY="81" styleClass="menu-buttons">
+            <VBox fx:id="menuButtons" layoutX="1067" layoutY="80" styleClass="menu-buttons">
                 <Button fx:id="boardBtn" styleClass="menu-btn" onAction="#onGuestbookClick">
                     <graphic>
                         <StackPane>
@@ -52,14 +52,11 @@
             </VBox>
 
             <!-- 미니룸-->
-            <Pane fx:id="roomPane" layoutX="35" layoutY="25" prefWidth="950" prefHeight="700"
+            <Pane fx:id="roomPane" layoutX="35" layoutY="25" prefWidth="1000" prefHeight="700"
                   styleClass="miniroom-pane">
                 <!-- 미니룸 배경 -->
-                <ImageView layoutX="8" layoutY="8" fitWidth="934" fitHeight="684" pickOnBounds="true" preserveRatio="false">
+                <ImageView layoutX="8" layoutY="8" fitWidth="984" fitHeight="684" pickOnBounds="true" preserveRatio="false">
                     <Image url="@../images/room.png" />
-<!--                    <clip>-->
-<!--                        <Rectangle arcWidth="10" arcHeight="10" width="984" height="704" />-->
-<!--                    </clip>-->
                 </ImageView>
             </Pane>
         </Pane>

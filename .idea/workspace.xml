@@ -87,7 +87,7 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "dev-fe/miniroom",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/KOSA/IdeaProjects/Minico/src/main/resources/allday/minico",
@@ -100,6 +100,7 @@
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.fileTypes",
+
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -149,7 +150,8 @@
       <workItem from="1752575112670" duration="1258000" />
       <workItem from="1752710551001" duration="10000" />
       <workItem from="1752710771187" duration="49000" />
-      <workItem from="1752711487944" duration="10380000" />
+      <workItem from="1752711487944" duration="10600000" />
+      <workItem from="1752723009916" duration="8024000" />
     </task>
     <task id="LOCAL-00001" summary="chore: project setting">
       <option name="closed" value="true" />
@@ -167,14 +169,34 @@
       <option name="project" value="LOCAL" />
       <updated>1752716024679</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="design : setting layout">
+      <option name="closed" value="true" />
+      <created>1752722587058</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1752722587058</updated>
+    </task>
+    <task id="LOCAL-00004" summary="design : miniroom">
+      <option name="closed" value="true" />
+      <created>1752730656289</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1752730656289</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="chore: project setting" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: project setting" />
+    <MESSAGE value="design : setting layout" />
+    <MESSAGE value="design : miniroom" />
+    <option name="LAST_COMMIT_MESSAGE" value="design : miniroom" />
   </component>
 </project>
