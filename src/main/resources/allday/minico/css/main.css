@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "NeoDunggeunmo";
+  src: url("../fonts/NEODGM.ttf");
+}
+
+.root {
+  -fx-background-color: #ffffffff;
+  -fx-background-image: url("../images/background.png");
+  -fx-background-size: cover;
+  -fx-background-position: center center;
+  -fx-background-repeat: no-repeat;
+  -fx-font-family: "NeoDunggeunmo", "Segoe UI",sans-serif;
+}
+
+/* 미니룸 컨테이너 */
+.miniroom-container {
+  -fx-padding: 20;
+}
+
+/* 미니룸 메인 영역 */
+.miniroom-pane {
+  -fx-background-color: #ffffffff;
+  -fx-border-color: #000000;
+  -fx-border-width: 8;
+  -fx-border-radius: 14;
+  -fx-background-radius: 14;
+  -fx-padding: 6;
+  /*0 15px 0 0 black;*/
+
+}
+
+.menu-btn {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-text-fill: white;
+  -fx-font-size: 12px;
+  -fx-font-weight: bold;
+}
+
+.menu-btn:hover {
+  -fx-background-color: transparent;
+  -fx-effect: null;
+}
+
+.menu-btn:pressed {
+  -fx-background-color: transparent;
+  -fx-effect: null;
+}

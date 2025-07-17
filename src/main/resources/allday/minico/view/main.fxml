@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.String?>
+
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="allday.minico.controller.MainController"
+            styleClass="root"
+            stylesheets="@../css/main.css">
+<center>
+    <AnchorPane styleClass="miniroom-container">
+
+        <Pane layoutX="20" layoutY="20" prefWidth="1000" prefHeight="720"
+              style="-fx-background-color: rgba(255,255,255,0.3); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, #cccccc, 20, 0.5, 0, 0.5);">
+
+<!--            메뉴 버튼-->
+            <VBox fx:id="menuButtons" layoutX="950" layoutY="50" spacing="15" >
+                <Button fx:id="boardBtn" styleClass="menu-btn" onAction="#onGuestbookClick">
+                    <graphic>
+                        <StackPane>
+                            <ImageView fitWidth="120" fitHeight="40">
+                                <Image url="@../images/btn-Retro.png"/>
+                            </ImageView>
+                            <Label text="게시판"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button fx:id="diaryBtn" styleClass="menu-btn" onAction="#onMusicClick">
+                    <graphic>
+                        <StackPane>
+                            <ImageView fitWidth="120" fitHeight="40">
+                                <Image url="@../images/menu-btn.png"/>
+                            </ImageView>
+                            <Label text="다이어리"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button fx:id="inputBtn" styleClass="menu-btn" onAction="#onSettingClick">
+                    <graphic>
+                        <StackPane>
+                            <ImageView fitWidth="120" fitHeight="40">
+                                <Image url="@../images/menu-btn.png"/>
+                            </ImageView>
+                            <Label text="타자게임"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+                <Button fx:id="oxBtn" styleClass="menu-btn" onAction="#onHelpClick">
+                    <graphic>
+                        <StackPane>
+                            <ImageView fitWidth="120" fitHeight="40">
+                                <Image url="@../images/menu-btn.png"/>
+                            </ImageView>
+                            <Label text="OX게임"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+            </VBox>
+
+            <!-- 미니룸-->
+            <Pane fx:id="roomPane" layoutX="50" layoutY="35" prefWidth="880" prefHeight="650"
+                  styleClass="miniroom-pane">
+                <!-- 미니룸 배경 -->
+                <ImageView layoutX="8" layoutY="8" fitWidth="864" fitHeight="634" pickOnBounds="true" preserveRatio="false">
+                    <Image url="@../images/room.png" />
+                    <clip>
+                        <Rectangle arcWidth="10" arcHeight="10" width="864" height="634" />
+                    </clip>
+                </ImageView>
+            </Pane>
+        </Pane>
+    </AnchorPane>
+</center>
+</BorderPane>
+
+

@@ -4,21 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/HelloController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/hello-view.fxml" afterDir="false" />
+    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="chore: project setting">
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/fonts/NEODGM.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/Btn-Retro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/menu-btn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/room.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +26,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "DHowor1d"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/sysone-allday/Minico.git",
+    "accountId": "c304b3f8-a195-4de5-8884-ac9b8a62f91f"
+  }
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -35,11 +45,16 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2ztShwWWtRSjjBfFeGjFYrsdNRQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,11 +63,12 @@
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/project/sysone/test/javafx",
+    "last_opened_file_path": "C:/project/sysone/minico/src/main/resources/allday/minico/images",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -62,6 +78,26 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\images" />
+      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico" />
+      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\view" />
+      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\css" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="allday.minico.Main" />
+      <module name="minico" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -84,10 +120,15 @@
       <workItem from="1752575112670" duration="1258000" />
       <workItem from="1752710551001" duration="10000" />
       <workItem from="1752710771187" duration="49000" />
+      <workItem from="1752711487944" duration="4054000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore: project setting" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: project setting" />
   </component>
 </project>

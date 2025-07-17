@@ -12,4 +12,6 @@ module allday.minico {
 
     opens allday.minico to javafx.fxml;
     exports allday.minico;
+    exports allday.minico.controller;
+    opens allday.minico.controller to javafx.fxml;
 }
