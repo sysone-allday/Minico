@@ -24,7 +24,7 @@
                 <Button fx:id="boardBtn" styleClass="menu-btn" onAction="#onGuestbookClick">
                     <graphic>
                         <StackPane>
-                            <Label text="게시판1" styleClass="menu-btn-label"/>
+                            <Label text="게시판" styleClass="menu-btn-label"/>
                         </StackPane>
                     </graphic>
                 </Button>
