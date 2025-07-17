@@ -29,12 +29,22 @@
 
 }
 
+/* 우측 메뉴 버튼들 */
+.menu-buttons {
+  -fx-spacing: 15;
+}
+
 .menu-btn {
+  -fx-background-image: url("../images/btn-Retro.png");
   -fx-background-color: transparent;
-  -fx-border-color: transparent;
-  -fx-text-fill: white;
-  -fx-font-size: 12px;
-  -fx-font-weight: bold;
+  -fx-background-size: contain;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+  -fx-padding: 0;
+  -fx-effect: null;
+  -fx-pref-width: 180;
+  -fx-pref-height: 74;
+  -fx-alignment: center;
 }
 
 .menu-btn:hover {
@@ -45,4 +55,15 @@
 .menu-btn:pressed {
   -fx-background-color: transparent;
   -fx-effect: null;
+}
+
+.menu-btn-label {
+  -fx-text-fill: black;
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
+  -fx-translate-x: 5;
+  -fx-translate-y: -3;
 }
