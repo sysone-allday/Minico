@@ -36,8 +36,5 @@
             </HBox>
             
         </VBox>
-
-        <Button fx:id="ExitButton" text="종료" onAction="#Exit" styleClass="exit-btn" />
-        
     </VBox>
 </AnchorPane>

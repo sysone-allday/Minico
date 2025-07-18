@@ -61,34 +61,35 @@ public class LoginController {
     @FXML
     void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동 (지금 하드코딩해서 나중에 SceneManager 메서드로 바뀌게 변경하는 것이 좋아보임)
         Member loginmember = memberService.login(idField.getText(), pwField.getText());
-        Parent currentRoot = loginButton.getScene().getRoot();
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), currentRoot);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.0);
-  
-   fadeOut.setOnFinished(e -> {
-            try {
-                // 미니룸 화면 로드
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/miniroom.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root, 1280, 800);
-                
-                // 새 화면을 투명하게 시작
-                root.setOpacity(0.0);
-                SceneManager.getPrimaryStage().setScene(scene);
-                
-                // 새 화면에 페이드인 효과 적용
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), root);
-                fadeIn.setFromValue(0.0);
-                fadeIn.setToValue(1.0);
-                fadeIn.play();
-                
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        
-        fadeOut.play();
+
+        // 화면 전환 효과
+//        Parent currentRoot = loginButton.getScene().getRoot();
+//        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), currentRoot);
+//        fadeOut.setFromValue(1.0);
+//        fadeOut.setToValue(0.0);
+//   fadeOut.setOnFinished(e -> {
+//            try {
+//                // 미니룸 화면 로드
+//                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/miniroom.fxml"));
+//                Parent root = loader.load();
+//                Scene scene = new Scene(root, 1280, 800);
+//
+//                // 새 화면을 투명하게 시작
+//                root.setOpacity(0.0);
+//                SceneManager.getPrimaryStage().setScene(scene);
+//
+//                // 새 화면에 페이드인 효과 적용
+//                FadeTransition fadeIn = new FadeTransition(Duration.millis(500), root);
+//                fadeIn.setFromValue(0.0);
+//                fadeIn.setToValue(1.0);
+//                fadeIn.play();
+//
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        });
+//
+//        fadeOut.play();
 
         if(loginmember != null) { // 멤버 정보, 로그인 로그 ID 를 세션에 저장
             try {
