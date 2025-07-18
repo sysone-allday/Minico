@@ -16,7 +16,7 @@ public class Main extends Application {
         // System.out.println("🚀 애플리케이션 시작");
         
         // 리소스 경로 확인
-        String loginPath = "/allday/minico/view/member/Login.fxml";
+        String loginPath = "/allday/minico/view/diary/diary.fxml";
         // System.out.println("🔍 리소스 확인: " + loginPath);
         // System.out.println("📂 리소스 URL: " + Main.class.getResource(loginPath));
         
@@ -26,7 +26,7 @@ public class Main extends Application {
         }
         
         SceneManager.init(stage); // stage
-        SceneManager.switchScene("Login");  // 최초 화면을 "Login.fxml"로 설정
+        SceneManager.switchScene("diary");  // 최초 화면을 "Login.fxml"로 설정
         SceneManager.getPrimaryStage().show(); // 스테이지 띄우기
     }
 

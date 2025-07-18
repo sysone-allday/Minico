@@ -24,7 +24,7 @@ public class SceneManager {
 
     public static void switchScene(String fxml) {// 씬 변경 메서드
         try {
-            String resourcePath = "/allday/minico/view/member/" + fxml + ".fxml";
+            String resourcePath = "/allday/minico/view/diary/" + fxml + ".fxml";
             
             // 리소스 경로 확인
             if (Main.class.getResource(resourcePath) == null) {

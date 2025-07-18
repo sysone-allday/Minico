@@ -11,8 +11,10 @@ module allday.minico {
     requires org.kordamp.ikonli.javafx;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires java.sql;
     requires static lombok;
+
+    exports allday.minico.controller.diary to javafx.fxml;
+    opens allday.minico.controller.diary to javafx.fxml;
 
     opens allday.minico.controller.member to javafx.fxml;
     opens allday.minico.controller.miniroom to javafx.fxml;
@@ -21,4 +23,5 @@ module allday.minico {
     exports allday.minico.controller;
     exports allday.minico.controller.miniroom;
     opens allday.minico.controller to javafx.fxml;
+
 }
