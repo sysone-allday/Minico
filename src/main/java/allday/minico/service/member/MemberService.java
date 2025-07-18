@@ -36,8 +36,14 @@ public class MemberService implements MemberServiceInterface {
     }
 
     @Override
-    public boolean login(String memberId, String memberPw) {
-        return false;
+    public Member login(String memberId, String memberPw) {
+        try {
+            return memberDAO.tryLogin(memberId, memberPw);
+            } catch(SQLException e) {
+            System.out.println("회원정보 가져오는 중 SQL 예외 발생");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String findPwHint(String memberId) { // 아이디와 일치하는 힌트 가져오기

@@ -19,6 +19,9 @@ public class MemberSQL {
 			WHERE MEMBER_ID = ?
 			""";
 
-
-    public static String loginSQL = "{call get_member_and_room(?, ?, ?, ?)}";
+	public static String getAllMemberInfoSQL = """
+			SELECT *
+			FROM MEMBER
+			WHERE MEMBER_ID = ? AND MEMBER_PASSWORD = ?
+			""";
 }

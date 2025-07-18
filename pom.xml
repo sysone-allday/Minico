@@ -98,6 +98,14 @@
             </exclusions>
         </dependency>
 
+        <!-- Lombok (자동 getter/setter, 생성자, toString 등 코드 자동 생성 도구) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- JUnit 테스트 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
