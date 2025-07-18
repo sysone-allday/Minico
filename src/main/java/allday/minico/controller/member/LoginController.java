@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
+// import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -59,7 +59,6 @@ public class LoginController {
     } // 회원가입 창으로 이동
 
     @FXML
-
     void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동 (지금 하드코딩해서 나중에 SceneManager 메서드로 바뀌게 변경하는 것이 좋아보임)
         Member loginmember = memberService.login(idField.getText(), pwField.getText());
         Parent currentRoot = loginButton.getScene().getRoot();
@@ -69,8 +68,8 @@ public class LoginController {
   
    fadeOut.setOnFinished(e -> {
             try {
-                // 메인 화면 로드
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/main.fxml"));
+                // 미니룸 화면 로드
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/miniroom.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root, 1280, 800);
                 
