@@ -10,6 +10,7 @@ module allday.minico {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires static lombok;
 
     opens allday.minico.controller.member to javafx.fxml;
     opens allday.minico to javafx.fxml;

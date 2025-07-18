@@ -5,32 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="chore: project setting">
-      <change afterPath="$PROJECT_DIR$/lib/ojdbc11.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/CharacterSelectController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/FindPasswordController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/SignUpCompleteController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/SignUpController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dao/member/MemberDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dto/member/Member.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberServiceInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/sql/member/MemberSQL.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/utils/member/SceneManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/utils/member/Validator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/Logincharacter.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/Minimi_Female.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/Minimi_Male.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/CharacterSelect.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/FindPassword.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/Login.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/SignUp.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/SignUpComplete.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dao/member/LoginLogDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dto/member/LoginLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/LoginLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/sesstion/AppSession.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/allday/minico/sql/member/LoginLogSQL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/images/member/SignUpCharacter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/LoginFail.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/member/SignUpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/dao/member/MemberDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dao/member/MemberDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/dto/member/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/dto/member/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberServiceInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/service/member/MemberServiceInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/sql/member/MemberSQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/sql/member/MemberSQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/member/Login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,12 +46,12 @@
     &quot;assignee&quot;: &quot;DHowor1d&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/sysone-allday/Minico.git&quot;,
-    &quot;accountId&quot;: &quot;c304b3f8-a195-4de5-8884-ac9b8a62f91f&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/sysone-allday/Minico.git",
+    "accountId": "b38ab36e-2566-4ee1-b3e5-96dcd4950a3c"
   }
-}</component>
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -86,8 +79,9 @@
     "Application.Main.executor": "Run",
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "dev-fe/miniroom",
+    "git-widget-placeholder": "devbe",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/KOSA/IdeaProjects/Minico/src/main/resources/allday/minico",
@@ -99,8 +93,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -113,10 +106,11 @@
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico\images\member" />
+      <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\java\allday\minico\controller\member" />
       <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico\view" />
       <recent name="C:\Users\KOSA\IdeaProjects\Minico\src\main\resources\allday\minico\view\member" />
       <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\view" />
-      <recent name="C:\project\sysone\minico\src\main\resources\allday\minico\css" />
     </key>
   </component>
   <component name="RunManager">
@@ -131,8 +125,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
       </set>
     </attachedChunks>
   </component>
@@ -152,6 +146,7 @@
       <workItem from="1752710771187" duration="49000" />
       <workItem from="1752711487944" duration="10600000" />
       <workItem from="1752723009916" duration="8024000" />
+      <workItem from="1752795135939" duration="10054000" />
     </task>
     <task id="LOCAL-00001" summary="chore: project setting">
       <option name="closed" value="true" />
