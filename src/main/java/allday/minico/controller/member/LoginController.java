@@ -67,7 +67,6 @@ public class LoginController {
 //        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), currentRoot);
 //        fadeOut.setFromValue(1.0);
 //        fadeOut.setToValue(0.0);
-  
 //   fadeOut.setOnFinished(e -> {
 //            try {
 //                // 미니룸 화면 로드
