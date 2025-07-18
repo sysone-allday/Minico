@@ -4,19 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="merge: 수동 병합 충돌 해결">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/controller/DiaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/DiaryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/allday/minico/controller/TodolistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/allday/minico/controller/TodolistController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/view/diary.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/diary.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/allday/minico/view/todolist.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/allday/minico/view/todolist.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="05075457-c859-4fd2-8e38-8b7e77c741e4" name="Changes" comment="feat: 투두리스트 구현" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev-be/diary" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -60,7 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "dev-be/diary에 #2개",
+    "git-widget-placeholder": "feature/SYSONE-35-투두리스트-구현",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/project/sysone/minico/src/main/resources/allday/minico/images",
@@ -130,7 +129,7 @@
       <workItem from="1752710771187" duration="49000" />
       <workItem from="1752711487944" duration="10600000" />
       <workItem from="1752723009916" duration="4264000" />
-      <workItem from="1752796473260" duration="24589000" />
+      <workItem from="1752796473260" duration="25123000" />
     </task>
     <task id="LOCAL-00001" summary="chore: project setting">
       <option name="closed" value="true" />
@@ -164,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752736195058</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: 투두리스트 구현">
+      <option name="closed" value="true" />
+      <created>1752827291827</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1752827291827</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +183,7 @@
     <MESSAGE value="chore: project setting" />
     <MESSAGE value="design : setting layout" />
     <MESSAGE value="merge: 수동 병합 충돌 해결" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge: 수동 병합 충돌 해결" />
+    <MESSAGE value="feat: 투두리스트 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 투두리스트 구현" />
   </component>
 </project>
