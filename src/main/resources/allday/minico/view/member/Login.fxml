@@ -4,36 +4,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.LoginController">
-
-    <HBox spacing="40" AnchorPane.bottomAnchor="30" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" AnchorPane.topAnchor="30">
-
-        <!-- 왼쪽 VBox: 로그인 영역 -->
-        <VBox alignment="CENTER" prefHeight="440.0" prefWidth="268.0" spacing="20">
-            <Label alignment="CENTER" prefHeight="81.0" prefWidth="250.0" text="프로그램 이름">
-                <font>
-                    <Font size="28" />
-                </font>
-            </Label>
-
-            <!-- ID -->
-            <HBox alignment="CENTER_LEFT" spacing="10">
-                <Label minWidth="40" text="ID" />
-                <TextField fx:id="idField" prefWidth="200" promptText="아이디 입력" />
-            </HBox>
-
 
 <AnchorPane prefHeight="500" prefWidth="800" styleClass="login-root" stylesheets="@../../css/login.css"
     xmlns:fx="http://javafx.com/fxml/1"
-    xmlns="http://javafx.com/javafx/17.0.12" fx:controller="allday.minico.controller.member.LoginController">
+    xmlns="http://javafx.com/javafx/21" fx:controller="allday.minico.controller.member.LoginController">
 
     <VBox alignment="CENTER" spacing="30" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50">
 
@@ -57,6 +36,8 @@
             </HBox>
             
         </VBox>
+
+        <Button fx:id="ExitButton" text="종료" onAction="#Exit" styleClass="exit-btn" />
         
     </VBox>
 </AnchorPane>
