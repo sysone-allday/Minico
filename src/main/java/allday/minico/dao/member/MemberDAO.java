@@ -2,6 +2,7 @@ package allday.minico.dao.member;
 
 
 import allday.minico.dto.member.Member;
+import allday.minico.sesstion.AppSession;
 import allday.minico.sql.member.MemberSQL;
 import java.sql.*;
 
@@ -48,9 +49,9 @@ public class MemberDAO {
 
             pstmt.setString(1, member.getMemberId());
             pstmt.setString(2, member.getPassword());
-            pstmt.setString(3, member.getNickName());
+            pstmt.setString(3, member.getNickname());
             pstmt.setString(4, member.getEmail());
-            pstmt.setDate(5, Date.valueOf(member.getJoinDate()));
+            pstmt.setTimestamp(5, Timestamp.valueOf(member.getJoinDate()));
             pstmt.setString(6, member.getPasswordHint());
             pstmt.setInt(7, member.getVisitCount());
             pstmt.setInt(8, member.getLevel());
@@ -79,5 +80,34 @@ public class MemberDAO {
             }
         }
 
+    }
+
+    public Member tryLogin(String memberId, String memberPw) throws SQLException { // 로그인 시도
+        String getAllMemberInfoSQL = MemberSQL.getAllMemberInfoSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(getAllMemberInfoSQL)) {
+            pstmt.setString(1, memberId);
+            pstmt.setString(2, memberPw);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Member member = new Member();
+                member.setMemberId(rs.getString("MEMBER_ID"));
+                member.setPassword(rs.getString("MEMBER_PASSWORD"));
+                member.setMinimi(rs.getString("MINIMI_TYPE"));
+                member.setCoin(rs.getInt("COIN"));
+                member.setEmail(rs.getString("EMAIL"));
+                member.setExperience(rs.getInt("EXPERIENCE"));
+                member.setLevel(rs.getInt("LV"));
+                member.setNickname(rs.getString("NICKNAME"));
+                member.setJoinDate(rs.getTimestamp("JOIN_DATE").toLocalDateTime());
+                member.setPasswordHint(rs.getString("PW_HINT"));
+                member.setVisitCount(rs.getInt("VISIT_COUNT"));
+                return member;
+            } else {
+                return null;
+            }
+        }
     }
 }

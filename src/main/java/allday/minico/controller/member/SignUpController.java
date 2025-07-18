@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.time.LocalDate;
@@ -33,6 +34,12 @@ public class SignUpController {
 
     private String checkAvailabilityStatus = null; // ID 중복 체크 상태
     MemberService memberservice =  new MemberService();
+
+    @FXML
+    public void initialize() { // 이 컨트롤러와 연결된 fxml 이 로딩될 때 자동으로 실행되는 메서드
+        Image image = new Image(getClass().getResource("/allday/minico/images/member/SignUpCharacter.png").toExternalForm());
+        characterImage.setImage(image); // 로그인 화면 이미지 삽입
+    }
 
     @FXML
     void checkId(ActionEvent event) { // ID 중복체크 버튼 클릭 시 실행
@@ -66,7 +73,7 @@ public class SignUpController {
             signUpResultText.setStyle("-fx-text-fill: red;");
             return;
         }
-        if(!Validator.isIdChecked(idField.getText(),checkAvailabilityStatus )) {return;} // 중복확인을 했는지
+        if(!Validator.isIdChecked(idField.getText(),checkAvailabilityStatus )) {return;} // ID 중복확인을 했는지
         if(!Validator.isValidEmail(emailField.getText())) {
             signUpResultText.setText("이메일 형식이 올바르지 않습니다.");
             signUpResultText.setStyle("-fx-text-fill: red;"); return;} // 이메일 양식이 적합한지
@@ -86,7 +93,7 @@ public class SignUpController {
         member.setPassword(pwField.getText().trim());
         member.setNickname(nicknameField.getText().trim());
         member.setEmail(emailField.getText().trim());
-        member.setJoinDate(LocalDate.now());
+        member.setJoinDate(LocalDate.now().atStartOfDay());
         member.setPasswordHint(passwordHint.getText());
         member.setCoin(0);
         member.setLevel(1);
@@ -106,5 +113,4 @@ public class SignUpController {
     void backToLogin(ActionEvent event) { // 로그인 화면으로 돌아가기
         SceneManager.switchTo("Login");
     }
-
 }
