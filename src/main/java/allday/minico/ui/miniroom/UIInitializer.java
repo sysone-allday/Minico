@@ -1,0 +1,36 @@
+package allday.minico.ui.miniroom;
+
+import javafx.scene.layout.Pane;
+
+public class UIInitializer {
+    
+    private final Pane roomPane;
+    
+    public UIInitializer(Pane roomPane) {
+        this.roomPane = roomPane;
+    }
+    
+    public void initializeCSS() {
+        javafx.application.Platform.runLater(() -> {
+            try {
+                if (roomPane.getScene() != null) {
+                    String cssPath = getClass().getResource("/allday/minico/css/main.css")
+                            .toExternalForm();
+                    roomPane.getScene().getStylesheets().add(cssPath);
+
+                    // chat.css 파일이 없으므로 주석 처리
+                    // String chatCssPath = getClass().getResource("/allday/minico/css/chat.css")
+                    //         .toExternalForm();
+                    // roomPane.getScene().getStylesheets().add(chatCssPath);
+                }
+            } catch (Exception e) {
+                System.out.println("CSS 파일을 로드할 수 없습니다: " + e.getMessage());
+            }
+        });
+    }
+    
+    public void setupRoomPaneFocus() {
+        // roomPane 클릭 시 포커스 이동
+        roomPane.setOnMouseClicked(event -> roomPane.requestFocus());
+    }
+}
