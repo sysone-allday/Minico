@@ -38,7 +38,7 @@ public class DiaryController implements Initializable {
     private TodolistController todolistController;
 
     // 유저아이디 - 나중에 값으로 넣음
-    private final String memberId = "user01";
+    private final String memberId = "USER01";
 
     // 현재 날짜로 초기화
     private LocalDate selectedDate = LocalDate.now();
@@ -59,31 +59,26 @@ public class DiaryController implements Initializable {
         if (datePicker != null) {
             datePicker.setValue(LocalDate.now());
             datePicker.setOnAction(e -> {
-                LocalDate picked = datePicker.getValue();
-                onDateChanged(picked);
-                selectedDate = picked;
-                loadDiaryForDate(selectedDate);
+                LocalDate newDate = datePicker.getValue();
+                onDateChanged(newDate);
             });
         }
 
         // 버튼 이벤트 연결
         dateBackButton.setOnAction(event -> {
-            onDateChanged(selectedDate.minusDays(1));  // 투두리스트 날짜 변경
-            selectedDate = selectedDate.minusDays(1);   // 일기 날짜 변경
-            updateDateText();
-            loadDiaryForDate(selectedDate); // DB에서 일기 조회
+            LocalDate newDate = selectedDate.minusDays(1);
+            onDateChanged(newDate);
+            //loadDiaryForDate(selectedDate); // DB에서 일기 조회
         });
 
         dateNextButton.setOnAction(event -> {
-            onDateChanged(selectedDate.plusDays(1));    // 투두리스트 날짜 변경
-            selectedDate = selectedDate.plusDays(1);    // 일기 날짜 변경
-            updateDateText();
-            loadDiaryForDate(selectedDate); // DB에서 일기 조회
+            LocalDate newDate = selectedDate.plusDays(1);
+            onDateChanged(newDate);
+            //loadDiaryForDate(selectedDate); // DB에서 일기 조회
         });
 
         // 앱 시작시 오늘 날짜로 diary 내용 조회
-        loadDiaryForDate(selectedDate);
-
+        onDateChanged(selectedDate);
         // 오늘 날짜를 원하는 포맷으로 넣기
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일"); // 원하는 포맷
@@ -179,7 +174,7 @@ public class DiaryController implements Initializable {
     }
 
     // 날짜 별로 일기 가져오기
-    private void loadDiaryForDate(LocalDate date) {
+    private void loadDiaryForDate(LocalDate ignoredDate) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connectDb = connection.getConnection();
 
@@ -191,7 +186,7 @@ public class DiaryController implements Initializable {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 String content = rs.getString("CONTENT");
-                diaryContentText.setText(content);      // ★ 이 한 줄!
+                diaryContentText.setText(content);      //
                 diaryContentText.setVisible(true);      // 텍스트 창 보여주기
                 diaryTextArea.setVisible(false);
                 diaryEditButton.setVisible(true);
