@@ -37,8 +37,6 @@ public class SignUpController {
 
     @FXML
     public void initialize() { // 이 컨트롤러와 연결된 fxml 이 로딩될 때 자동으로 실행되는 메서드
-        Image image = new Image(getClass().getResource("/allday/minico/images/member/SignUpCharacter.png").toExternalForm());
-        characterImage.setImage(image); // 로그인 화면 이미지 삽입
     }
 
     @FXML

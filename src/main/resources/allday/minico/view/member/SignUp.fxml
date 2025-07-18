@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.SignUpController">
+<AnchorPane prefHeight="500" prefWidth="800" styleClass="login-root" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.SignUpController">
 
     <!-- 뒤로가기 버튼 -->
     <Button fx:id="backToLoginButton" layoutX="30" layoutY="30" onAction="#backToLogin" text="뒤로가기" />
@@ -42,8 +42,6 @@
     <!-- 확인 버튼 -->
     <Button fx:id="submitButton" layoutX="200.0" layoutY="391.0" onAction="#submit" prefHeight="22.0" prefWidth="75.0" text="확인.." />
 
-    <!-- 캐릭터 이미지 -->
-    <ImageView fx:id="characterImage" fitHeight="250" fitWidth="200" layoutX="500" layoutY="80" />
     <Label layoutX="95.0" layoutY="338.0" prefHeight="22.0" prefWidth="85.0" text="비밀번호  힌트" />
     <TextField fx:id="passwordHint" layoutX="194.0" layoutY="338.0" prefHeight="22.0" prefWidth="223.0" promptText="내 생년월일은?" />
 

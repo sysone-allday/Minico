@@ -17,7 +17,7 @@
     <VBox alignment="CENTER" spacing="30" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50">
 
         <ImageView fitHeight="184" fitWidth="684" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../images/minico-logo.png" />
+            <Image url="@../../images/minico_logo.gif" />
         </ImageView>
 
         <VBox alignment="CENTER" spacing="16" styleClass="login-form-container">
