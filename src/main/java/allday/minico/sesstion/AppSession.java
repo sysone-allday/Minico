@@ -7,13 +7,26 @@ import allday.minico.service.member.LoginLogService;
 public class AppSession {
     private static Member loginMember;
     private static long loginlogId = -1;
+    private static String playerNickname; // 플레이어 닉네임 저장
 
     public static void setLoginMember(Member member) {
         loginMember = member;
+        // 로그인 시 닉네임도 함께 저장
+        if (member != null) {
+            playerNickname = member.getNickname();
+        }
     }
 
     public static Member getLoginMember() {
         return loginMember;
+    }
+
+    public static String getPlayerNickname() {
+        return playerNickname;
+    }
+
+    public static void setPlayerNickname(String nickname) {
+        playerNickname = nickname;
     }
 
     public static boolean logout() { // 로그아웃
@@ -40,6 +53,7 @@ public class AppSession {
         // 로그인 정보 초기화
         loginMember = null;
         loginlogId = -1L;
+        playerNickname = null;
     }
 
     public static void setLoginLog(long logId) { // 로그인시 로그 ID 저장해둠

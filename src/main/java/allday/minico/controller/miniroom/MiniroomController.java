@@ -127,13 +127,20 @@ public class MiniroomController implements Initializable {
     }
 
     private void setupPlayerName() {
-        allday.minico.ui.common.PlayerNameModal.show(roomPane, null, name -> {
-            playerName = name;
-            System.out.println("플레이어 이름 설정됨: " + playerName);
-            
-            // 플레이어 이름이 설정된 후 네트워크 매니저 초기화
-            initializeNetworkManager();
-        });
+        // AppSession에서 로그인한 사용자의 닉네임 가져오기
+        String nickname = allday.minico.sesstion.AppSession.getPlayerNickname();
+        
+        if (nickname != null && !nickname.trim().isEmpty()) {
+            playerName = nickname.trim();
+        } else {
+            // 세션에 닉네임이 없는 경우 기본값 설정
+            playerName = "Player" + (System.currentTimeMillis() % 1000);
+        }
+        
+        System.out.println("플레이어 이름 설정됨: " + playerName);
+        
+        // 플레이어 이름이 설정된 후 네트워크 매니저 초기화
+        initializeNetworkManager();
     }
     
     private void initializeNetworkManager() {
