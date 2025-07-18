@@ -104,8 +104,8 @@ public class LoginController {
                 }
 
                 /// ////////////////////////////////////////////////////////////////////////////////////////////////
-                // 로그인 성공 시 마이룸으로 화면전환 (씬만 변경)
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/main.fxml"));
+                // 로그인 성공 시 미니룸으로 화면전환 (씬만 변경)
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/miniroom.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root, 1280, 800);
                 SceneManager.getPrimaryStage().setScene(scene);

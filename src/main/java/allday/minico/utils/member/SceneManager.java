@@ -24,22 +24,71 @@ public class SceneManager {
 
     public static void switchScene(String fxml) {// 씬 변경 메서드
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/member/" + fxml + ".fxml"));
+            String resourcePath = "/allday/minico/view/member/" + fxml + ".fxml";
+            
+            // 리소스 경로 확인
+            if (Main.class.getResource(resourcePath) == null) {
+                System.err.println("❌ FXML 파일을 찾을 수 없습니다: " + resourcePath);
+                String[] alternatePaths = {
+                    "/allday/minico/view/" + fxml + ".fxml",
+                    "/" + fxml + ".fxml",
+                    "/view/member/" + fxml + ".fxml"
+                };
+                
+                for (String altPath : alternatePaths) {
+                    if (Main.class.getResource(altPath) != null) {
+                        resourcePath = altPath;
+                        // System.out.println("✅ 대체 경로에서 발견: " + resourcePath);
+                        break;
+                    }
+                }
+            } else {
+                // System.out.println("✅ FXML 파일 발견: " + resourcePath);
+            }
+            
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(resourcePath));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1280, 800);
             primaryStage.setScene(scene);
+            // System.out.println("✅ 씬 전환 완료: " + fxml);
         } catch (IOException e) {
+            // System.err.println("❌ 씬 전환 실패: " + fxml);
             e.printStackTrace();
         }
     }
 
     public static void switchTo(String fxml) { // 루트 변경 메서드
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/member/" + fxml + ".fxml"));
-            // FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+            String resourcePath = "/allday/minico/view/member/" + fxml + ".fxml";
+            // System.out.println("🔍 FXML 파일 로드 시도 (switchTo): " + resourcePath);
+            
+            // 리소스 경로 확인
+            if (Main.class.getResource(resourcePath) == null) {
+                System.err.println("❌ FXML 파일을 찾을 수 없습니다: " + resourcePath);
+                // 대체 경로들 시도
+                String[] alternatePaths = {
+                    "/allday/minico/view/" + fxml + ".fxml",
+                    "/" + fxml + ".fxml",
+                    "/view/member/" + fxml + ".fxml"
+                };
+                
+                for (String altPath : alternatePaths) {
+                    if (Main.class.getResource(altPath) != null) {
+                        resourcePath = altPath;
+                        // System.out.println("✅ 대체 경로에서 발견: " + resourcePath);
+                        break;
+                    }
+                }
+            } else {
+                // System.out.println("✅ FXML 파일 발견: " + resourcePath);
+            }
+            
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(resourcePath));
             Parent root = loader.load();
             primaryStage.getScene().setRoot(root); // 씬은 그대로 두고 루트만 변경
+            // System.out.println("✅ 루트 변경 완료: " + fxml);
         } catch (IOException e) {
+            // System.err.println("❌ 루트 변경 실패: " + fxml);
             throw new RuntimeException(e);
         }
     }

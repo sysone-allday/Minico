@@ -8,8 +8,8 @@ import java.sql.*;
 public class LoginLogDAO {
 
     private static final String url = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-    private static final String dbMember = "onyu";
-    private static final String dbPassword = "onyu";
+    private static final String dbMember = "ace";
+    private static final String dbPassword = "ace";
 
     // 싱글 톤
     private static LoginLogDAO instance;

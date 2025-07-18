@@ -67,8 +67,9 @@ public class CustomAlert {
         modalBox.setStyle("-fx-border-color: " + type.getColor() + ";");
         // CSS 파일 적용
         try {
-            String css = CustomAlert.class.getResource("/sysone/sysonefirst/css/custom-alert.css").toExternalForm();
-            modalBox.getStylesheets().add(css);
+            // custom-alert.css 파일이 없으므로 주석 처리
+            // String css = CustomAlert.class.getResource("/allday/minico/css/custom-alert.css").toExternalForm();
+            // modalBox.getStylesheets().add(css);
         } catch (Exception e) {
             // ignore
         }

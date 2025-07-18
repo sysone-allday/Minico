@@ -14,13 +14,14 @@ public class UIInitializer {
         javafx.application.Platform.runLater(() -> {
             try {
                 if (roomPane.getScene() != null) {
-                    String cssPath = getClass().getResource("/sysone/sysonefirst/css/main.css")
+                    String cssPath = getClass().getResource("/allday/minico/css/main.css")
                             .toExternalForm();
                     roomPane.getScene().getStylesheets().add(cssPath);
 
-                    String chatCssPath = getClass().getResource("/sysone/sysonefirst/css/chat.css")
-                            .toExternalForm();
-                    roomPane.getScene().getStylesheets().add(chatCssPath);
+                    // chat.css 파일이 없으므로 주석 처리
+                    // String chatCssPath = getClass().getResource("/allday/minico/css/chat.css")
+                    //         .toExternalForm();
+                    // roomPane.getScene().getStylesheets().add(chatCssPath);
                 }
             } catch (Exception e) {
                 System.out.println("CSS 파일을 로드할 수 없습니다: " + e.getMessage());
