@@ -2,8 +2,6 @@ module allday.minico {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
-    requires java.sql;
-    requires java.desktop;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
