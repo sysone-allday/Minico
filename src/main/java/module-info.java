@@ -13,8 +13,10 @@ module allday.minico {
     requires static lombok;
 
     opens allday.minico.controller.member to javafx.fxml;
+    opens allday.minico.controller.miniroom to javafx.fxml;
     opens allday.minico to javafx.fxml;
     exports allday.minico;
     exports allday.minico.controller;
+    exports allday.minico.controller.miniroom;
     opens allday.minico.controller to javafx.fxml;
 }
