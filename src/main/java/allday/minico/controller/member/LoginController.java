@@ -7,7 +7,6 @@ import allday.minico.service.member.LoginLogService;
 import allday.minico.service.member.MemberService;
 import allday.minico.sesstion.AppSession;
 import allday.minico.utils.member.SceneManager;
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +18,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 // import javafx.scene.image.Image;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -70,7 +68,7 @@ public class LoginController {
 //   fadeOut.setOnFinished(e -> {
 //            try {
 //                // 미니룸 화면 로드
-//                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/miniroom.fxml"));
+//                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/Miniroom.fxml"));
 //                Parent root = loader.load();
 //                Scene scene = new Scene(root, 1280, 800);
 //
@@ -105,7 +103,7 @@ public class LoginController {
 
                 /// ////////////////////////////////////////////////////////////////////////////////////////////////
                 // 로그인 성공 시 미니룸으로 화면전환 (씬만 변경)
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/miniroom.fxml"));
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("/allday/minico/view/Miniroom.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root, 1280, 800);
                 SceneManager.getPrimaryStage().setScene(scene);
