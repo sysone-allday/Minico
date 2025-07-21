@@ -145,7 +145,7 @@ public class MiniroomController implements Initializable {
 
     private void setupPlayerName() {
         // AppSession에서 로그인한 사용자의 닉네임 가져오기
-        String nickname = allday.minico.sesstion.AppSession.getPlayerNickname();
+        String nickname = allday.minico.session.AppSession.getPlayerNickname();
 
         if (nickname != null && !nickname.trim().isEmpty()) {
             playerName = nickname.trim();
