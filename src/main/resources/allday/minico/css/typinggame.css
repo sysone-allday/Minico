@@ -1,0 +1,56 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.root {
+    -fx-background-color: #ffffffff;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo", "Segoe UI",sans-serif;
+}
+
+/* back 버튼 */
+.back-button {
+    -fx-font-size: 20px;
+    -fx-text-fill: #6E6363;
+    -fx-background-color: #fff;
+    -fx-background-radius: 15;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #DAD9D8;     /* 테두리 색상 */
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+
+.start-button {
+    -fx-font-size: 20px;
+    -fx-text-fill: #6E6363;
+    -fx-background-color: #fff;
+    -fx-background-radius: 15;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #DAD9D8;     /* 테두리 색상 */
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+
+/* 단어 게임 단어 떨어지는 영역 */
+.word-game-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    /*-fx-background-color: #aaffaa;*/
+    -fx-background-radius: 8;
+}
+
+.word-game-input {
+    -fx-font-size: 20px;
+    -fx-text-fill: #6E6363;
+    -fx-background-color: #fff;
+    -fx-background-radius: 15;
+    -fx-border-color: #DAD9D8;     /* 테두리 색상 */
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}

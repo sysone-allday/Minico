@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<StackPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="allday.minico.controller.typinggame.TypingGameController"
+            prefWidth="1280" prefHeight="800"
+            alignment="CENTER"
+            styleClass="root">
+
+    <StackPane prefWidth="1200">
+        <HBox alignment="CENTER" maxWidth="1200" prefWidth="1200" spacing="10" style="-fx-padding: 20 0 0 0;">
+            <!--   화면 왼쪽 영역     -->
+            <StackPane prefWidth="200" prefHeight="760 ">
+                <VBox alignment="TOP_CENTER" spacing="30">
+                    <!-- 상단 Back 버튼 -->
+                    <Button fx:id="backButton"
+                            prefWidth="120" prefHeight="40"
+                            text="〈 Back"
+                            styleClass="back-button"
+                            onAction="#goToMain" />
+
+                    <!-- 타이머 -->
+                    <Label fx:id="timerLabel"
+                           layoutY="100"
+                           text="60:00"
+                           style="-fx-font-size: 30px;" />
+
+                    <!-- 성공 -->
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="성공" textFill="#4EA0FF" style="-fx-font-size: 25px;"/>
+                        <Label fx:id="successCount" text="0개" style="-fx-font-size: 25px;"/>
+                    </HBox>
+
+                    <!-- 실패 -->
+                    <HBox alignment="CENTER" spacing="5">
+                        <Label text="실패" textFill="#FFA5A5" style="-fx-font-size: 25px;" />
+                        <Label fx:id="failCount" text="0개" style="-fx-font-size: 25px;" />
+                    </HBox>
+                </VBox>
+            </StackPane>
+
+            <!--   화면 오른쪽 영역     -->
+            <StackPane prefWidth="1000" prefHeight="760" alignment="CENTER">
+                <VBox alignment="TOP_CENTER" prefWidth="900" prefHeight="760" spacing="20">
+
+                    <!-- 단어들 떨어지는 Pane -->
+                    <Pane fx:id="gamePane"
+                               prefWidth="900"
+                               prefHeight="680"
+                          styleClass="word-game-pane">
+
+                        <!-- 게임 시작 버튼 (가운데 배치) -->
+                        <!-- 게임 시작하면 사라짐-->
+                        <Button fx:id="startButton"
+                                prefWidth="200" prefHeight="50"
+                                layoutX="390" layoutY="320"
+                                text="게임 시작"
+                                onAction="#startGame"
+                                styleClass="start-button" />
+                    </Pane>
+
+                    <!-- 입력창 -->
+                    <HBox alignment="CENTER">
+                        <TextField fx:id="inputField"
+                                   prefWidth="400" prefHeight="40"
+                                   promptText="입력해주세요.."
+                                   onAction="#checkAnswer"
+                                   styleClass="word-game-input" />
+                    </HBox>
+                </VBox>
+            </StackPane>
+        </HBox>
+    </StackPane>
+
+
+
+
+
+
+
+
+    <!-- 고양이 이미지 -->
+<!--    <ImageView fx:id="catImage"-->
+<!--               layoutX="30" layoutY="360"-->
+<!--               fitWidth="80" fitHeight="80"-->
+<!--               pickOnBounds="true"-->
+<!--               preserveRatio="true"-->
+<!--               image="@/allday/minico/assets/cat.png" /> &lt;!&ndash; 실제 경로에 맞게 수정 &ndash;&gt;-->
+
+
+
+</StackPane>
