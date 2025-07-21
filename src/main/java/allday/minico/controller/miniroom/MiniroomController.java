@@ -1,9 +1,15 @@
 package allday.minico.controller.miniroom;
 
+import allday.minico.controller.oxgame.OxGameSettingController;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +23,7 @@ import allday.minico.ui.common.CustomAlert;
 import allday.minico.utils.audio.ButtonSoundHandler;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -461,9 +468,27 @@ public class MiniroomController implements Initializable {
     }
 
     @FXML
-    protected void onOxClick() {
+    public void onOxClick(ActionEvent event) {
         System.out.println("OX게임 버튼 클릭");
-        // OX게임 기능 구현
+        try {
+            FXMLLoader oxGameRoot = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
+            Parent root = oxGameRoot.load();
+
+            OxGameSettingController controller = oxGameRoot.getController();
+            Scene oxScene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(oxScene);
+
+            // layout 강제 적용 (전체화면 안 가도 정상 동작하게)
+            Platform.runLater(() -> {
+                root.applyCss();
+                root.layout();
+            });
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void cleanup() {
