@@ -37,6 +37,13 @@ public class MiniroomController implements Initializable {
     private Button typingBtn;
     @FXML
     private Button oxBtn;
+    @FXML
+    private Button friendsbtn;
+
+    protected  void onFriendsClick(){
+
+    }
+
 
     private ImageView character;
     private CharacterMovementController movementController;

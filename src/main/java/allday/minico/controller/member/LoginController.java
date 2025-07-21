@@ -73,7 +73,9 @@ public class LoginController {
 
     @FXML
     void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동 (지금 하드코딩해서 나중에 SceneManager 메서드로 바뀌게 변경하는 것이 좋아보임)
+
         Member loginmember = memberService.login(idField.getText(), pwField.getText());
+
 
         // 화면 전환 효과
 //        Parent currentRoot = loginButton.getScene().getRoot();
