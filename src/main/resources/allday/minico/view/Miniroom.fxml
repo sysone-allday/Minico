@@ -55,7 +55,7 @@
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="friendsbtn" styleClass="menu-btn">
+                    <Button fx:id="friendsbtn" styleClass="menu-btn" onAction="#onFriendsClick">
                         <graphic>
                             <StackPane>
                                 <Label text="친구찾기" styleClass="menu-btn-label"/>
