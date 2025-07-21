@@ -27,6 +27,13 @@
                             </StackPane>
                         </graphic>
                     </Button>
+                    <Button fx:id="visitBtn" styleClass="menu-btn" onAction="#onVisitClick">
+                        <graphic>
+                            <StackPane>
+                                <Label text="미니룸 방문" styleClass="menu-btn-label"/>
+                            </StackPane>
+                        </graphic>
+                    </Button>
                     <Button fx:id="diaryBtn" styleClass="menu-btn" onAction="#onDiaryClick">
                         <graphic>
                             <StackPane>
@@ -45,6 +52,13 @@
                         <graphic>
                             <StackPane>
                                 <Label text="OX게임" styleClass="menu-btn-label"/>
+                            </StackPane>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="friendsbtn" styleClass="menu-btn">
+                        <graphic>
+                            <StackPane>
+                                <Label text="친구찾기" styleClass="menu-btn-label"/>
                             </StackPane>
                         </graphic>
                     </Button>
