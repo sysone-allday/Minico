@@ -5,11 +5,13 @@ import allday.minico.service.diary.DiaryService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DiaryController implements Initializable {
@@ -177,5 +180,24 @@ public class DiaryController implements Initializable {
         }
     }
 
+    @FXML
+    private void goToMyRoomPage(MouseEvent event) {
+        try {
+            // 1) 클릭된 노드에서 Stage 확보
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene().getWindow();
+
+            // 2) diary.fxml 로 전환
+            Parent root = FXMLLoader.load(
+                    Objects.requireNonNull(getClass().getResource(
+                            "/allday/minico/view/diary/myroom.fxml")));
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

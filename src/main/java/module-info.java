@@ -13,6 +13,9 @@ module allday.minico {
     requires com.almasb.fxgl.all;
     requires static lombok;
 
+    //날씨 연동 관련
+    requires com.google.gson;
+
     exports allday.minico.controller.diary to javafx.fxml;
     opens allday.minico.controller.diary to javafx.fxml;
 

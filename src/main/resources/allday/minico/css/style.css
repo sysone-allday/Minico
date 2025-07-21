@@ -8,3 +8,33 @@
 .button {
     -fx-font-family: 'Neo둥근모';
 }
+/* 달력 전체(그리드 VBox) */
+.date-picker > .calendar-grid {
+    -fx-background-color: transparent;      /* 컨테이너 배경만 사용 */
+}
+
+/* 요일 헤더 */
+.date-picker > .calendar-grid > .day-name-cell {
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff69b4;                 /* 핑크 글씨 */
+}
+
+/* 일반 날짜 셀 */
+.date-picker > .calendar-grid > .day-cell {
+    -fx-font-size: 13px;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: CENTER;
+}
+
+/* 오늘 날짜 셀 – 연핑크 배경 + 진핑크 테두리 */
+.date-picker > .calendar-grid > .day-cell:today {
+    -fx-background-color: #ffe5f1;
+    -fx-border-color: #ff69b4;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Hover 효과 */
+.date-picker > .calendar-grid > .day-cell:hover {
+    -fx-background-color: #f8f8f8;
+}

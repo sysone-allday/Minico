@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="allday.minico.controller.diary.MyRoomController">
+    <children>
+        <!-- 전체 배경 -->
+        <ImageView fitHeight="800.0" fitWidth="1280.0" mouseTransparent="true">
+            <image>
+                <Image url="@../../images/background.png" />
+            </image>
+        </ImageView>
+        <!-- 방 배경 -->
+        <ImageView fitHeight="700.0" fitWidth="1180.0" layoutX="50.0" layoutY="50.0" mouseTransparent="true" >
+            <image>
+                <Image url="@../../images/diary/myroomBackground.png" />
+            </image>
+        </ImageView>
+        <!-- 날씨 창문 이미지 -->
+        <ImageView fx:id="weatherImageView"
+                   layoutX="800" layoutY="130"
+                   fitWidth="250" fitHeight="200" />
+        <!-- 달력 -->
+        <AnchorPane fx:id="calendarContainer"
+                    layoutX="150" layoutY="150"
+                    prefWidth="120" prefHeight="160"
+                    onMouseClicked="#goToDiaryPage"
+                    style="
+                    -fx-background-color: rgba(255,255,255,0.85);
+                    -fx-border-color: #FF69B4;
+                    -fx-border-radius: 10;
+                    -fx-background-radius: 10;"/>
+    </children>
+</AnchorPane>

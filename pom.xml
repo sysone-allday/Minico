@@ -103,6 +103,13 @@
             </exclusions>
         </dependency>
 
+        <!-- 날씨 연동 api 관련 -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
         <!-- Lombok (자동 getter/setter, 생성자, toString 등 코드 자동 생성 도구) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
