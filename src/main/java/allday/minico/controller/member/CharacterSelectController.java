@@ -23,13 +23,13 @@ public class CharacterSelectController {
     @FXML
     void selectFemaleMinimi(ActionEvent event) { // 여자 미니미 클릭 시
         ViewSelectedCharacter.setImage(new Image(getClass().getResource("/allday/minico/images/member/Minimi_Female.png").toExternalForm()));
-        member.setMinimi("Minimi_Female");
+        member.setMinimi("Female");
     }
 
     @FXML
     void selectMaleMinimi(ActionEvent event) { // 남자 미니미 클릭 시
         ViewSelectedCharacter.setImage(new Image(getClass().getResource("/allday/minico/images/member/Minimi_Male.png").toExternalForm()));
-        member.setMinimi("Minimi_Male");
+        member.setMinimi("Male");
     }
 
     public void setPendingMember(Member member) {

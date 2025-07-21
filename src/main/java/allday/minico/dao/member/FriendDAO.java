@@ -8,20 +8,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendDAO {
+import static allday.minico.utils.DBUtil.getConnection;
 
-    private static final String url = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-    private static final String dbMember = "onyu";
-    private static final String dbPassword = "onyu";
+public class FriendDAO {
 
     private static final FriendDAO instance = new FriendDAO();
     private FriendDAO() {}
     public static FriendDAO getInstance() {
         return instance;
-    }
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, dbMember, dbPassword);
     }
 
     public Friend getFriendInfo(String myId, String friendId) throws SQLException { // 친구 찾기

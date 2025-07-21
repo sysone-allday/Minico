@@ -74,9 +74,9 @@ public class LoginController {
     } // 회원가입 창으로 이동
 
     @FXML
+
    void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동
         Member loginmember = memberService.login(idField.getText(), pwField.getText());
-
         if(loginmember != null) { // 멤버 정보, 로그인 로그 ID 를 세션에 저장
             try {
                 AppSession.setLoginMember(loginmember); // 로그인한 멤버 정보 세션에 저장
