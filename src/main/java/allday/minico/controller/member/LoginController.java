@@ -5,7 +5,7 @@ import allday.minico.Main;
 import allday.minico.dto.member.Member;
 import allday.minico.service.member.LoginLogService;
 import allday.minico.service.member.MemberService;
-import allday.minico.sesstion.AppSession;
+import allday.minico.session.AppSession;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.AudioManager;
 import allday.minico.utils.audio.ButtonSoundHandler;
