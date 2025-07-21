@@ -64,6 +64,10 @@ public class SignUpController {
     @FXML
     void submit(ActionEvent event) {
 
+        if(!Validator.isIdChecked(idField.getText(),checkAvailabilityStatus )) {
+            signUpResultText.setText("ID 중복확인을 해주세요");
+            signUpResultText.setStyle("-fx-text-fill: red;");
+            return;} // ID 중복확인을 했는지
         if(!Validator.isInfoFill(// 회원가입 완료 버튼 클릭 시 미기입란 여부 확인
                 idField.getText(),nicknameField.getText(), emailField.getText(),
                 passwordHint.getText(), pwField.getText(),pwCheckField.getText())){
@@ -71,7 +75,6 @@ public class SignUpController {
             signUpResultText.setStyle("-fx-text-fill: red;");
             return;
         }
-        if(!Validator.isIdChecked(idField.getText(),checkAvailabilityStatus )) {return;} // ID 중복확인을 했는지
         if(!Validator.isValidEmail(emailField.getText())) {
             signUpResultText.setText("이메일 형식이 올바르지 않습니다.");
             signUpResultText.setStyle("-fx-text-fill: red;"); return;} // 이메일 양식이 적합한지

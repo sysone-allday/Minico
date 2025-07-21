@@ -5,11 +5,9 @@ import allday.minico.sql.member.MemberSQL;
 
 import java.sql.*;
 
-public class LoginLogDAO {
+import static allday.minico.utils.DBUtil.getConnection;
 
-    private static final String url = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-    private static final String dbMember = "ace";
-    private static final String dbPassword = "ace";
+public class LoginLogDAO {
 
     // 싱글 톤
     private static LoginLogDAO instance;
@@ -17,11 +15,6 @@ public class LoginLogDAO {
     public static LoginLogDAO getInstance() {
         if (instance == null) instance = new LoginLogDAO();
         return instance;
-    }
-
-    // DB 에 접근하기 위해 필요한 통로역할을 하는 Connection 객체
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, dbMember, dbPassword);
     }
 
 

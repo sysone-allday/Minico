@@ -1,6 +1,7 @@
 package allday.minico.controller.miniroom;
 
 import allday.minico.controller.oxgame.OxGameSettingController;
+import allday.minico.utils.member.SceneManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,6 +45,15 @@ public class MiniroomController implements Initializable {
     private Button typingBtn;
     @FXML
     private Button oxBtn;
+    @FXML
+    private Button friendsButton;
+
+    @FXML
+    private void friendsButtonClick(){
+        SceneManager.showModal("FriendInfo", "친구 찾기");
+    }
+
+
 
     private ImageView character;
     private CharacterMovementController movementController;
@@ -152,7 +162,7 @@ public class MiniroomController implements Initializable {
 
     private void setupPlayerName() {
         // AppSession에서 로그인한 사용자의 닉네임 가져오기
-        String nickname = allday.minico.sesstion.AppSession.getPlayerNickname();
+        String nickname = allday.minico.session.AppSession.getPlayerNickname();
 
         if (nickname != null && !nickname.trim().isEmpty()) {
             playerName = nickname.trim();
