@@ -3,13 +3,22 @@ package allday.minico.controller.diary;
 import allday.minico.dto.diary.Diary;
 import allday.minico.service.diary.DiaryService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import lombok.Getter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,16 +34,38 @@ public class DiaryController implements Initializable {
     @FXML private Text diaryContentText;
     @FXML private Text dateText;
     @FXML private DatePicker datePicker;
+    @FXML private StackPane calendarModalContainer;
+
+    @FXML private VBox todolist;
+    private TodolistController todolistController;
 
     private final DiaryService diaryService = new DiaryService();
 
     private final String memberId = "USER01";
+    // 현재 보고 있는 날짜를 반환
+    @Getter
     private LocalDate selectedDate = LocalDate.now();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         diaryContentText.setFont(Font.font("Neo둥근모", 24));
         updateDateText();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/diary/todolist.fxml"));
+            VBox loaded = loader.load();  // VBox 루트 노드
+            todolistController = loader.getController(); // 진짜 컨트롤러 얻기
+
+            // calendarModalContainer처럼 화면에 추가
+            todolist.getChildren().setAll(loaded);  // 현재 todolist에 컨텐츠 교체
+
+            // 날짜 적용
+            todolistController.setDateAndMember(selectedDate, memberId);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         diaryRegisterButton.setOnAction(event -> diaryRegisterButtonAction());
         diaryEditButton.setOnAction(event -> diaryEditButtonAction());
@@ -120,5 +151,31 @@ public class DiaryController implements Initializable {
     public void onDateChanged(LocalDate newDate) {
         selectedDate = newDate;
         loadDiaryForDate(selectedDate);
+
+        // todolist 컨트롤러도 바뀜
+        if (todolistController != null) {
+            todolistController.setDateAndMember(selectedDate, memberId);  // ✅ 컨트롤러에 호출
+        }
     }
+
+    //달력 클릭하면 모달 띄우기
+    @FXML
+    private void openCalendarModal() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/diary/calendar.fxml"));
+            Parent calendarPane = loader.load();
+
+            CalendarController calendarController = loader.getController();
+            calendarController.setDiaryController(this);
+
+            calendarController.setCloseCallback(() -> calendarModalContainer.setVisible(false)); // 닫기 콜백
+            calendarModalContainer.getChildren().setAll(calendarPane);
+            calendarModalContainer.setVisible(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
