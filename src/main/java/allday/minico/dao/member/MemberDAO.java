@@ -24,13 +24,11 @@ public class MemberDAO {
                 url = dbProps.getProperty("db.url");
                 dbUsername = dbProps.getProperty("db.username");
                 dbPassword = dbProps.getProperty("db.password");
-                System.out.println("✅ database.properties 로드 성공");
+                // System.out.println("✅ database.properties 로드 성공");
             } else {
-                // Fallback to hardcoded values if properties file not found
                 url = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
                 dbUsername = "ace";
                 dbPassword = "ace";
-                System.out.println("⚠️ database.properties 파일을 찾을 수 없어 기본값을 사용합니다.");
             }
         } catch (IOException e) {
             // Fallback to hardcoded values

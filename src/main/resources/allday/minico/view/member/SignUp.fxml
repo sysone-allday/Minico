@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.SignUpController">
+<AnchorPane prefHeight="500" prefWidth="800" styleClass="signup-root" stylesheets="@../../css/signup.css"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="allday.minico.controller.member.SignUpController">
 
-    <!-- 뒤로가기 버튼 -->
-    <Button fx:id="backToLoginButton" layoutX="30" layoutY="30" onAction="#backToLogin" text="뒤로가기" />
+    <VBox alignment="CENTER" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50"
+          AnchorPane.topAnchor="50">
+        <VBox alignment="CENTER" spacing="16" styleClass="signup-form-container">
+            <!-- 회원가입 타이틀 -->
+            <Label layoutX="160.0" layoutY="41.0" styleClass="signup-title" text="회원가입"/>
 
-    <!-- 회원가입 타이틀 -->
-    <Label layoutX="160.0" layoutY="41.0" style="-fx-font-size: 24;" text="회원가입" />
+            <!-- 사용자 ID -->
+            <HBox alignment="CENTER" spacing="10">
+                <TextField fx:id="idField" promptText="소문자와 숫자 조합, 8자 이상" style="-fx-min-width: 260"
+                           styleClass="signup-input"/>
+                <Button fx:id="checkIdButton" styleClass="duplication-check-btn" onAction="#checkId" text="중복확인"/>
+            </HBox>
 
-    <!-- 사용자 ID -->
-    <Label layoutX="100" layoutY="100" text="사용자 ID" />
-    <TextField fx:id="idField" layoutX="200" layoutY="95" prefHeight="22.0" prefWidth="174.0" promptText="소문자와 숫자 조합, 8자 이상" />
-    <Button fx:id="checkIdButton" layoutX="393.0" layoutY="95.0" onAction="#checkId" text="중복확인" />
 
-    <!-- 닉네임 -->
-    <Label layoutX="100" layoutY="140" text="닉네임" />
-    <TextField fx:id="nicknameField" layoutX="200" layoutY="135" prefHeight="22.0" prefWidth="174.0" promptText="영문,한글,숫자 2~10 자" />
+            <!-- 닉네임 -->
+            <TextField fx:id="nicknameField" styleClass="signup-input" promptText="닉네임 2~10자"/>
 
-    <!-- 비밀번호 -->
-    <Label layoutX="100" layoutY="180" text="비밀번호" />
-    <PasswordField fx:id="pwField" layoutX="200" layoutY="175" prefHeight="22.0" prefWidth="174.0" promptText="소문자와 숫자 조합, 8자 이상" />
+            <!-- 비밀번호 -->
+            <PasswordField fx:id="pwField" styleClass="signup-input" promptText="비밀번호 영어와 숫자 조합, 8자 이상"/>
 
-    <!-- 비밀번호 확인 -->
-    <Label layoutX="100" layoutY="220" text="비밀번호 확인" />
-    <PasswordField fx:id="pwCheckField" layoutX="200" layoutY="215" prefHeight="22.0" prefWidth="174.0" promptText="비밀번호 확인" />
+            <!-- 비밀번호 확인 -->
+            <PasswordField fx:id="pwCheckField" styleClass="signup-input" promptText="비밀번호 확인"/>
 
-    <!-- 이메일 -->
-    <Label layoutX="100" layoutY="260" text="Email" />
-    <TextField fx:id="emailField" layoutX="200" layoutY="255" prefHeight="22.0" prefWidth="174.0" promptText="이메일 입력" />
+            <TextField fx:id="passwordHint" styleClass="signup-input" promptText="내 생년월일은?"/>
 
-    <!-- ID 중복확인 안내 -->
-    <Label fx:id="signUpResultText" layoutX="100" layoutY="300" style="-fx-text-fill: gray;" />
+            <!-- 이메일 -->
+            <TextField fx:id="emailField" styleClass="signup-input" promptText="이메일 입력"/>
 
-    <!-- 확인 버튼 -->
-    <Button fx:id="submitButton" layoutX="200.0" layoutY="391.0" onAction="#submit" prefHeight="22.0" prefWidth="75.0" text="확인.." />
 
-    <!-- 캐릭터 이미지 -->
-    <ImageView fx:id="characterImage" fitHeight="250" fitWidth="200" layoutX="500" layoutY="80" />
-    <Label layoutX="95.0" layoutY="338.0" prefHeight="22.0" prefWidth="85.0" text="비밀번호  힌트" />
-    <TextField fx:id="passwordHint" layoutX="194.0" layoutY="338.0" prefHeight="22.0" prefWidth="223.0" promptText="내 생년월일은?" />
-
+            <HBox alignment="CENTER" spacing="35">
+                <!-- 뒤로가기 버튼 -->
+                <Button fx:id="backToLoginButton" onAction="#backToLogin" styleClass="signup-btn" text="취소"/>
+                <!-- 가입 버튼 -->
+                <Button fx:id="submitButton" styleClass="signup-btn" onAction="#submit" text="가입"/>
+            </HBox>
+            <!--            중복확인-->
+            <Label fx:id="signUpResultText" style="-fx-text-fill: #757575; -fx-font-size: 16"/>
+        </VBox>
+    </VBox>
 </AnchorPane>

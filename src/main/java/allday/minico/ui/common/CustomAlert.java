@@ -68,10 +68,9 @@ public class CustomAlert {
         // CSS 파일 적용
         try {
             // custom-alert.css 파일이 없으므로 주석 처리
-            // String css = CustomAlert.class.getResource("/allday/minico/css/custom-alert.css").toExternalForm();
-            // modalBox.getStylesheets().add(css);
+            String css = CustomAlert.class.getResource("/allday/minico/css/custom-alert.css").toExternalForm();
+            modalBox.getStylesheets().add(css);
         } catch (Exception e) {
-            // ignore
         }
         // 크기 설정
         double modalWidth = 450;
