@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="root" stylesheets="@../css/main.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="allday.minico.controller.miniroom.MiniroomController">
+<BorderPane styleClass="root" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.miniroom.MiniroomController">
     <center>
         <AnchorPane styleClass="miniroom-container">
 
@@ -53,7 +53,7 @@
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="friendsbtn" onAction="#onFriendsClick" styleClass="menu-btn">
+                    <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
                                 <Label styleClass="menu-btn-label" text="친구찾기" />

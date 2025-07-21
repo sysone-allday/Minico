@@ -1,6 +1,7 @@
 package allday.minico.controller.miniroom;
 
 import allday.minico.controller.oxgame.OxGameSettingController;
+import allday.minico.utils.member.SceneManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,11 +46,13 @@ public class MiniroomController implements Initializable {
     @FXML
     private Button oxBtn;
     @FXML
-    private Button friendsbtn;
+    private Button friendsButton;
 
-    protected  void onFriendsClick(){
-
+    @FXML
+    private void friendsButtonClick(){
+        SceneManager.showModal("FriendInfo", "친구 찾기");
     }
+
 
 
     private ImageView character;
