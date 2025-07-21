@@ -28,7 +28,7 @@ public class MyRoomController {
     @FXML private ImageView weatherImageView;
     @FXML private AnchorPane calendarContainer;
 
-    private final String API_KEY = "c1b35f20fb45fd683ea1a60795b70f0d";
+    private final String API_KEY = "c1b35f20fb45f~~b70f0d";
 
     @FXML
     public void initialize() {
