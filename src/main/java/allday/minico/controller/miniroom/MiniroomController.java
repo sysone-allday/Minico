@@ -2,7 +2,10 @@ package allday.minico.controller.miniroom;
 
 import javafx.fxml.FXML;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 // import javafx.scene.control.DialogPane;
 import javafx.scene.layout.Pane;
@@ -12,8 +15,10 @@ import javafx.scene.text.Text;
 import allday.minico.network.RoomNetworkManager;
 import allday.minico.ui.common.CustomAlert;
 import allday.minico.utils.audio.ButtonSoundHandler;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MiniroomController implements Initializable {
@@ -427,6 +432,25 @@ public class MiniroomController implements Initializable {
     protected void onTypingClick() {
         System.out.println("타자게임 버튼 클릭");
         // 타자게임 기능 구현
+        try {
+            Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/allday/minico/view/typinggame/typing_game.fxml")
+            ));
+
+            // 현재 Stage와 Scene 가져오기
+            Stage stage = (Stage) typingBtn.getScene().getWindow();
+            Scene scene = stage.getScene();
+
+            // Root 교체
+            scene.setRoot(gameRoot);
+
+            // ✅ 타자게임 CSS 적용
+            scene.getStylesheets().clear(); // 기존 main.css 제거
+            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/typinggame.css").toExternalForm());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

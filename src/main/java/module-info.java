@@ -20,4 +20,8 @@ module allday.minico {
     exports allday.minico;
     exports allday.minico.controller.miniroom;
     exports allday.minico.controller.member;
+
+    // 타자게임
+    opens allday.minico.controller.typinggame to javafx.fxml;
+    exports allday.minico.controller.typinggame;
 }
