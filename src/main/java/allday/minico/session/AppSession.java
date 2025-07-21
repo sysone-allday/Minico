@@ -1,6 +1,5 @@
-package allday.minico.sesstion;
+package allday.minico.session;
 
-import allday.minico.dto.member.LoginLog;
 import allday.minico.dto.member.Member;
 import allday.minico.service.member.LoginLogService;
 
@@ -35,7 +34,7 @@ public class AppSession {
             boolean logoutComplete = LoginLogService.getInstance().recordLogoutLog(loginlogId); // 로그아웃 로그 UPDATE
 
             if (logoutComplete) { // 로그아웃 로그 UPDATE 성공 시 실행
-                System.out.println("로그아웃 성공, 로그아웃 로그 UPDATE");
+                System.out.println(loginMember.getMemberId() +  " 유저의 로그아웃 성공, 로그아웃 로그 UPDATE");
                 clear();
                 return true;
             } else {

@@ -1,6 +1,7 @@
 package allday.minico.utils.member;
 
 import allday.minico.Main;
+import allday.minico.session.AppSession;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,6 +21,12 @@ public class SceneManager {
 
     public static void init(Stage stage) {
         primaryStage = stage;
+
+        primaryStage.setOnCloseRequest(event -> {
+            if(AppSession.getLoginMember() != null) {
+                AppSession.logout();
+            }
+        });
     }
 
     public static void switchScene(String fxml) {// 씬 변경 메서드
