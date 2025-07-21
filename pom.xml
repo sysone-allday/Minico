@@ -15,6 +15,7 @@
     </properties>
 
     <dependencies>
+        <!-- JavaFX 관련 -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -40,6 +41,8 @@
             <artifactId>javafx-media</artifactId>
             <version>21</version>
         </dependency>
+
+        <!-- 기타 UI 라이브러리 -->
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
@@ -94,6 +97,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- Lombok (자동 getter/setter, 생성자, toString 등 코드 자동 생성 도구) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JUnit 테스트 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -105,6 +118,15 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Oracle JDBC 드라이버 (ojdbc11) -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <version>21.9.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ojdbc11.jar</systemPath>
         </dependency>
     </dependencies>
 
@@ -125,7 +147,6 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>allday.minico/allday.minico.Main</mainClass>

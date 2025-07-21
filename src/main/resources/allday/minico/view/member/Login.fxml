@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500" prefWidth="800" styleClass="login-root" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.LoginController">
+
+    <VBox alignment="CENTER" spacing="30" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50">
+
+        <ImageView fitHeight="184" fitWidth="684" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../images/minico_logo.gif" />
+        </ImageView>
+
+        <VBox alignment="CENTER" spacing="16" styleClass="login-form-container">
+
+            <Label styleClass="login-title" text="로그인" />
+
+            <TextField fx:id="idField" promptText="아이디" styleClass="login-input" />
+
+            <PasswordField fx:id="pwField" promptText="비밀번호" styleClass="login-input" />
+
+            <Button fx:id="loginButton" onAction="#login" prefHeight="72" prefWidth="373" styleClass="login-btn" text="로그인하기" />
+
+            <HBox alignment="CENTER" spacing="40">
+                <Button fx:id="findPasswordButton" onAction="#findPassword" styleClass="sub-btn" text="비밀번호찾기" />
+                <Button fx:id="signUpButton" onAction="#signUp" styleClass="sub-btn" text="가입하기" />
+            </HBox>
+            
+        </VBox>
+    </VBox>
+</AnchorPane>
