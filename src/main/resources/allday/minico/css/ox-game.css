@@ -1,0 +1,40 @@
+.custom-combo {
+    -fx-font-family: "Tmoney RoundWind Regular";
+    -fx-font-size: 30px;
+}
+
+.custom-combo .prompt-text {
+    -fx-text-fill: #564145;
+    -fx-font-size: 30px;
+    -fx-font-family: "Tmoney RoundWind Regular";
+}
+
+// 게임 세팅에서 버튼 관련 css
+/* 공통 버튼 스타일 */
+.level-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 100;
+    -fx-border-radius: 100;
+    -fx-text-fill: #BEA5A9;
+    -fx-font-family: "Tmoney RoundWind ExtraBold";
+    -fx-font-size: 32px;
+    -fx-background-radius: 100;
+    -fx-border-radius: 100;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
+
+/* 선택된 버튼 스타일 (원형 강조) */
+.level-btn:selected,
+.level-btn.selected {
+    -fx-background-color: #F4AFB2!important;
+    -fx-background-radius: 100;
+    -fx-border-color: #DF9299 !important;
+    -fx-border-width: 5;
+    -fx-border-radius: 100;
+    -fx-font-family: "Tmoney RoundWind ExtraBold";
+    -fx-font-size: 32;
+    -fx-text-fill: #564145;
+    -fx-alignment: center;
+}
