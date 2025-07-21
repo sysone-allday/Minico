@@ -28,8 +28,15 @@ public class MyRoomController {
     @FXML private ImageView weatherImageView;
     @FXML private AnchorPane calendarContainer;
 
-    private final String API_KEY = "c1b35f20fb45fd683ea1a60795b70f0d";
+    private static final String API_KEY = getApiKey();
 
+    private static String getApiKey() {
+        String key = System.getenv("WEATHER_API_KEY");
+        if (key == null || key.isBlank()) {
+            throw new IllegalStateException("환경 변수 WEATHER_API_KEY 가 설정되지 않았습니다.");
+        }
+        return key;
+    }
     @FXML
     public void initialize() {
         updateWeatherImage("Seoul");
@@ -72,19 +79,21 @@ public class MyRoomController {
             JsonObject json = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
             String weather = json.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
 
-            String imageFileName = switch (weather.toLowerCase()) {
-                case "snow" -> "snow.png";
-                case "clouds" -> "cloudy.png";
-                case "rain" -> "rainy.png";
-                default -> {
-                    int hour = java.time.LocalTime.now().getHour();
-                    if (hour >= 20 || hour < 6) yield "sunny_night.png";
-                    else yield "sunny.png";
-                }
+            // 1) 밤·낮 판별 (00~05, 20~23시는 night)
+            boolean isNight = java.time.LocalTime.now().getHour() >= 20
+                    || java.time.LocalTime.now().getHour() < 6;
+
+// 2) 날씨별 접두어 결정
+            String base = switch (weather.toLowerCase()) {
+                case "snow"   -> "snow";
+                case "clouds" -> "cloudy";
+                case "rain"   -> "rainy";
+                default       -> "sunny";
             };
 
-            String base = "/allday/minico/images/diary/";
-            String path = base + imageFileName;
+// 3) 최종 파일 이름
+            String imageFileName = base + (isNight ? "_night" : "") + ".png";
+            String path = "/allday/minico/images/diary/" + imageFileName;
 
             InputStream stream = getClass().getResourceAsStream(path);
             System.out.println("TRY LOAD: " + path + " -> " + (stream == null)); // false 가 돼야 정상
