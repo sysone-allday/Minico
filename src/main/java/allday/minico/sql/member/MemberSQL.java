@@ -24,4 +24,23 @@ public class MemberSQL {
 			FROM MEMBER
 			WHERE MEMBER_ID = ? AND MEMBER_PASSWORD = ?
 			""";
+	public static String updateMemberInfoSQL = """
+			UPDATE MEMBER
+			SET
+				NICKNAME = ?,
+				EMAIL = ?,
+				MEMBER_PASSWORD = ?,
+				PW_HINT = ?
+			WHERE MEMBER_ID = ?
+			""";
+	public static String deleteMemberSQL = """
+			DELETE FROM MEMBER
+			WHERE MEMBER_ID = ?
+			""";
+	public static String checkMultipleLoginSQL = """
+			SELECT LOGOUT_TIME FROM LOGIN_LOG
+			WHERE MEMBER_ID = ?
+			ORDER BY LOG_ID DESC
+			FETCH FIRST 1 ROWS ONLY
+			""";
 }

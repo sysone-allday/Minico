@@ -46,4 +46,17 @@ public class LoginLogDAO {
             }
         }
     }
+
+    public boolean insertLogForSignUp(String memberId) throws SQLException {
+        String insertLogForSignupSQL = LoginLogSQL.insertLogForSignupSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(insertLogForSignupSQL)) {
+            pstmt.setString(1, memberId);
+
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

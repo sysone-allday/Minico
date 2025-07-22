@@ -47,11 +47,16 @@ public class MiniroomController implements Initializable {
     private Button oxBtn;
     @FXML
     private Button friendsButton;
+    @FXML
+    private Button myProfileButton;
 
     @FXML
     private void friendsButtonClick(){
         SceneManager.showModal("FriendInfo", "친구 찾기");
     }
+
+    @FXML
+    private void myProfileButtonClick(){SceneManager.showModal("myProfile", "내 정보");}
 
 
 

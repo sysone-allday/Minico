@@ -15,4 +15,9 @@ public class LoginLogSQL {
             SET LOGOUT_TIME = SYSDATE
             WHERE LOG_ID = ?
             """;
+    public static String insertLogForSignupSQL = """
+            INSERT INTO LOGIN_LOG
+            (LOGIN_TIME, LOGOUT_TIME, MEMBER_ID)
+            VALUES(SYSDATE, SYSDATE + INTERVAL '1' SECOND, ?)
+            """;
 }

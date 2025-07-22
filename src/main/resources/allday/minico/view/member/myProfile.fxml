@@ -21,6 +21,7 @@
       <Label fx:id="coinText" layoutX="280.0" layoutY="200.0" prefHeight="27.0" prefWidth="200.0" text="COIN  : 15000" />
       <Label fx:id="experienceText" layoutX="280.0" layoutY="227.0" prefHeight="27.0" prefWidth="200.0" text="경험치 : 12345" />
       <Label fx:id="joindateText" layoutX="280.0" layoutY="256.0" prefHeight="27.0" prefWidth="200.0" text="가입일 : 2009-09-09" />
-      <Button fx:id="modifyProfileButton" layoutX="254.0" layoutY="304.0" mnemonicParsing="false" onAction="#modifyProfile" text="회원 정보 수정 " />
+      <Button fx:id="modifyProfileButton" layoutX="169.0" layoutY="303.0" mnemonicParsing="false" onAction="#modifyProfile" text="회원 정보 수정 " />
+      <Button fx:id="deleteAccountButton" layoutX="280.0" layoutY="303.0" mnemonicParsing="false" onAction="#deleteAccountButtonClick" prefHeight="22.0" prefWidth="82.0" text="회원 탈퇴" />
    </children>
 </AnchorPane>
