@@ -1,5 +1,8 @@
 package allday.minico.controller.diary;
 
+import allday.minico.dto.diary.Todolist;
+import allday.minico.service.diary.TodolistService;
+import allday.minico.session.AppSession;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javafx.fxml.FXML;
@@ -14,19 +17,41 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class MyRoomController {
 
     @FXML private ImageView weatherImageView;
-    @FXML private AnchorPane calendarContainer;
+    @FXML private Pane calendarContainer;
+    private final TodolistService todoService = new TodolistService();
+
+
+    // 잡초 ImageView 7개 주입
+    @FXML private ImageView weed1;
+    @FXML private ImageView weed2;
+    @FXML private ImageView weed3;
+    @FXML private ImageView weed4;
+    @FXML private ImageView weed5;
+    @FXML private ImageView weed6;
+    @FXML private ImageView weed7;
+    @FXML private ImageView weed8;
+    @FXML private ImageView weed9;
+    @FXML private ImageView weed10;
+    @FXML private ImageView weed11;
+
+    private List<ImageView> weeds;   // 편하게 리스트로 묶기
+    private String memberId;
 
     private static final String API_KEY = getApiKey();
 
@@ -39,10 +64,45 @@ public class MyRoomController {
     }
     @FXML
     public void initialize() {
+        memberId = AppSession.getLoginMember().getMemberId();
+        weeds = List.of(weed1, weed2, weed3, weed4, weed5, weed6, weed7, weed8, weed9, weed10, weed11);
+        linkTodoController();      // Todo 컨트롤러 연결(화면엔 안 붙임)
+
         updateWeatherImage("Seoul");
         embedCalendar(); // 달력 넣기
+
+        updateWeedDensity(loadTodayProgress());      // 초기값(0% 달성 → 잡초 전체 노출)
     }
 
+    private double loadTodayProgress() {
+        List<Todolist> list = todoService.getTodos(memberId, LocalDate.now());
+        long done = list.stream().filter(Todolist::isDone).count();
+        return list.isEmpty() ? 0 : (double) done / list.size();
+    }
+
+    private void linkTodoController() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass()
+                    .getResource("/allday/minico/view/diary/todolist.fxml"));
+            loader.load();
+            TodolistController todoCtrl = loader.getController();
+            todoCtrl.setMyRoomController(this);   // 여기서 refreshProgress() 호출됨
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    // 잡초 제거
+    public void updateWeedDensity(double progress) {
+        // 달성률이 높을수록 남길 잡초 수가 줄어듦
+        int maxWeed = weeds.size();                    // 10
+        int weedToShow = (int) Math.round(maxWeed * (1 - progress));
+
+        for (int i = 0; i < maxWeed; i++) {
+            weeds.get(i).setVisible(i < weedToShow);   // 앞에서부터 숨김 처리
+        }
+    }
+
+
+    // 달력 삽입
     private void embedCalendar() {
         DatePicker picker = new DatePicker(LocalDate.now());
         picker.setShowWeekNumbers(false);
@@ -69,6 +129,7 @@ public class MyRoomController {
     }
 
 
+    // 창문 날씨별 삽입
     private void updateWeatherImage(String city) {
         try {
             String apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + API_KEY + "&units=metric";
@@ -80,7 +141,7 @@ public class MyRoomController {
             String weather = json.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
 
             // 밤·낮 판별 (00~05, 20~23시는 night)
-            boolean isNight = java.time.LocalTime.now().getHour() >= 20
+            boolean isNight = java.time.LocalTime.now().getHour() >= 18
                     || java.time.LocalTime.now().getHour() < 6;
 
             // 날씨별 접두어 결정
@@ -105,6 +166,7 @@ public class MyRoomController {
         }
     }
 
+    // 달력 누르면 다이어리 페이지로 이동
     @FXML
     private void goToDiaryPage(MouseEvent event) {
         try {
@@ -125,6 +187,7 @@ public class MyRoomController {
         }
     }
 
+    // 뒤로 가기 누르면 미니룸 페이지로 이동
     @FXML
     private void goToMiniroomPage(MouseEvent event) {
         try {

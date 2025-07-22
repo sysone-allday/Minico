@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -29,8 +30,9 @@ public class TodolistController implements Initializable {
     @FXML private ProgressBar progress;
 
     private final ObservableList<Todolist> todos = FXCollections.observableArrayList();
-
     private final TodolistService todoService = new TodolistService();
+    @Setter
+    private MyRoomController myRoomController; // 주입받는 참조
 
     private String memberId;
     private LocalDate selectedDate = LocalDate.now();
@@ -39,7 +41,7 @@ public class TodolistController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         memberId = AppSession.getLoginMember().getMemberId();
         listView.setItems(todos); // ListView 데이터 연결
-        listView.setCellFactory(lv -> new ListCell<Todolist>() {
+        listView.setCellFactory(lv -> new ListCell<>() {
             private final CheckBox cb = new CheckBox();
             private final Label label = new Label();
             private final Button btnEdit = new Button("✎");
@@ -147,9 +149,17 @@ public class TodolistController implements Initializable {
     }
 
     // 달성률 가져오기
-    private void refreshProgress() {
+    public void refreshProgress() {
         long done = todos.stream().filter(Todolist::isDone).count();
-        progress.setProgress(todos.isEmpty() ? 0 : (double) done / todos.size());
+        double prog = todos.isEmpty() ? 0 : (double) done / todos.size();
+        System.out.println("[Todo] done=" + done + ", total=" + todos.size() + ", prog=" + prog);
+
+        progress.setProgress(prog);
+
+        // MyRoom 쪽에도 전달
+        if (myRoomController != null) {
+            myRoomController.updateWeedDensity(prog);
+        }
     }
 
     // 날짜/멤버 변경 시 외부에서 호출
@@ -160,5 +170,9 @@ public class TodolistController implements Initializable {
         refreshProgress();
     }
 
+    public void setMyRoomController(MyRoomController mc) {
+        this.myRoomController = mc;
+        refreshProgress();          // ★ 연결된 순간 바로 sync
+    }
 
 }

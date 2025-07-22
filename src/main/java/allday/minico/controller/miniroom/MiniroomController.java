@@ -502,11 +502,6 @@ public class MiniroomController implements Initializable {
 
             // Root 교체
             scene.setRoot(gameRoot);
-
-            // CSS 적용
-            scene.getStylesheets().clear(); // 기존 main.css 제거
-            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
-
         } catch (Exception e) {
             e.printStackTrace();
         }
