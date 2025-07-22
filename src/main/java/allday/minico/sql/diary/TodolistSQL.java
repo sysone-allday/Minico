@@ -4,7 +4,7 @@ public class TodolistSQL {
     public static final String SELECT_BY_MEMBER_AND_DATE = """
         SELECT TODO_ID, CONTENT, IS_DONE
         FROM TODO
-        WHERE MEMBER_ID = UPPER(?) AND TRUNC(CREATE_AT) = ?
+        WHERE MEMBER_ID = ? AND TRUNC(CREATE_AT) = ?
     """;
     public static final String INSERT = """
         INSERT INTO TODO (CONTENT, IS_DONE, CREATE_AT, MEMBER_ID)

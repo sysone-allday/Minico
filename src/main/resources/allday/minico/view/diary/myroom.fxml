@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="allday.minico.controller.diary.MyRoomController">
     <children>
         <!-- 전체 배경 -->
@@ -40,5 +41,11 @@
                     -fx-border-color: #FF69B4;
                     -fx-border-radius: 10;
                     -fx-background-radius: 10;"/>
+
+        <Button layoutX="57.0" layoutY="36.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="115.0" text="back"  onMouseClicked="#goToMiniroomPage">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

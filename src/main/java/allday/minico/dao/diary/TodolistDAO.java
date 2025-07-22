@@ -11,7 +11,7 @@ import java.util.List;
 import static allday.minico.utils.DBUtil.getConnection;
 
 public class TodolistDAO {
-
+    // 날짜별 투두 조회
     public List<Todolist> getTodosByDate(String memberId, LocalDate date) {
         List<Todolist> list = new ArrayList<>();
         try (Connection conn = getConnection();
@@ -31,6 +31,7 @@ public class TodolistDAO {
         return list;
     }
 
+    // 투두 추가
     public long insertTodo(String content, LocalDate date, String memberId) {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.INSERT, new String[]{"TODO_ID"})) {
@@ -45,6 +46,7 @@ public class TodolistDAO {
         return 0;
     }
 
+    // 완료 수정
     public void updateDone(long id, boolean done) {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.UPDATE_DONE)) {
@@ -54,6 +56,7 @@ public class TodolistDAO {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
+    // 투두 내용 수정
     public void updateContent(long id, String content) {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.UPDATE_CONTENT)) {
@@ -63,6 +66,7 @@ public class TodolistDAO {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
+    // 삭제
     public void delete(long id) {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.DELETE)) {

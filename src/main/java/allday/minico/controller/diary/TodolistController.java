@@ -6,12 +6,19 @@ import allday.minico.session.AppSession;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class TodolistController implements Initializable {
@@ -31,7 +38,7 @@ public class TodolistController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         memberId = AppSession.getLoginMember().getMemberId();
-        listView.setItems(todos);
+        listView.setItems(todos); // ListView 데이터 연결
         listView.setCellFactory(lv -> new ListCell<Todolist>() {
             private final CheckBox cb = new CheckBox();
             private final Label label = new Label();
@@ -52,6 +59,7 @@ public class TodolistController implements Initializable {
                     }
                 });
 
+                // 투두 삭제
                 btnDel.setOnAction(e -> {
                     Todolist item = getItem();
                     if (item != null) {
@@ -61,6 +69,7 @@ public class TodolistController implements Initializable {
                     }
                 });
 
+                // 투두 수정
                 btnEdit.setOnAction(e -> {
                     Todolist item = getItem();
                     if (item != null) {
@@ -75,6 +84,7 @@ public class TodolistController implements Initializable {
                 tf.setOnAction(e -> commitEdit());
             }
 
+            // 텍스트 수정 저장
             private void commitEdit() {
                 Todolist item = getItem();
                 if (item != null && editing) {
@@ -88,6 +98,7 @@ public class TodolistController implements Initializable {
                 }
             }
 
+            // 셀 렌더링
             @Override
             protected void updateItem(Todolist item, boolean empty) {
                 super.updateItem(item, empty);
@@ -107,18 +118,22 @@ public class TodolistController implements Initializable {
             }
         });
 
-        loadTodosFromDB();
-        refreshProgress();
+        loadTodosFromDB(); // DB에서 오늘 날짜 todo 로드
+        refreshProgress(); // 달성률
 
         addBtn.setOnAction(e -> addTodo());
         inputField.setOnAction(e -> addTodo());
     }
 
+    // db에서 todo 로드
     private void loadTodosFromDB() {
+        System.out.println("selectedDate = " + selectedDate);  // ★ 찍어 보면 오늘 날짜
         todos.clear();
         todos.addAll(todoService.getTodos(memberId, selectedDate));
+        System.out.println("조회된 Todo 수 = " + todos.size());
     }
 
+    // todo 추가
     private void addTodo() {
         String text = inputField.getText().trim();
         if (text.isEmpty()) return;
@@ -131,6 +146,7 @@ public class TodolistController implements Initializable {
         }
     }
 
+    // 달성률 가져오기
     private void refreshProgress() {
         long done = todos.stream().filter(Todolist::isDone).count();
         progress.setProgress(todos.isEmpty() ? 0 : (double) done / todos.size());
@@ -143,4 +159,6 @@ public class TodolistController implements Initializable {
         loadTodosFromDB();
         refreshProgress();
     }
+
+
 }

@@ -124,4 +124,24 @@ public class MyRoomController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void goToMiniroomPage(MouseEvent event) {
+        try {
+            // 클릭된 노드에서 Stage 확보
+            Stage stage = (Stage) ((Node) event.getSource())
+                    .getScene().getWindow();
+
+            // diary.fxml 로 전환
+            Parent root = FXMLLoader.load(
+                    Objects.requireNonNull(getClass().getResource(
+                            "/allday/minico/view/Miniroom.fxml")));
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

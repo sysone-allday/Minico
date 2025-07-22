@@ -491,6 +491,25 @@ public class MiniroomController implements Initializable {
     protected void onDiaryClick() {
         System.out.println("다이어리 버튼 클릭");
         // 다이어리 기능 구현
+        try {
+            Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/allday/minico/view/diary/myroom.fxml")
+            ));
+
+            // 현재 Stage와 Scene 가져오기
+            Stage stage = (Stage) typingBtn.getScene().getWindow();
+            Scene scene = stage.getScene();
+
+            // Root 교체
+            scene.setRoot(gameRoot);
+
+            // CSS 적용
+            scene.getStylesheets().clear(); // 기존 main.css 제거
+            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

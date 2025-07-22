@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import static allday.minico.utils.DBUtil.getConnection;
 
 public class DiaryDAO {
+    // 날짜별 일기 조회
     public Diary selectDiaryByDate(String memberId, LocalDate date) {
          try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.SELECT_BY_DATE)) {
@@ -29,6 +30,7 @@ public class DiaryDAO {
         return null;
     }
 
+    // 일기 추가
     public boolean insertDiary(Diary diary) {
          try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.INSERT)) {
@@ -42,6 +44,7 @@ public class DiaryDAO {
         return false;
     }
 
+    // 일기 수정
     public boolean updateDiary(Diary diary) {
           try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.UPDATE)) {
