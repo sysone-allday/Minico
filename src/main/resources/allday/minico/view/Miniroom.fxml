@@ -69,6 +69,15 @@
                         <Image url="@../images/room.png" />
                     </ImageView>
                 </Pane>
+            <Button fx:id="myProfileButton" layoutX="1004.0" layoutY="631.0" onAction="#myProfileButtonClick" styleClass="menu-btn">
+               <graphic>
+                  <StackPane>
+                     <children>
+                        <Label styleClass="menu-btn-label" text="내 정보" />
+                     </children>
+                  </StackPane>
+               </graphic>
+            </Button>
             </Pane>
         </AnchorPane>
     </center>

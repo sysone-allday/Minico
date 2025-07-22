@@ -76,11 +76,20 @@ public class LoginController {
     @FXML
 
    void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동
+
+        // 동시 로그인이 되지 않도록 로그아웃정보를 기반으로 로그인 가능여부 체크
+        boolean isMultipleLogin = memberService.preventMultipleLogins(idField.getText());
+        if(isMultipleLogin == false) {
+            SceneManager.showModal("MultipleLoginError", "중복 로그인");
+            return;
+        }
+
         Member loginmember = memberService.login(idField.getText(), pwField.getText());
+
         if(loginmember != null) { // 멤버 정보, 로그인 로그 ID 를 세션에 저장
             try {
                 AppSession.setLoginMember(loginmember); // 로그인한 멤버 정보 세션에 저장
-                LoginLogService loginlogservice = LoginLogService.getInstance(); // 로그 서비스 객체 가져옴
+                LoginLogService loginlogservice = LoginLogService.getInstance();
                 long logId = loginlogservice.recordLoginLog(loginmember.getMemberId()); // 로그인 로그 INSERT 후 로그 ID 반환
                 if(logId > 0){
                     AppSession.setLoginLog(logId); // 로그인 시 로그ID 를 세션에 저장

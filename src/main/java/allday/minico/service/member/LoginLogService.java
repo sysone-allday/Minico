@@ -22,13 +22,24 @@ public class LoginLogService {
         } catch (SQLException e){
                 e.printStackTrace();
                 return -1L;
-            }
         }
+    }
 
     public boolean recordLogoutLog(long logId) {
         try {
             boolean result = loginLogDAO.updateLogoutLog(logId);
             return result;
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public boolean recordLogForSignUp(String memberId) {
+        try{
+            boolean recordSuccess = loginLogDAO.insertLogForSignUp(memberId);
+            return recordSuccess;
         } catch (SQLException e){
             e.printStackTrace();
             return false;

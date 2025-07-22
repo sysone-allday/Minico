@@ -5,6 +5,7 @@ import allday.minico.sql.member.FriendSQL;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +58,11 @@ public class FriendDAO {
         String insertFriendShipSQL = FriendSQL.insertFriendShipSQL;
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(insertFriendShipSQL)) {
+
             pstmt.setString(1, myId);
             pstmt.setString(2, friendId);
+            LocalDateTime nowKST = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            pstmt.setTimestamp(3, Timestamp.valueOf(nowKST));
 
             if(pstmt.executeUpdate() > 0){ return true; }
             else { return false; }

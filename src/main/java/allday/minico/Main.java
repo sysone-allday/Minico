@@ -26,26 +26,6 @@ public class Main extends Application {
         super.stop();
     }
 
-
-    // 수정한 것
-    // module-info 에 opens allday.minico.controller.member to javafx.fxml; 추가함
-
-
-    /*
-    @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/Miniroom.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
-        stage.setTitle("Minico");
-        stage.setScene(scene);
-        stage.setMinWidth(1280);
-        stage.setMinHeight(800);
-        stage.show();
-    }
-    */
-
-
-
     public static void main(String[] args) {
         launch();
     }
