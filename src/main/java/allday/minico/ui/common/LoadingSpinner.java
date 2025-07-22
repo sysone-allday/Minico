@@ -4,11 +4,9 @@ import javafx.application.Platform;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class LoadingSpinner {
-    private StackPane overlay;
+    private StackPane spinnerContainer;
     private ProgressIndicator spinner;
     private Pane parentPane;
     
@@ -18,43 +16,46 @@ public class LoadingSpinner {
     }
     
     private void createSpinner() {
-        // 반투명 배경
-        Rectangle background = new Rectangle();
-        background.setFill(Color.BLACK);
-        background.setOpacity(0.3);
-        background.widthProperty().bind(parentPane.widthProperty());
-        background.heightProperty().bind(parentPane.heightProperty());
-        
-        // 스피너
+        // 스피너만 생성 (오버레이 배경 제거)
         spinner = new ProgressIndicator();
         spinner.setMaxSize(60, 60);
         spinner.setStyle("-fx-progress-color: #b2fbb5ff;");
         
-        // 오버레이 컨테이너
-        overlay = new StackPane();
-        overlay.getChildren().addAll(background, spinner);
-        overlay.setVisible(false);
+        // 스피너 컨테이너 (배경 없이)
+        spinnerContainer = new StackPane();
+        spinnerContainer.getChildren().add(spinner);
+        spinnerContainer.setVisible(false);
+        
+        // 스피너를 중앙에 위치시키기
+        spinnerContainer.setLayoutX(0);
+        spinnerContainer.setLayoutY(0);
     }
     
     public void show() {
         Platform.runLater(() -> {
-            if (!parentPane.getChildren().contains(overlay)) {
-                parentPane.getChildren().add(overlay);
+            // 스피너를 부모 패널의 중앙에 위치시키기
+            double centerX = (parentPane.getWidth() - 60) / 2;
+            double centerY = (parentPane.getHeight() - 60) / 2;
+            
+            spinnerContainer.setLayoutX(Math.max(0, centerX));
+            spinnerContainer.setLayoutY(Math.max(0, centerY));
+            
+            if (!parentPane.getChildren().contains(spinnerContainer)) {
+                parentPane.getChildren().add(spinnerContainer);
             }
-            overlay.setVisible(true);
-            overlay.toFront();
+            spinnerContainer.setVisible(true);
+            spinnerContainer.toFront();
         });
     }
     
     public void hide() {
         Platform.runLater(() -> {
-            overlay.setVisible(false);
-            parentPane.getChildren().remove(overlay);
+            spinnerContainer.setVisible(false);
+            parentPane.getChildren().remove(spinnerContainer);
         });
     }
     
     public void showWithMessage(String message) {
-        // 필요시 메시지와 함께 표시할 수 있도록 확장 가능
         show();
     }
 }

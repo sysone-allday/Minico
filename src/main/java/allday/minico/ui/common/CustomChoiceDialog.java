@@ -12,9 +12,7 @@ import allday.minico.network.MiniRoomDiscovery;
 
 import java.util.List;
 
-/**
- * 사용자 정의 방 선택 다이얼로그
- */
+
 public class CustomChoiceDialog {
     
     public static void showRoomSelection(Pane parentPane, List<MiniRoomDiscovery.RoomInfo> rooms, 
@@ -30,7 +28,6 @@ public class CustomChoiceDialog {
                          "-fx-border-width: 2; -fx-background-radius: 16; -fx-border-radius: 16; " +
                          "-fx-padding: 24; -fx-alignment: center;");
         
-        // 크기를 더 크게 설정
         double modalWidth = 520;
         double modalHeight = 480;
         modalBox.setMaxWidth(modalWidth);
@@ -62,8 +59,8 @@ public class CustomChoiceDialog {
         
         // 방 목록 영역
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setStyle("-fx-background-color: transparent; -fx-border-color: #ddd; " +
-                           "-fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
+        scrollPane.setStyle("-fx-background-color: transparent;" +
+                           " -fx-border-radius: 30; -fx-background-radius: 30;");
         scrollPane.setFitToWidth(true);
         scrollPane.setMaxHeight(280);
         scrollPane.setPrefHeight(280);
@@ -80,16 +77,16 @@ public class CustomChoiceDialog {
         for (MiniRoomDiscovery.RoomInfo room : rooms) {
             Button roomButton = new Button();
             roomButton.setMaxWidth(Double.MAX_VALUE);
-            roomButton.setPrefHeight(60); // 높이 증가
+            roomButton.setPrefHeight(60);
             roomButton.setMinHeight(60);
             
             // 방 정보 텍스트 설정 - IP 주소 대신 닉네임만 표시
             String roomText = String.format("🏠 %s의 미니룸", room.owner);
             roomButton.setText(roomText);
-            roomButton.setStyle("-fx-font-size: 12px; " +
+            roomButton.setStyle("-fx-font-size: 14px; " +
                                "-fx-background-color: #f8f9fa; -fx-text-fill: #333; " +
                                "-fx-border-color: #ddd; -fx-border-width: 1; " +
-                               "-fx-background-radius: 8; -fx-border-radius: 8; " +
+                               "-fx-background-radius: 30; -fx-border-radius: 30; " +
                                "-fx-padding: 8; -fx-cursor: hand; -fx-text-alignment: center;");
             
             // 선택 효과
@@ -101,15 +98,15 @@ public class CustomChoiceDialog {
                         ((Button) node).setStyle("-fx-font-size: 12px; " +
                                                 "-fx-background-color: #f8f9fa; -fx-text-fill: #333; " +
                                                 "-fx-border-color: #ddd; -fx-border-width: 1; " +
-                                                "-fx-background-radius: 8; -fx-border-radius: 8; " +
+                                                "-fx-background-radius: 30; -fx-border-radius: 30; " +
                                                 "-fx-padding: 8; -fx-cursor: hand; -fx-text-alignment: center;");
                     }
                 }
                 // 선택된 버튼 스타일 변경
                 roomButton.setStyle("-fx-font-size: 12px; " +
                                    "-fx-background-color: #e3f2fd; -fx-text-fill: #1976d2; " +
-                                   "-fx-border-color: #2196F3; -fx-border-width: 2; " +
-                                   "-fx-background-radius: 8; -fx-border-radius: 8; " +
+                                   "-fx-border-color: #FFABBD; -fx-border-width: 2; " +
+                                   "-fx-background-radius: 30; -fx-border-radius: 30; " +
                                    "-fx-padding: 8; -fx-cursor: hand; -fx-text-alignment: center;");
             });
             
