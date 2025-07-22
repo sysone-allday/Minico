@@ -45,14 +45,10 @@
     -fx-cursor: hand;
 }
 .custom-alert-btn-confirm {
-    -fx-background-color: #2196F3;
+    -fx-background-color: green;
     -fx-text-fill: white;
-    -fx-border-color: #2196F3;
-    -fx-border-width: 2;
 }
 .custom-alert-btn-cancel {
-    -fx-background-color: #f0f0f0;
-    -fx-text-fill: #333;
-    -fx-border-color: #ccc;
-    -fx-border-width: 2;
+    -fx-background-color: #FFABBD;
+    -fx-text-fill: white;
 }

@@ -55,10 +55,28 @@ public class CustomAlert {
     //공용
     private static void show(Pane parentPane, AlertType type, String title, String message, 
                             Runnable onConfirm) {
-        // 오버레이 배경
+        // Scene의 root를 찾기
+        javafx.scene.Parent sceneRoot = parentPane.getScene().getRoot();
+        
+        // 오버레이 배경 - 화면 전체를 덮도록 설정
         Pane overlay = new Pane();
         overlay.setStyle("-fx-background-color: rgba(0,0,0,0.4);");
-        overlay.setPrefSize(parentPane.getWidth(), parentPane.getHeight());
+        
+        // Stage의 실제 크기를 가져와서 화면 전체를 덮도록 설정
+        final double[] stageDimensions = new double[2]; // [width, height]
+        try {
+            javafx.stage.Stage stage = (javafx.stage.Stage) parentPane.getScene().getWindow();
+            stageDimensions[0] = stage.getWidth();
+            stageDimensions[1] = stage.getHeight();
+        } catch (Exception e) {
+            // Stage를 가져올 수 없는 경우 Scene 크기 사용
+            stageDimensions[0] = parentPane.getScene().getWidth();
+            stageDimensions[1] = parentPane.getScene().getHeight();
+        }
+        
+        overlay.setPrefSize(stageDimensions[0], stageDimensions[1]);
+        overlay.setLayoutX(0);
+        overlay.setLayoutY(0);
 
         // 모달 박스 크기 조정 및 CSS 적용
         VBox modalBox = new VBox(20);
@@ -67,7 +85,6 @@ public class CustomAlert {
         modalBox.setStyle("-fx-border-color: " + type.getColor() + ";");
         // CSS 파일 적용
         try {
-            // custom-alert.css 파일이 없으므로 주석 처리
             String css = CustomAlert.class.getResource("/allday/minico/css/custom-alert.css").toExternalForm();
             modalBox.getStylesheets().add(css);
         } catch (Exception e) {
@@ -80,10 +97,10 @@ public class CustomAlert {
         modalBox.setPrefWidth(modalWidth);
         modalBox.setPrefHeight(modalHeight);
 
-        // 중앙 정렬
+        // 중앙 정렬 - Stage 크기 기준으로 계산
         javafx.application.Platform.runLater(() -> {
-            double centerX = (parentPane.getWidth() - modalWidth) / 2;
-            double centerY = (parentPane.getHeight() - modalHeight) / 2;
+            double centerX = (stageDimensions[0] - modalWidth) / 2;
+            double centerY = (stageDimensions[1] - modalHeight) / 2;
             modalBox.setLayoutX(Math.max(0, centerX));
             modalBox.setLayoutY(Math.max(0, centerY));
         });
@@ -133,20 +150,20 @@ public class CustomAlert {
             Button confirmBtn = new Button("확인");
             confirmBtn.getStyleClass().addAll("custom-alert-btn", "custom-alert-btn-confirm");
             confirmBtn.setOnAction(e -> {
-                parentPane.getChildren().remove(overlay);
+                removeOverlayFromScene(sceneRoot, overlay);
                 onConfirm.run();
             });
 
             Button cancelBtn = new Button("취소");
             cancelBtn.getStyleClass().addAll("custom-alert-btn", "custom-alert-btn-cancel");
-            cancelBtn.setOnAction(e -> parentPane.getChildren().remove(overlay));
+            cancelBtn.setOnAction(e -> removeOverlayFromScene(sceneRoot, overlay));
 
             buttonBox.getChildren().addAll(confirmBtn, cancelBtn);
         } else {
             // 일반 알림인 경우 확인 버튼만
             Button okBtn = new Button("확인");
             okBtn.getStyleClass().addAll("custom-alert-btn", "custom-alert-btn-confirm");
-            okBtn.setOnAction(e -> parentPane.getChildren().remove(overlay));
+            okBtn.setOnAction(e -> removeOverlayFromScene(sceneRoot, overlay));
 
             buttonBox.getChildren().add(okBtn);
         }
@@ -157,12 +174,12 @@ public class CustomAlert {
         // ESC로 닫기
         overlay.setOnKeyPressed(ev -> {
             if (ev.getCode() == javafx.scene.input.KeyCode.ESCAPE) {
-                parentPane.getChildren().remove(overlay);
+                removeOverlayFromScene(sceneRoot, overlay);
             }
         });
         overlay.setFocusTraversable(true);
         
-        parentPane.getChildren().add(overlay);
+        addOverlayToScene(sceneRoot, overlay);
         javafx.application.Platform.runLater(() -> {
             overlay.requestFocus();
             // 첫 번째 버튼에 포커스
@@ -170,5 +187,35 @@ public class CustomAlert {
                 ((Button) buttonBox.getChildren().get(0)).requestFocus();
             }
         });
+    }
+    
+    // Scene root에 오버레이를 추가하는 헬퍼 메서드
+    private static void addOverlayToScene(javafx.scene.Parent sceneRoot, Pane overlay) {
+        if (sceneRoot instanceof javafx.scene.layout.BorderPane) {
+            javafx.scene.layout.BorderPane borderPane = (javafx.scene.layout.BorderPane) sceneRoot;
+            // BorderPane에 전체 화면을 덮는 오버레이 추가
+            javafx.scene.layout.StackPane stackPane = new javafx.scene.layout.StackPane();
+            stackPane.getChildren().addAll(borderPane.getCenter(), overlay);
+            borderPane.setCenter(stackPane);
+        } else if (sceneRoot instanceof Pane) {
+            ((Pane) sceneRoot).getChildren().add(overlay);
+        }
+    }
+    
+    // Scene root에서 오버레이를 제거하는 헬퍼 메서드
+    private static void removeOverlayFromScene(javafx.scene.Parent sceneRoot, Pane overlay) {
+        if (sceneRoot instanceof javafx.scene.layout.BorderPane) {
+            javafx.scene.layout.BorderPane borderPane = (javafx.scene.layout.BorderPane) sceneRoot;
+            javafx.scene.Node center = borderPane.getCenter();
+            if (center instanceof javafx.scene.layout.StackPane) {
+                javafx.scene.layout.StackPane stackPane = (javafx.scene.layout.StackPane) center;
+                if (stackPane.getChildren().size() > 1) {
+                    javafx.scene.Node originalCenter = stackPane.getChildren().get(0);
+                    borderPane.setCenter(originalCenter);
+                }
+            }
+        } else if (sceneRoot instanceof Pane) {
+            ((Pane) sceneRoot).getChildren().remove(overlay);
+        }
     }
 }
