@@ -94,7 +94,7 @@ public class SignUpController {
         member.setPassword(pwField.getText().trim());
         member.setNickname(nicknameField.getText().trim());
         member.setEmail(emailField.getText().trim());
-        member.setJoinDate(LocalDate.now().atStartOfDay());
+        member.setJoinDate(java.time.LocalDateTime.now());
         member.setPasswordHint(passwordHint.getText());
         member.setCoin(0);
         member.setLevel(1);

@@ -1,0 +1,61 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.modify-root {
+    -fx-background-color: #ffffffff;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
+}
+
+.modify-title {
+    -fx-font-size: 28px;
+    -fx-text-fill: #fff;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #f88da9, 3, 1, 1, 1);
+}
+
+.modify-input {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-border-color: #CFCFCF;
+    -fx-border-radius: 30;
+    -fx-border-width: 3;
+    -fx-alignment: center;
+    -fx-max-width: 373;
+    -fx-max-height: 53;
+    -fx-font-size: 25px;
+    -fx-prompt-text-fill: #E5E5E5;
+}
+
+.modify-btn {
+    -fx-pref-width: 169;
+    -fx-pref-height: 53;
+    -fx-min-width: 169;
+    -fx-min-height: 53;
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.modify-btn:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255,20,147,0.4), 8, 0, 0, 2);
+}
+
+.modify-result-text {
+    -fx-text-fill: #757575;
+    -fx-font-size: 16;
+}
+
+.modify-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
+}

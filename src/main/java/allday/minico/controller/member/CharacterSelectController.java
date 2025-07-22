@@ -2,6 +2,7 @@ package allday.minico.controller.member;
 
 
 import allday.minico.dto.member.Member;
+import allday.minico.service.member.LoginLogService;
 import allday.minico.service.member.MemberService;
 import allday.minico.utils.member.SceneManager;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ public class CharacterSelectController {
 
     private Member member;
     MemberService memberService = new MemberService();
+    LoginLogService loginLogService;
 
     @FXML
     void selectFemaleMinimi(ActionEvent event) { // 여자 미니미 클릭 시
@@ -39,6 +41,16 @@ public class CharacterSelectController {
     @FXML
     public void characterSelectConfirm(ActionEvent event) { // 캐릭터 선택 완료 버튼 클릭 시
         boolean success = memberService.signUp(member);
+
+        String memberId = member.getMemberId();
+        loginLogService = LoginLogService.getInstance();
+        boolean logRecordSuccess =  loginLogService.recordLogForSignUp(memberId);
+
+
+
+
+
+
         if(success) {// Insert 성공 시 모달창 뜨고 메인으로 돌아가기
             System.out.println("회원가입 성공");
             SceneManager.showModal("signUpComplete", "회원가입 완료");

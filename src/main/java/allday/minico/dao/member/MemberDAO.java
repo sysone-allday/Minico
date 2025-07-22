@@ -105,4 +105,59 @@ public class MemberDAO {
             }
         }
     }
+
+    public boolean updateMemberInfo(String modifyInfoMemberId, String nickname, String email, String password, String passwordHint) throws SQLException {
+        String updateMemberInfoSQL = MemberSQL.updateMemberInfoSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateMemberInfoSQL)) {
+
+            // 닉네임, 이메일, 비밀번호, 힌트, ID 순
+            pstmt.setString(1, nickname);
+            pstmt.setString(2, email);
+            pstmt.setString(3, password);
+            pstmt.setString(4, passwordHint);
+            pstmt.setString(5, modifyInfoMemberId);
+
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteMember(String deleteId) throws SQLException {
+        String deleteMemberSQL = MemberSQL.deleteMemberSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(deleteMemberSQL)) {
+            pstmt.setString(1, deleteId);
+
+            if(pstmt.executeUpdate() > 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean checkMultipleLogin(String checkId) throws SQLException {
+        String checkMultipleLoginSQL = MemberSQL.checkMultipleLoginSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(checkMultipleLoginSQL)) {
+
+            pstmt.setString(1, checkId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String result = rs.getString("LOGOUT_TIME");
+                if(result != null){
+                    System.out.println("로그인 중 아님, 로그인 가능");
+                    return true;
+                } else{
+                    System.out.println("다른 곳에서 로그인 중이므로 로그인 불가");
+                    return false;
+                }
+            }
+        }
+        System.out.println("없는 멤버거나 로그아웃기록이 없는 ID");
+        return null;
+    }
 }
