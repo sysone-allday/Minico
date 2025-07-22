@@ -1,15 +1,16 @@
 package allday.minico.dao.diary;
 
-import allday.minico.DatabaseConnection;
 import allday.minico.dto.diary.Diary;
 import allday.minico.sql.diary.DiarySQL;
 
 import java.sql.*;
 import java.time.LocalDate;
 
+import static allday.minico.utils.DBUtil.getConnection;
+
 public class DiaryDAO {
     public Diary selectDiaryByDate(String memberId, LocalDate date) {
-         try (Connection conn = new DatabaseConnection().getConnection();
+         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.SELECT_BY_DATE)) {
             ps.setString(1, memberId);
             ps.setString(2, date.toString());
@@ -29,7 +30,7 @@ public class DiaryDAO {
     }
 
     public boolean insertDiary(Diary diary) {
-         try (Connection conn = new DatabaseConnection().getConnection();
+         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.INSERT)) {
             ps.setString(1, diary.getContent());
             ps.setDate  (2, Date.valueOf(diary.getWrittenAt()));
@@ -42,7 +43,7 @@ public class DiaryDAO {
     }
 
     public boolean updateDiary(Diary diary) {
-          try (Connection conn = new DatabaseConnection().getConnection();
+          try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.UPDATE)) {
             ps.setString(1, diary.getContent());
             ps.setString(2, diary.getVisibility());

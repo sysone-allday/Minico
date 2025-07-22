@@ -1,7 +1,9 @@
 package allday.minico.controller.diary;
 
 import allday.minico.dto.diary.Diary;
+import allday.minico.dto.member.Member;
 import allday.minico.service.diary.DiaryService;
+import allday.minico.session.AppSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,13 +40,12 @@ public class DiaryController implements Initializable {
     @FXML private Text dateText;
     @FXML private DatePicker datePicker;
     @FXML private StackPane calendarModalContainer;
-
     @FXML private VBox todolist;
-    private TodolistController todolistController;
 
+    private TodolistController todolistController;
     private final DiaryService diaryService = new DiaryService();
 
-    private final String memberId = "USER01";
+    private String memberId;
     // 현재 보고 있는 날짜를 반환
     @Getter
     private LocalDate selectedDate = LocalDate.now();
@@ -52,6 +53,7 @@ public class DiaryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        memberId = AppSession.getLoginMember().getMemberId();
         diaryContentText.setFont(Font.font("Neo둥근모", 24));
         updateDateText();
 
@@ -70,18 +72,21 @@ public class DiaryController implements Initializable {
             e.printStackTrace();
         }
 
+        // 다이어리 crud 버튼
         diaryRegisterButton.setOnAction(event -> diaryRegisterButtonAction());
         diaryEditButton.setOnAction(event -> diaryEditButtonAction());
         diaryEditDoneButton.setOnAction(event -> diaryEditDoneButtonAction());
 
+        //
         if (datePicker != null) {
-            datePicker.setValue(LocalDate.now());
-            datePicker.setOnAction(e -> {
+            datePicker.setValue(LocalDate.now()); // 화면 초기 오늘 날짜 설정
+            datePicker.setOnAction(e -> { // 날짜 변경 이벤트
                 LocalDate newDate = datePicker.getValue();
                 onDateChanged(newDate);
             });
         }
 
+        // 날짜 전날, 다음 날 변경
         dateBackButton.setOnAction(event -> onDateChanged(selectedDate.minusDays(1)));
         dateNextButton.setOnAction(event -> onDateChanged(selectedDate.plusDays(1)));
 
@@ -89,11 +94,13 @@ public class DiaryController implements Initializable {
         onDateChanged(selectedDate);
     }
 
+    // 날짜 변경
     private void updateDateText() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일");
         dateText.setText(selectedDate.format(formatter));
     }
 
+    // 일기 등록
     public void diaryRegisterButtonAction() {
         String content = diaryTextArea.getText();
         if (content == null || content.trim().isEmpty()) {
@@ -110,6 +117,7 @@ public class DiaryController implements Initializable {
         }
     }
 
+    //일기 수정
     public void diaryEditButtonAction() {
         diaryTextArea.setText(diaryContentText.getText());
         diaryTextArea.setVisible(true);
@@ -119,6 +127,7 @@ public class DiaryController implements Initializable {
         diaryRegisterButton.setVisible(false);
     }
 
+    // 일기 수정 완료
     public void diaryEditDoneButtonAction() {
         String content = diaryTextArea.getText();
         Diary diary = new Diary(null, content, selectedDate, "public", memberId, 1);
@@ -131,12 +140,14 @@ public class DiaryController implements Initializable {
         }
     }
 
+    // 날짜에 따른 일기 로드
     private void loadDiaryForDate(LocalDate date) {
         Diary diary = diaryService.getDiary(memberId, date);
+        // 일기 내용 유무에 따라 textfield 변경
         if (diary != null) {
             diaryContentText.setText(diary.getContent());
-            diaryContentText.setVisible(true);
-            diaryTextArea.setVisible(false);
+            diaryContentText.setVisible(true); // 읽기 모드로 전환
+            diaryTextArea.setVisible(false); // 수정 모드 숨김
             diaryEditButton.setVisible(true);
             diaryRegisterButton.setVisible(false);
             diaryEditDoneButton.setVisible(false);
@@ -151,13 +162,14 @@ public class DiaryController implements Initializable {
         updateDateText();
     }
 
+    // 날짜 변경에 따른 일기 화면 갱신
     public void onDateChanged(LocalDate newDate) {
         selectedDate = newDate;
         loadDiaryForDate(selectedDate);
 
         // todolist 컨트롤러도 바뀜
         if (todolistController != null) {
-            todolistController.setDateAndMember(selectedDate, memberId);  // ✅ 컨트롤러에 호출
+            todolistController.setDateAndMember(selectedDate, memberId);  // 컨트롤러에 호출
         }
     }
 
@@ -180,14 +192,15 @@ public class DiaryController implements Initializable {
         }
     }
 
+    // back 버튼 클릭 시 마이룸으로 이동
     @FXML
     private void goToMyRoomPage(MouseEvent event) {
         try {
-            // 1) 클릭된 노드에서 Stage 확보
+            // 클릭된 노드에서 Stage 확보
             Stage stage = (Stage) ((Node) event.getSource())
                     .getScene().getWindow();
 
-            // 2) diary.fxml 로 전환
+            // diary.fxml 로 전환
             Parent root = FXMLLoader.load(
                     Objects.requireNonNull(getClass().getResource(
                             "/allday/minico/view/diary/myroom.fxml")));

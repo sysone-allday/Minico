@@ -2,6 +2,7 @@ package allday.minico.controller.diary;
 
 import allday.minico.dto.diary.Todolist;
 import allday.minico.service.diary.TodolistService;
+import allday.minico.session.AppSession;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,11 +25,12 @@ public class TodolistController implements Initializable {
 
     private final TodolistService todoService = new TodolistService();
 
-    private String memberId = "USER01";
+    private String memberId;
     private LocalDate selectedDate = LocalDate.now();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        memberId = AppSession.getLoginMember().getMemberId();
         listView.setItems(todos);
         listView.setCellFactory(lv -> new ListCell<Todolist>() {
             private final CheckBox cb = new CheckBox();

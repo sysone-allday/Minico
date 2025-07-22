@@ -26,4 +26,11 @@ module allday.minico {
     // 타자게임
     opens allday.minico.controller.typinggame to javafx.fxml;
     exports allday.minico.controller.typinggame;
+
+    //날씨 연동 관련
+    requires com.google.gson;
+
+    exports allday.minico.controller.diary to javafx.fxml;
+    opens allday.minico.controller.diary to javafx.fxml;
+
 }

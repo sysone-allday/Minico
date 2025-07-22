@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 // import javafx.scene.control.DialogPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 
 public class MiniroomController implements Initializable {
 
@@ -443,6 +445,25 @@ public class MiniroomController implements Initializable {
     protected void onDiaryClick() {
         System.out.println("다이어리 버튼 클릭");
         // 다이어리 기능 구현
+        try {
+            /* diaryBtn → Scene → Window(=Stage) */
+            Stage stage = (Stage) diaryBtn.getScene().getWindow();
+
+            Parent root = FXMLLoader.load(
+                    Objects.requireNonNull(getClass()
+                            .getResource("/allday/minico/view/diary/myroom.fxml")));
+
+            stage.setScene(new Scene(root));
+            Scene scene = stage.getScene();
+
+            // ✅ 타자게임 CSS 적용
+            scene.getStylesheets().clear(); // 기존 main.css 제거
+            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
+
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

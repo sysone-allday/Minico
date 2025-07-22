@@ -1,6 +1,5 @@
 package allday.minico.dao.diary;
 
-import allday.minico.DatabaseConnection;
 import allday.minico.dto.diary.Todolist;
 import allday.minico.sql.diary.TodolistSQL;
 
@@ -9,11 +8,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static allday.minico.utils.DBUtil.getConnection;
+
 public class TodolistDAO {
 
     public List<Todolist> getTodosByDate(String memberId, LocalDate date) {
         List<Todolist> list = new ArrayList<>();
-        try (Connection conn = new DatabaseConnection().getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.SELECT_BY_MEMBER_AND_DATE)) {
             ps.setString(1, memberId);
             ps.setDate(2, java.sql.Date.valueOf(date));
@@ -31,7 +32,7 @@ public class TodolistDAO {
     }
 
     public long insertTodo(String content, LocalDate date, String memberId) {
-        try (Connection conn = new DatabaseConnection().getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.INSERT, new String[]{"TODO_ID"})) {
             ps.setString(1, content);
             ps.setDate(2, java.sql.Date.valueOf(date));
@@ -45,7 +46,7 @@ public class TodolistDAO {
     }
 
     public void updateDone(long id, boolean done) {
-        try (Connection conn = new DatabaseConnection().getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.UPDATE_DONE)) {
             ps.setString(1, done ? "Y" : "N");
             ps.setLong(2, id);
@@ -54,7 +55,7 @@ public class TodolistDAO {
     }
 
     public void updateContent(long id, String content) {
-        try (Connection conn = new DatabaseConnection().getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.UPDATE_CONTENT)) {
             ps.setString(1, content);
             ps.setLong(2, id);
@@ -63,7 +64,7 @@ public class TodolistDAO {
     }
 
     public void delete(long id) {
-        try (Connection conn = new DatabaseConnection().getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(TodolistSQL.DELETE)) {
             ps.setLong(1, id);
             ps.executeUpdate();

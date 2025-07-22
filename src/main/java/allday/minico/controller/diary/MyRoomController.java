@@ -79,11 +79,11 @@ public class MyRoomController {
             JsonObject json = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
             String weather = json.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
 
-            // 1) 밤·낮 판별 (00~05, 20~23시는 night)
+            // 밤·낮 판별 (00~05, 20~23시는 night)
             boolean isNight = java.time.LocalTime.now().getHour() >= 20
                     || java.time.LocalTime.now().getHour() < 6;
 
-// 2) 날씨별 접두어 결정
+            // 날씨별 접두어 결정
             String base = switch (weather.toLowerCase()) {
                 case "snow"   -> "snow";
                 case "clouds" -> "cloudy";
@@ -91,7 +91,7 @@ public class MyRoomController {
                 default       -> "sunny";
             };
 
-// 3) 최종 파일 이름
+            // 최종 파일 이름
             String imageFileName = base + (isNight ? "_night" : "") + ".png";
             String path = "/allday/minico/images/diary/" + imageFileName;
 
@@ -108,11 +108,11 @@ public class MyRoomController {
     @FXML
     private void goToDiaryPage(MouseEvent event) {
         try {
-            // 1) 클릭된 노드에서 Stage 확보
+            // 클릭된 노드에서 Stage 확보
             Stage stage = (Stage) ((Node) event.getSource())
                     .getScene().getWindow();
 
-            // 2) diary.fxml 로 전환
+            // diary.fxml 로 전환
             Parent root = FXMLLoader.load(
                     Objects.requireNonNull(getClass().getResource(
                             "/allday/minico/view/diary/diary.fxml")));
