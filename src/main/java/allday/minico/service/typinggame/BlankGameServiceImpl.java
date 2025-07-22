@@ -6,13 +6,13 @@ import allday.minico.dto.typinggame.Word;
 
 import java.util.List;
 
-public class TypingGameServiceImpl implements TypingGameService {
+public class BlankGameServiceImpl implements TypingGameService {
 
 
     private TypingGameDAO typingGameDAO;
 
     // 객체 생성 (초기화) 해야함
-    public TypingGameServiceImpl() {
+    public BlankGameServiceImpl() {
         typingGameDAO = new TypingGameDAOImpl();
     }
 
