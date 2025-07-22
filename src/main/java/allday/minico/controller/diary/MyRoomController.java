@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.skin.DatePickerSkin;
@@ -32,23 +33,17 @@ import java.util.ResourceBundle;
 
 public class MyRoomController {
 
+    @FXML private Button backButton;
+
     @FXML private ImageView weatherImageView;
     @FXML private Pane calendarContainer;
     private final TodolistService todoService = new TodolistService();
 
-
     // 잡초 ImageView 7개 주입
-    @FXML private ImageView weed1;
-    @FXML private ImageView weed2;
-    @FXML private ImageView weed3;
-    @FXML private ImageView weed4;
-    @FXML private ImageView weed5;
-    @FXML private ImageView weed6;
-    @FXML private ImageView weed7;
-    @FXML private ImageView weed8;
-    @FXML private ImageView weed9;
-    @FXML private ImageView weed10;
-    @FXML private ImageView weed11;
+    @FXML private ImageView weed1; @FXML private ImageView weed2; @FXML private ImageView weed3;
+    @FXML private ImageView weed4; @FXML private ImageView weed5; @FXML private ImageView weed6;
+    @FXML private ImageView weed7; @FXML private ImageView weed8; @FXML private ImageView weed9;
+    @FXML private ImageView weed10; @FXML private ImageView weed11;
 
     private List<ImageView> weeds;   // 편하게 리스트로 묶기
     private String memberId;
@@ -140,8 +135,8 @@ public class MyRoomController {
             JsonObject json = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
             String weather = json.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
 
-            // 밤·낮 판별 (00~05, 20~23시는 night)
-            boolean isNight = java.time.LocalTime.now().getHour() >= 18
+            // 밤·낮 판별 (00~05, 19~23시는 night)
+            boolean isNight = java.time.LocalTime.now().getHour() >= 19
                     || java.time.LocalTime.now().getHour() < 6;
 
             // 날씨별 접두어 결정
@@ -170,41 +165,50 @@ public class MyRoomController {
     @FXML
     private void goToDiaryPage(MouseEvent event) {
         try {
-            // 클릭된 노드에서 Stage 확보
-            Stage stage = (Stage) ((Node) event.getSource())
+            /* 1. diary.fxml 로드 */
+            Parent diaryRoot = FXMLLoader.load(
+                    getClass().getResource("/allday/minico/view/diary/diary.fxml"));
+
+            /* 2. 현재 Stage / Scene 확보 */
+            Stage stage  = (Stage) ((Node) event.getSource())
                     .getScene().getWindow();
+            Scene scene = stage.getScene();       // 이미 존재하는 Scene
 
-            // diary.fxml 로 전환
-            Parent root = FXMLLoader.load(
-                    Objects.requireNonNull(getClass().getResource(
-                            "/allday/minico/view/diary/diary.fxml")));
+            /* 3. Root 교체 */
+            scene.setRoot(diaryRoot);
 
-            stage.setScene(new Scene(root));
-            stage.show();
+            /* 4. 필요한 CSS 한 번만 추가 (중복 방지) */
+            String css = getClass()
+                    .getResource("/allday/minico/css/diary.css")
+                    .toExternalForm();
+            if (!scene.getStylesheets().contains(css)) {
+                scene.getStylesheets().add(css);
+            }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.err.println("🚫 diary.fxml 로드 실패");
             e.printStackTrace();
         }
     }
 
-    // 뒤로 가기 누르면 미니룸 페이지로 이동
+
+    // 메인 화면으로 이동
     @FXML
-    private void goToMiniroomPage(MouseEvent event) {
+    private void goToMain() {
         try {
-            // 클릭된 노드에서 Stage 확보
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene().getWindow();
+            // 메인 화면 FXML 로드
+            Parent mainRoot = FXMLLoader.load(getClass().getResource("/allday/minico/view/Miniroom.fxml"));
 
-            // diary.fxml 로 전환
-            Parent root = FXMLLoader.load(
-                    Objects.requireNonNull(getClass().getResource(
-                            "/allday/minico/view/Miniroom.fxml")));
+            // 현재 Stage 얻기
+            Stage stage = (Stage) backButton.getScene().getWindow();
 
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (Exception e) {
+            // Scene 변경
+            stage.getScene().setRoot(mainRoot);
+        } catch (IOException e) {
+            System.err.println("🚫 [화면 전환 실패] Miniroom.fxml 로드 중 오류 발생");
+            System.err.println("경로 확인: /allday/minico/view/Miniroom.fxml");
             e.printStackTrace();
         }
     }
+
 }

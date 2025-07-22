@@ -2,68 +2,42 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.layout.StackPane?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController" stylesheets="@../../css/diary.css">
+<AnchorPane styleClass="diary-root" stylesheets="@../../css/diary.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
    <children>
-      <ImageView fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true">
-         <image>
-            <Image url="@../../images/background.png" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="25" layoutY="25" prefHeight="750" prefWidth="1230">
-         <style>
-            -fx-background-color: rgba(255, 255, 255, 0.7); -fx-background-radius: 10;
-         </style>
+      <!-- 메인 패널 -->
+      <AnchorPane styleClass="board-pane"
+                  layoutX="40"  layoutY="40"
+   prefWidth="1200" prefHeight="720"
+   minWidth="1200"  minHeight="720"
+   maxWidth="1200"  maxHeight="720">
+         <!-- ★ 인라인 style 제거 -->
          <children>
-            <Button fx:id="diaryRegisterButton" layoutX="866.0" layoutY="630.0" visible="false" mnemonicParsing="false" prefHeight="51.0" prefWidth="86.0" text="등록" />
-         </children>
-         <children>
-            <Button fx:id="diaryEditButton" layoutX="866.0" layoutY="630.0" visible="false"  mnemonicParsing="false" prefHeight="51.0" prefWidth="86.0" text="수정" />
-         </children>
-         <children>
-            <Button fx:id="diaryEditDoneButton" layoutX="836.0" layoutY="630.0" visible="false" mnemonicParsing="false" prefHeight="51.0" prefWidth="150.0" text="수정완료" />
+            <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51" prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="등록" visible="false" />
+            <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51" prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정" visible="false" />
+            <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false" prefHeight="51" prefWidth="150" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정완료" visible="false" />
          </children>
       </AnchorPane>
-      <fx:include source="todolist.fxml" fx:id="todolist"/>
-      <TextArea fx:id="diaryTextArea" layoutX="719.0" layoutY="245.0" prefHeight="394.0" prefWidth="459.0" />
-      <Text fx:id="diaryContentText" layoutX="719.0" layoutY="245.0" visible="false">
-      </Text>
-      <Text layoutX="719.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Today's emotion" styleClass="text" wrappingWidth="233.3333740234375">
-      </Text>
-      <Text fx:id="dateText" layoutX="547.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="오늘">
-      </Text>
-      <Button fx:id="dateBackButton" layoutX="386.0" layoutY="69.0" mnemonicParsing="false" text="◁">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="dateNextButton" layoutX="775.0" layoutY="69.0" mnemonicParsing="false" text="▷">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="1022.0" layoutY="69.0" mnemonicParsing="false" text="달력" onAction="#openCalendarModal" />
-      <!-- 달력 모달 -->
-      <StackPane fx:id="calendarModalContainer"
-                 AnchorPane.topAnchor="0.0"
-                 AnchorPane.bottomAnchor="0.0"
-                 AnchorPane.leftAnchor="0.0"
-                 AnchorPane.rightAnchor="0.0"
-                 alignment="CENTER"
-                 visible="false"
-                 style="-fx-background-color: rgba(0, 0, 0, 0.3);">
-      </StackPane>
+      <fx:include fx:id="todolist" source="todolist.fxml" />
+      <!-- ★ TextArea에 스타일 클래스 추가 -->
+      <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="245" prefHeight="394" prefWidth="459" styleClass="text-field" stylesheets="@../../css/diary.css" />
 
-      <Button layoutX="57.0" layoutY="36.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="115.0" text="back"  onMouseClicked="#goToMyRoomPage">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
+      <Text fx:id="diaryContentText" layoutX="719" layoutY="245" visible="false" />
+      <Text layoutX="719" layoutY="190" styleClass="text" text="Today's emotion" wrappingWidth="233.33" />
+      <Text fx:id="dateText" layoutX="547" layoutY="105" styleClass="text" text="오늘" />
+
+            <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" stylesheets="@../../css/diary.css" text="◁" />
+      <Button fx:id="dateNextButton" layoutX="775" layoutY="69" styleClass="date-nav" stylesheets="@../../css/diary.css" text="▷" />
+
+      <Button layoutX="1122" layoutY="69" onAction="#openCalendarModal" styleClass="action-button" stylesheets="@../../css/diary.css" text="달력" />
+
+      <!-- 달력 모달 -->
+      <StackPane fx:id="calendarModalContainer" styleClass="modal-dim" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <!-- ★ 인라인 배경 제거 -->
+
+            <Button fx:id="backButton" layoutX="70" layoutY="66" onAction="#goToMyRoom" prefHeight="40" prefWidth="120" styleClass="back-button" stylesheets="@../../css/diary.css" text="〈 Back" />
    </children>
 </AnchorPane>

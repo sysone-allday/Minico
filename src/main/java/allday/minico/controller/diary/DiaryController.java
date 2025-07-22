@@ -18,7 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -41,6 +40,7 @@ public class DiaryController implements Initializable {
     @FXML private DatePicker datePicker;
     @FXML private StackPane calendarModalContainer;
     @FXML private VBox todolist;
+    @FXML private Button backButton;
 
     private TodolistController todolistController;
     private final DiaryService diaryService = new DiaryService();
@@ -194,21 +194,23 @@ public class DiaryController implements Initializable {
 
     // back 버튼 클릭 시 마이룸으로 이동
     @FXML
-    private void goToMyRoomPage(MouseEvent event) {
+    private void goToMyRoom() {
         try {
-            // 클릭된 노드에서 Stage 확보
-            Stage stage = (Stage) ((Node) event.getSource())
-                    .getScene().getWindow();
+            // 메인 화면 FXML 로드
+            Parent mainRoot = FXMLLoader.load(getClass().getResource("/allday/minico/view/diary/myroom.fxml"));
 
-            // diary.fxml 로 전환
-            Parent root = FXMLLoader.load(
-                    Objects.requireNonNull(getClass().getResource(
-                            "/allday/minico/view/diary/myroom.fxml")));
+            // 현재 Stage와 Scene 가져오기
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            Scene scene = stage.getScene();
 
-            stage.setScene(new Scene(root));
-            stage.show();
+            // Root 교체
+            stage.getScene().setRoot(mainRoot);
 
-        } catch (Exception e) {
+            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
+
+        } catch (IOException e) {
+            System.err.println("🚫 [화면 전환 실패] myroom.fxml 로드 중 오류 발생");
+            System.err.println("경로 확인: /allday/minico/view/diary/myroom.fxml");
             e.printStackTrace();
         }
     }

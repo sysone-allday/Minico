@@ -16,6 +16,9 @@
                 <Image url="@../../images/background.png" />
             </image>
         </ImageView>
+        <Pane layoutX="40" layoutY="40"
+              prefWidth="1200" prefHeight="720"
+              styleClass="board-pane" />
         <!-- 방 배경 -->
         <ImageView fitHeight="700.0" fitWidth="1180.0" layoutX="50.0" layoutY="50.0" mouseTransparent="true">
             <clip>
@@ -33,7 +36,7 @@
 
         <Pane fx:id="groundPane" prefHeight="300" prefWidth="1180" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50">
             <!-- 캐릭터 1명 -->
-            <ImageView fitHeight="326.0" fitWidth="246.0" layoutX="465.0" layoutY="-159.0">
+            <ImageView fitHeight="256.0" fitWidth="206.0" layoutX="465.0" layoutY="-159.0">
                 <image><Image url="@../../images/character/민서미니미.png" /></image>
             </ImageView>
 
@@ -61,11 +64,12 @@
             </ImageView>
         </Pane>
 
-        <Button layoutX="57.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#goToMiniroomPage" prefHeight="45.0" prefWidth="115.0" text="back">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Button>
+        <Button fx:id="backButton"
+                layoutX="60" layoutY="56"
+                prefWidth="120" prefHeight="40"
+                text="〈 Back"
+                styleClass="back-button"
+                onAction="#goToMain" />
          <ImageView fx:id="weed4" fitHeight="80" fitWidth="80" layoutX="545.0" layoutY="158.0">
              <image>
             <Image url="@../../images/diary/dust2.png" />

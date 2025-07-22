@@ -52,6 +52,14 @@ public class TodolistController implements Initializable {
             private boolean editing = false;
 
             {
+                // CSS 클래스 연결
+                cb.getStyleClass().add("todo-check");
+                label.getStyleClass().add("todo-label");
+                tf.getStyleClass().add("todo-edit");
+                btnEdit.getStyleClass().addAll("todo-btn","edit-btn");
+                btnOk  .getStyleClass().addAll("todo-btn","ok-btn");
+                btnDel .getStyleClass().addAll("todo-btn","del-btn");
+
                 cb.setOnAction(e -> {
                     Todolist item = getItem();
                     if (item != null) {
