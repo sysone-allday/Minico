@@ -164,32 +164,36 @@ public class MyRoomController {
     // 달력 누르면 다이어리 페이지로 이동
     @FXML
     private void goToDiaryPage(MouseEvent event) {
+        /* 방어 코드: Scene 이 없으면 바로 반환 */
+        Scene currentScene =
+                (event == null || event.getSource() == null)
+                        ? null
+                        : ((Node) event.getSource()).getScene();
+        if (currentScene == null) {
+            System.err.println("🚫 Scene 이 연결되지 않았습니다.");
+            return;
+        }
+        Stage stage = (Stage) currentScene.getWindow();
+
         try {
-            /* 1. diary.fxml 로드 */
             Parent diaryRoot = FXMLLoader.load(
                     getClass().getResource("/allday/minico/view/diary/diary.fxml"));
 
-            /* 2. 현재 Stage / Scene 확보 */
-            Stage stage  = (Stage) ((Node) event.getSource())
-                    .getScene().getWindow();
-            Scene scene = stage.getScene();       // 이미 존재하는 Scene
+            /* 새 Scene 을 만들어 교체 → 루트 교체 시점에 따른 이벤트 충돌 없음 */
+            Scene diaryScene = new Scene(diaryRoot);
+            diaryScene.getStylesheets().add(
+                    getClass().getResource(
+                            "/allday/minico/css/diary.css").toExternalForm());
 
-            /* 3. Root 교체 */
-            scene.setRoot(diaryRoot);
-
-            /* 4. 필요한 CSS 한 번만 추가 (중복 방지) */
-            String css = getClass()
-                    .getResource("/allday/minico/css/diary.css")
-                    .toExternalForm();
-            if (!scene.getStylesheets().contains(css)) {
-                scene.getStylesheets().add(css);
-            }
+            stage.setScene(diaryScene);
+            stage.show();
 
         } catch (IOException e) {
             System.err.println("🚫 diary.fxml 로드 실패");
             e.printStackTrace();
         }
     }
+
 
 
     // 메인 화면으로 이동

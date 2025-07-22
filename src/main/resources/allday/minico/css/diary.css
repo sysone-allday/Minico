@@ -19,7 +19,7 @@
     -fx-background-color: rgba(255,255,255,0.92);
 
     /* ✿ 핑크 테두리 추가 */
-    -fx-border-color: #FF9DB8;
+    -fx-border-color: pink;
     -fx-border-width: 6;
 
     /* 둥근 모서리 ↔ 테두리 동일 반경 */

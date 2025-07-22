@@ -8,7 +8,6 @@
       layoutX="100" layoutY="170"
       prefWidth="450" prefHeight="500"
       spacing="30"
-      xmlns="http://javafx.com/javafx/24.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="allday.minico.controller.diary.TodolistController">
 

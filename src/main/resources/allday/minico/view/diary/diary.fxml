@@ -6,20 +6,22 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane styleClass="diary-root" stylesheets="@../../css/diary.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
+<AnchorPane styleClass="diary-root"  prefWidth="1280" prefHeight="800" stylesheets="@../../css/diary.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
    <children>
       <!-- 메인 패널 -->
-      <AnchorPane styleClass="board-pane"
-                  layoutX="40"  layoutY="40"
-   prefWidth="1200" prefHeight="720"
-   minWidth="1200"  minHeight="720"
-   maxWidth="1200"  maxHeight="720">
+      <AnchorPane
+                  styleClass="board-pane"
+                  prefWidth="1180" prefHeight="700">
          <!-- ★ 인라인 style 제거 -->
-         <children>
-            <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51" prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="등록" visible="false" />
-            <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51" prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정" visible="false" />
-            <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false" prefHeight="51" prefWidth="150" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정완료" visible="false" />
-         </children>
+         <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51"
+                 prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="등록"
+                 visible="false"/>
+         <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51"
+                 prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정"
+                 visible="false"/>
+         <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false" prefHeight="51"
+                 prefWidth="150" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정완료"
+                 visible="false"/>
       </AnchorPane>
       <fx:include fx:id="todolist" source="todolist.fxml" />
       <!-- ★ TextArea에 스타일 클래스 추가 -->
