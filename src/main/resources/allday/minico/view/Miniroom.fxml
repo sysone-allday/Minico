@@ -1,76 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="allday.minico.controller.miniroom.MiniroomController"
-            styleClass="root"
-            stylesheets="@../css/main.css">
+<BorderPane styleClass="root" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.miniroom.MiniroomController">
     <center>
         <AnchorPane styleClass="miniroom-container">
 
-            <Pane layoutX="30" layoutY="25" prefWidth="1147" prefHeight="750"
-                  style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 20;">
+            <Pane layoutX="30" layoutY="25" prefHeight="750" prefWidth="1147" style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 20;">
 
                 <!--            메뉴 버튼-->
                 <VBox fx:id="menuButtons" layoutX="1067" layoutY="80" styleClass="menu-buttons">
-                    <Button fx:id="guestbookBtn" styleClass="menu-btn" onAction="#onGuestbookClick">
+                    <Button fx:id="guestbookBtn" onAction="#onGuestbookClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
-                                <Label text="게시판" styleClass="menu-btn-label"/>
+                                <Label styleClass="menu-btn-label" text="게시판" />
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="visitBtn" styleClass="menu-btn" onAction="#onVisitClick">
+                    <Button fx:id="visitBtn" onAction="#onVisitClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
-                                <Label text="미니룸 방문" styleClass="menu-btn-label"/>
+                                <Label styleClass="menu-btn-label" text="미니룸 방문" />
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="diaryBtn" styleClass="menu-btn" onAction="#onDiaryClick">
+                    <Button fx:id="diaryBtn" onAction="#onDiaryClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
-                                <Label text="다이어리" styleClass="menu-btn-label"/>
+                                <Label styleClass="menu-btn-label" text="다이어리" />
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="typingBtn" styleClass="menu-btn" onAction="#onTypingClick">
+                    <Button fx:id="typingBtn" onAction="#onTypingClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
-                                <Label text="타자게임" styleClass="menu-btn-label"/>
+                                <Label styleClass="menu-btn-label" text="타자게임" />
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="oxBtn" styleClass="menu-btn" onAction="#onOxClick">
+                    <Button fx:id="oxBtn" onAction="#onOxClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
-                                <Label text="OX게임" styleClass="menu-btn-label"/>
+                                <Label styleClass="menu-btn-label" text="OX게임" />
                             </StackPane>
                         </graphic>
                     </Button>
-                    <Button fx:id="friendsbtn" styleClass="menu-btn" onAction="#onFriendsClick">
+                    <Button fx:id="friendsButton" onAction="#friendsButtonClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
-                                <Label text="친구찾기" styleClass="menu-btn-label"/>
+                                <Label styleClass="menu-btn-label" text="친구찾기" />
                             </StackPane>
                         </graphic>
                     </Button>
                 </VBox>
 
                 <!-- 미니룸-->
-                <Pane fx:id="roomPane" layoutX="35" layoutY="25" prefWidth="1000" prefHeight="700"
-                      styleClass="miniroom-pane">
+                <Pane fx:id="roomPane" layoutX="35" layoutY="25" prefHeight="700" prefWidth="1000" styleClass="miniroom-pane">
                     <!-- 미니룸 배경 -->
-                    <ImageView layoutX="8" layoutY="8" fitWidth="984" fitHeight="684" pickOnBounds="true"
-                               preserveRatio="false">
-                        <Image url="@../images/room.png"/>
+                    <ImageView fitHeight="684" fitWidth="984" layoutX="8" layoutY="8" pickOnBounds="true" preserveRatio="false">
+                        <Image url="@../images/room.png" />
                     </ImageView>
                 </Pane>
             </Pane>
