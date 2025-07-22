@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BlankGameService {
 
-    List<BlankGame> getQuestionText();
+    List<BlankGame> getBlankProblems(List<BlankGame> blankGameList);
 }

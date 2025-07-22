@@ -54,19 +54,79 @@
                         </Pane>
                     </VBox>
 
+                    <!-- 문제 제출 -->
+                    <Label fx:id="questionLabel"
+                           text="문제가 여기에 나와요"
+                           wrapText="true"
+                           style="-fx-font-size: 22px; -fx-text-fill: black;"
+                           prefWidth="500"
+                           alignment="CENTER" />
+
+
                     <!-- 입력창 -->
                     <HBox alignment="CENTER">
                         <TextField fx:id="inputField"
                                    prefWidth="400" prefHeight="40"
                                    promptText="입력해주세요.."
                                    onAction="#checkAnswer"
-                                   styleClass="word-game-input" />
+                                   styleClass="word-input" />
                     </HBox>
                 </VBox>
             </StackPane>
         </HBox>
     </StackPane>
 
+
+    <!-- 문제 설명 오버레이 -->
+    <StackPane fx:id="introPane"
+               visible="false"
+               style="-fx-background-color: rgba(0, 0, 0, 0.6);"
+               alignment="CENTER"
+               pickOnBounds="true">
+
+        <VBox alignment="CENTER" spacing="20"
+              prefWidth="400"
+              styleClass="result-box">
+
+            <Label text="게임 설명" style="-fx-font-size: 28px; -fx-font-weight: bold;" />
+
+            <Label wrapText="true" style="-fx-font-size: 18px; -fx-text-fill: #333;">
+                💡 앞에서 타자 게임에서 성공적으로 입력한 단어들 중 5개가 문제로 출제됩니다.
+                빈칸에 들어갈 단어를 맞춰보세요!
+            </Label>
+
+            <Button text="시작" onAction="#startBlankGame" styleClass="next-button"/>
+        </VBox>
+    </StackPane>
+
+    <!-- 결과창 오버레이 -->
+    <StackPane fx:id="resultPane"
+               visible="false"
+               style="-fx-background-color: rgba(0, 0, 0, 0.6);"
+               alignment="CENTER"
+               pickOnBounds="true">
+
+        <VBox alignment="CENTER" spacing="20"
+              prefWidth="400"
+              styleClass="result-box">
+
+            <Label fx:id="resultTitle" text="게임 결과" style="-fx-font-size: 28px; -fx-font-weight: bold;" />
+
+            <HBox alignment="CENTER" spacing="10">
+                <Label text="성공:" style="-fx-font-size: 20px;" />
+                <Label fx:id="resultSuccessLabel" text="0개" style="-fx-font-size: 20px;" />
+            </HBox>
+
+            <HBox alignment="CENTER" spacing="10">
+                <Label text="실패:" style="-fx-font-size: 20px;" />
+                <Label fx:id="resultFailLabel" text="0개" style="-fx-font-size: 20px;" />
+            </HBox>
+
+
+            <!-- 단어장으로 ? 일단 임시로 메인으로 ㄱㄱ -->
+            <Button text="홈 으로" onAction="#goToMain" styleClass="next-button"/>
+        </VBox>
+    </StackPane>
 
 
 
