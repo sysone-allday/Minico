@@ -37,25 +37,17 @@ public class MyProfileController {
     @FXML
     public void initialize(){
         Member loginmember = AppSession.getLoginMember();
-        nicknameText.setText("닉네임 : " + loginmember.getNickname());
-        idText.setText("ID : " + loginmember.getMemberId());
-        emailText.setText("이메일 : " + loginmember.getEmail());
-        levelText.setText("레벨 : " + loginmember.getLevel().toString());
-        coinText.setText("코인 : " + loginmember.getCoin().toString());
-        experienceText.setText("경험치 : " + loginmember.getExperience().toString());
+        nicknameText.setText(loginmember.getNickname());
+        idText.setText(loginmember.getMemberId());
+        emailText.setText(loginmember.getEmail());
+        levelText.setText("레벨 : " + loginmember.getLevel());
+        coinText.setText("코인 : " + loginmember.getCoin());
+        experienceText.setText("경험치 : " + loginmember.getExperience());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedTime = loginmember.getJoinDate() != null
                 ? loginmember.getJoinDate().format(formatter) : "가입일 알 수 없음";
-        joindateText.setText("가입일 : " + formattedTime);
-
-        /*
-        // 내 정보 조회 시, 내 미니미사진이 나오게 하려면 캐릭터 선택 시에 해당 미니미의 이미지파일 이름(확장자 없이)이
-        // MEMBER 테이블에 저장되어야 한다 ! (지금은 캐릭터 선택해도 이미지 파일이름과 일치하지 않음)
-        String myMinimi = loginmember.getMinimi();
-        Image image = new Image(getClass().getResource("/allday/minico/images/member/" +  myMinimi + ".png").toExternalForm());
-        myMinimiImg.setImage(image);
-         */
+        joindateText.setText(formattedTime);
     }
 
     @FXML

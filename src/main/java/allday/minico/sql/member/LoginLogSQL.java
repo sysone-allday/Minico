@@ -6,13 +6,13 @@ public class LoginLogSQL {
         BEGIN
             INSERT INTO LOGIN_LOG 
                 (LOGIN_TIME, LOGOUT_TIME, MEMBER_ID)
-                VALUES(SYSDATE, NULL, ?)
+                VALUES(?, NULL, ?)
             RETURNING LOG_ID INTO ?;
         END;
         """;
     public static String updateLogoutLogSQL = """
             UPDATE LOGIN_LOG
-            SET LOGOUT_TIME = SYSDATE
+            SET LOGOUT_TIME = ?
             WHERE LOG_ID = ?
             """;
     public static String insertLogForSignupSQL = """

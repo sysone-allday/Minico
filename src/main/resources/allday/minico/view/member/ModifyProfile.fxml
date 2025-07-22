@@ -1,30 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.ModifyProfileController">
-   <children>
-      <Label layoutX="219.0" layoutY="43.0" prefHeight="62.0" prefWidth="161.0" text="내 정보 수정">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
-      <Label layoutX="97.0" layoutY="131.0" prefHeight="26.0" prefWidth="84.0" text="닉네임 :" />
-      <Label layoutX="97.0" layoutY="166.0" prefHeight="26.0" prefWidth="84.0" text="Email" />
-      <Label layoutX="97.0" layoutY="200.0" prefHeight="26.0" prefWidth="84.0" text="비밀번호 : " />
-      <Label layoutX="97.0" layoutY="272.0" prefHeight="26.0" prefWidth="99.0" text="비밀번호 힌트 : " />
-      <TextField fx:id="nicknameField" layoutX="181.0" layoutY="133.0" prefHeight="22.0" prefWidth="221.0" promptText="닉네임 2~10자" />
-      <TextField fx:id="emailField" layoutX="181.0" layoutY="168.0" prefHeight="22.0" prefWidth="221.0" promptText="이메일 입력" />
-      <Button fx:id="mofdifyConfirmButton" layoutX="262.0" layoutY="341.0" mnemonicParsing="false" onAction="#modifyConfirmButtonClick" prefHeight="26.0" prefWidth="65.0" text="확인" />
-      <Label fx:id="modifyResultText" layoutX="179.0" layoutY="307.0" prefHeight="22.0" prefWidth="232.0" />
-      <PasswordField fx:id="passwordField" layoutX="182.0" layoutY="202.0" prefHeight="22.0" prefWidth="221.0" promptText="비밀번호 영어와 숫자 조합, 8자 이상" />
-      <Label layoutX="97.0" layoutY="239.0" prefHeight="26.0" prefWidth="91.0" text="비밀번호  확인 : " />
-      <PasswordField fx:id="passwordCheckField" layoutX="184.0" layoutY="241.0" prefHeight="22.0" prefWidth="221.0" promptText="비밀번호 확인" />
-      <TextField fx:id="passwordHintField" layoutX="184.0" layoutY="274.0" prefHeight="22.0" prefWidth="221.0" promptText="비밀번호 힌트" />
-   </children>
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="modify-root"
+            stylesheets="@../../css/modifyProfile.css"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="allday.minico.controller.member.ModifyProfileController">
+
+   <VBox alignment="CENTER" spacing="25"
+         AnchorPane.topAnchor="30" AnchorPane.bottomAnchor="30"
+         AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">
+
+      <!-- 타이틀 -->
+      <Label text="내 정보 수정" styleClass="modify-title"/>
+
+      <!-- 입력 폼 -->
+      <HBox alignment="CENTER">
+         <GridPane hgap="12" vgap="16">
+            <columnConstraints>
+               <ColumnConstraints minWidth="120" halignment="RIGHT"/>
+               <ColumnConstraints minWidth="300" halignment="LEFT"/>
+            </columnConstraints>
+
+            <Label text="닉네임 :" styleClass="modify-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="nicknameField" promptText="닉네임 2~10자" styleClass="modify-input" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Email :" styleClass="modify-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="emailField" promptText="이메일 입력" styleClass="modify-input" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="비밀번호 :" styleClass="modify-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="passwordField" promptText="비밀번호 영어와 숫자 조합" styleClass="modify-input" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="비밀번호 확인 :" styleClass="modify-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <PasswordField fx:id="passwordCheckField" promptText="비밀번호 확인" styleClass="modify-input" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="비밀번호 힌트 :" styleClass="modify-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextField fx:id="passwordHintField" promptText="비밀번호 힌트" styleClass="modify-input" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+         </GridPane>
+      </HBox>
+
+      <!-- 버튼 -->
+      <Button fx:id="mofdifyConfirmButton" text="확인"
+              onAction="#modifyConfirmButtonClick"
+              styleClass="modify-btn"/>
+
+      <!-- 결과 메시지 -->
+      <Label fx:id="modifyResultText" styleClass="modify-result-text"/>
+   </VBox>
 </AnchorPane>

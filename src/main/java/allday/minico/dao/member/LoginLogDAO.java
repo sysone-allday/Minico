@@ -4,6 +4,8 @@ import allday.minico.sql.member.LoginLogSQL;
 //import allday.minico.sql.member.MemberSQL;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import static allday.minico.utils.DBUtil.getConnection;
 
@@ -23,12 +25,14 @@ public class LoginLogDAO {
         String sql = LoginLogSQL.loginLogRecordSQL;
         try (Connection conn = getConnection();
              CallableStatement stmt = conn.prepareCall(sql)) {
-            stmt.setString(1, memberId);
-            stmt.registerOutParameter(2, Types.BIGINT); // OUT 파라미터 (LOG_ID)
+            LocalDateTime nowKST = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            stmt.setTimestamp(1, Timestamp.valueOf(nowKST));
+            stmt.setString(2, memberId);
+            stmt.registerOutParameter(3, Types.BIGINT); // OUT 파라미터 (LOG_ID)
 
             stmt.execute(); // 쿼리 실행
 
-            return stmt.getLong(2); // 반환된 로그ID 얻기
+            return stmt.getLong(3); // 반환된 로그ID 얻기
         }
     }
 
@@ -37,7 +41,9 @@ public class LoginLogDAO {
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(updateLogoutLogSQL)) {
 
-            pstmt.setLong(1, logId);
+            LocalDateTime nowKST = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            pstmt.setTimestamp(1, Timestamp.valueOf(nowKST));
+            pstmt.setLong(2, logId);
 
             if (pstmt.executeUpdate() > 0) {
                 return true;

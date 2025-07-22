@@ -45,7 +45,7 @@ public class FriendSQL {
     public static String insertFriendShipSQL = """
             INSERT INTO FRIEND
             (MEMBER_ID, FRIEND_ID,REQUESTED_AT, ACCEPTED_AT)
-            VALUES (?, ?, SYSDATE, NULL)
+            VALUES (?, ?, ?, NULL)
             """;
     public static String selectReceivedRequestsSQL = """
             SELECT
