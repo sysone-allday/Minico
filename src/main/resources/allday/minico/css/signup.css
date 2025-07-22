@@ -1,0 +1,71 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.signup-root {
+    -fx-background-color: #f5f5f5;
+    -fx-background-image: url("../images/login-background.png");
+    -fx-background-size: cover;
+    -fx-font-family: "NeoDunggeunmo";
+}
+
+/*회원가입 폼 컨테이너*/
+.signup-form-container {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-max-height: 739px;
+    -fx-max-width: 635px;
+    -fx-padding: 38;
+}
+
+.signup-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/*입력 필드 스타일*/
+.signup-input {
+    -fx-background-color: white;
+    -fx-background-radius: 30;
+    -fx-border-color: #CFCFCF;
+    -fx-border-radius: 30;
+    -fx-border-width: 3;
+    -fx-alignment: center;
+    -fx-max-width: 373;
+    -fx-max-height: 53;
+    -fx-font-size: 25px;
+    -fx-prompt-text-fill: #E5E5E5;
+}
+
+.duplication-check-btn {
+    -fx-max-width: 99;
+    -fx-max-height: 53;
+    -fx-font-size: 18;
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-text-fill: white;
+}
+
+.duplication-check-btn:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255,20,147,0.4), 8, 0, 0, 2);
+}
+
+.signup-btn {
+    -fx-pref-width: 169;
+    -fx-pref-height: 53;
+    -fx-min-width: 169;
+    -fx-min-height: 53;
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-font-size: 30;
+    -fx-text-fill: white;
+}
+
+.signup-btn:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255,20,147,0.4), 8, 0, 0, 2);
+}

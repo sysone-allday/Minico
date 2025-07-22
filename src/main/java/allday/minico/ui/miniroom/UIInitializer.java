@@ -18,10 +18,9 @@ public class UIInitializer {
                             .toExternalForm();
                     roomPane.getScene().getStylesheets().add(cssPath);
 
-                    // chat.css 파일이 없으므로 주석 처리
-                    // String chatCssPath = getClass().getResource("/allday/minico/css/chat.css")
-                    //         .toExternalForm();
-                    // roomPane.getScene().getStylesheets().add(chatCssPath);
+                    String chatCssPath = getClass().getResource("/allday/minico/css/chat.css")
+                            .toExternalForm();
+                    roomPane.getScene().getStylesheets().add(chatCssPath);
                 }
             } catch (Exception e) {
                 System.out.println("CSS 파일을 로드할 수 없습니다: " + e.getMessage());

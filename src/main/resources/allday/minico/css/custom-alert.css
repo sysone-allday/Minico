@@ -1,0 +1,58 @@
+.custom-alert-modal {
+    -fx-background-color: white;
+    -fx-border-width: 2;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-padding: 24;
+    -fx-alignment: center;
+    -fx-font-size: 14px;
+}
+.custom-alert-title-section {
+    -fx-alignment: center;
+}
+.custom-alert-type-info {
+    -fx-text-fill: #4CAF50;
+    -fx-font-weight: bold;
+}
+.custom-alert-type-warn {
+    -fx-text-fill: #FF9800;
+    -fx-font-weight: bold;
+}
+.custom-alert-type-error {
+    -fx-text-fill: #F44336;
+    -fx-font-weight: bold;
+}
+.custom-alert-type-confirm {
+    -fx-text-fill: #2196F3;
+    -fx-font-weight: bold;
+}
+.custom-alert-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+.custom-alert-message {
+    -fx-text-fill: #666;
+    -fx-wrap-text: true;
+    -fx-max-width: 350;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+.custom-alert-btn {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+.custom-alert-btn-confirm {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-border-color: #2196F3;
+    -fx-border-width: 2;
+}
+.custom-alert-btn-cancel {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #333;
+    -fx-border-color: #ccc;
+    -fx-border-width: 2;
+}

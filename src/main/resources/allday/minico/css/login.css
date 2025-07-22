@@ -18,7 +18,7 @@
     -fx-max-height: 470px;
     -fx-max-width: 635px;
     -fx-padding: 39;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    /*-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);*/
 }
 
 /* 로그인 타이틀 */
@@ -80,18 +80,3 @@
     -fx-text-fill: #ff69b4;
     -fx-underline: true;
 }
-
-
-/* .fade-out {
-    -fx-opacity: 0;
-    -fx-transition: opacity 0.5s ease-in-out;
-}
-
-.fade-in {
-    -fx-opacity: 1;
-    -fx-transition: opacity 0.5s ease-in-out;
-}
-
-.fade-transition {
-    -fx-transition: opacity 0.5s ease-in-out;
-} */

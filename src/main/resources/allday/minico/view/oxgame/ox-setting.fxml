@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0" styleClass="root" stylesheets="@../../css/ox-game.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxGameSettingController">
+    <AnchorPane fx:id="rootPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+        <children>
+            <ImageView fitHeight="816.0" fitWidth="1280.0" layoutY="-2.0" mouseTransparent="true" pickOnBounds="false">
+                <image>
+                    <Image url="@../../images/oxgame/background1.png" />
+                </image>
+            </ImageView>
+         <ImageView fitHeight="800.0" fitWidth="1280.0" mouseTransparent="true">
+            <image>
+               <Image url="@../../images/oxgame/background1-2.png" />
+            </image>
+         </ImageView>
+            <AnchorPane layoutX="52.0" layoutY="46.0" maxHeight="708.0" maxWidth="1175.0" minHeight="708.0" minWidth="1175.0" prefHeight="708.0" prefWidth="1175.0">
+                <children>
+                    <ImageView fitHeight="708.0" fitWidth="1175.0" layoutY="-2.0" mouseTransparent="true">
+                        <image>
+                            <Image url="@../../images/oxgame/background2.png" />
+                        </image>
+                    </ImageView>
+                    <AnchorPane layoutX="374.0" layoutY="125.0" prefHeight="530.0" prefWidth="748.0">
+                        <children>
+                            <ImageView fitHeight="543.0" fitWidth="755.0" layoutY="-7.0" mouseTransparent="true" AnchorPane.leftAnchor="0.0">
+                                <image>
+                                    <Image url="@../../images/oxgame/box1.png" />
+                                </image>
+                            </ImageView>
+                            <AnchorPane prefHeight="522.0" prefWidth="749.0">
+                                <children>
+                                    <VBox prefHeight="522.0" prefWidth="749.0" spacing="20.0">
+                                        <padding>
+                                            <Insets top="30.0" />
+                                        </padding>
+                                        <children>
+                                            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="748.0">
+                                                <children>
+                                                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="299.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="주제 선택" textFill="#564145">
+                                                        <font>
+                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <ComboBox fx:id="selectProblemType" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="342.0" promptText="    선택하세요" style="-fx-background-color: #FFFFFF; -fx-border-radius: 20; -fx-border-color: #BEA5A9; -fx-border-width: 4;" styleClass="custom-combo" stylesheets="@../../css/ox-game.css">
+                                                        <HBox.margin>
+                                                            <Insets right="90.0" />
+                                                        </HBox.margin>
+                                                    </ComboBox>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
+                                                <children>
+                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="293.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="난도" textFill="#564145">
+                                                        <font>
+                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                                        <children>
+                                                            <Button fx:id="btnLvLow" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="하" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                            </Button>
+                                                            <Button fx:id="btnLvMid" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="중" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                            </Button>
+                                                            <Button fx:id="btnLvHigh" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="상" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                            </Button>
+                                                            <Button fx:id="btnLvRandom" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="160.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="무작위" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font name="Tmoney RoundWind ExtraBold" size="36.0" />
+                                                                </font>
+                                                                <HBox.margin>
+                                                                    <Insets right="30.0" />
+                                                                </HBox.margin>
+                                                            </Button>
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
+                                                <children>
+                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="294.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="타이머(초)" textFill="#564145">
+                                                        <font>
+                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="455.0" spacing="30.0">
+                                                        <children>
+                                                            <Button fx:id="btnTM10" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                            </Button>
+                                                            <Button fx:id="btnTM15" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="15" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                            </Button>
+                                                            <Button fx:id="btnTM20" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" styleClass="level-btn" text="20" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                                <HBox.margin>
+                                                                    <Insets right="30.0" />
+                                                                </HBox.margin>
+                                                            </Button>
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
+                                                <children>
+                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="294.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="문제 횟수" textFill="#564145">
+                                                        <font>
+                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="455.0" spacing="30.0">
+                                                        <children>
+                                                            <Button fx:id="btnCT5" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="5" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                            </Button>
+                                                            <Button fx:id="btnCT10" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                            </Button>
+                                                            <Button fx:id="btnCT15" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" styleClass="level-btn" text="15" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                                <HBox.margin>
+                                                                    <Insets right="30.0" />
+                                                                </HBox.margin>
+                                                            </Button>
+                                                        </children>
+                                                    </HBox>
+                                                </children>
+                                            </HBox>
+                                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <children>
+                                                    <VBox alignment="CENTER" layoutY="-12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="749.0">
+                                                        <children>
+                                                            <ImageView fx:id="btnStartImage" fitHeight="102.0" fitWidth="238.0" pickOnBounds="true">
+                                                                <image>
+                                                                    <Image url="@../../images/oxgame/start_button.png" />
+                                                                </image>
+                                                            </ImageView>
+                                                        </children>
+                                                    </VBox>
+                                                </children>
+                                            </AnchorPane>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </AnchorPane>
+                        </children>
+                    </AnchorPane>
+                    <Pane layoutX="374.0" prefHeight="125.0" prefWidth="749.0">
+                        <children>
+                            <ImageView fitHeight="88.0" fitWidth="299.0" layoutX="225.0" layoutY="19.0" mouseTransparent="true">
+                                <image>
+                                    <Image url="@../../images/oxgame/text_setting.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </Pane>
+                    <Pane layoutX="63.0" layoutY="149.0" mouseTransparent="true" prefHeight="198.0" prefWidth="252.0">
+                        <children>
+                            <AnchorPane layoutY="-18.0" maxHeight="252.0" maxWidth="252.0" minHeight="198.0" minWidth="252.0" mouseTransparent="true" prefHeight="216.0" prefWidth="252.0">
+                                <children>
+                                    <ImageView fitHeight="186.0" fitWidth="243.0" layoutX="5.0" layoutY="14.0" mouseTransparent="true">
+
+                                        <image>
+                                            <Image url="@../../images/oxgame/speech_bubble1.png" />
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </AnchorPane>
+                        </children>
+                    </Pane>
+                    <ImageView id="minimiGif" fitHeight="297.0" fitWidth="267.0" layoutX="55.0" layoutY="340.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
+                    <StackPane fx:id="hoverContainer" layoutX="1" layoutY="2.0" minHeight="100" minWidth="200" prefHeight="100" prefWidth="200">
+                        <children>
+                            <ImageView fx:id="imageHover" onMouseClicked="#handleBackToMiniroom" visible="false">
+                                <image>
+                                    <Image url="@../../images/oxgame/back_ver2.png" />
+                                </image>
+                            </ImageView>
+                            <ImageView fx:id="imageNormal" onMouseClicked="#handleBackToMiniroom">
+                                <image>
+                                    <Image url="@../../images/oxgame/back_ver1.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                </children>
+            </AnchorPane>
+        </children>
+    </AnchorPane>
+</BorderPane>
