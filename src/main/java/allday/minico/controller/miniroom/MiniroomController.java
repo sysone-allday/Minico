@@ -14,8 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-// import javafx.scene.control.DialogPane;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
@@ -29,7 +28,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
 
 public class MiniroomController implements Initializable {
 
@@ -61,7 +59,7 @@ public class MiniroomController implements Initializable {
     private CharacterMovementController movementController;
 
     // 네트워크 관련 변수
-    private RoomNetworkManager networkManager;
+    private RoomNetworkManager networkManager; //로그인 완료시 자동 호출
     private String playerName = "Player1";
     private boolean isHosting = false;
     private boolean isVisiting = false;
@@ -177,6 +175,17 @@ public class MiniroomController implements Initializable {
 
         // 플레이어 이름이 설정된 후 네트워크 매니저 초기화
         initializeNetworkManager();
+        
+        // 로그인 완료 시 자동으로 서버 호스팅 시작
+        Platform.runLater(() -> {
+            if (networkManager != null && !isHosting) {
+                // System.out.println("로그인 완료 - 자동으로 서버 호스팅 시작");
+                networkManager.startHosting();
+            }
+            
+            // 버튼 텍스트 초기화
+            updateVisitButtonText();
+        });
     }
 
     private void initializeNetworkManager() {
@@ -221,7 +230,22 @@ public class MiniroomController implements Initializable {
                     @Override
                     public void onVisitingStatusChanged(boolean isVisiting) {
                         MiniroomController.this.isVisiting = isVisiting;
-                        System.out.println("방문 상태 변경: " + isVisiting); // 디버깅용 로그 추가
+                        // System.out.println("방문 상태 변경: " + isVisiting); 
+                        
+                        // 버튼 변경
+                        Platform.runLater(() -> {
+                            MiniroomController.this.updateVisitButtonText();
+                        });
+                        
+                        // 방문이 끝 호스팅 시작
+                        if (!isVisiting && !MiniroomController.this.isHosting) {
+                            // System.out.println("방문 종료 - 자동으로 호스팅 재시작");
+                            Platform.runLater(() -> {
+                                if (networkManager != null) {
+                                    networkManager.startHosting();
+                                }
+                            });
+                        }
                         // 네트워크 기능 제거됨
                     }
 
@@ -266,7 +290,7 @@ public class MiniroomController implements Initializable {
 
     private void createHostCharacter(double x, double y, String direction) {
         hostCharacter = characterManager.createHostCharacter(hostName, x, y, direction);
-        System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction + ", 호스트명=" + hostName);
+        // System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction + ", 호스트명=" + hostName);
     }
 
     private void updateHostCharacter(double x, double y, String direction) {
@@ -385,18 +409,18 @@ public class MiniroomController implements Initializable {
 
     @FXML
     protected void onGuestbookClick() {
-        System.out.println("게시판 버튼 클릭");
+        // System.out.println("게시판 버튼 클릭");
         // 게시판 기능 구현
     }
 
     @FXML
     private void onVisitClick() {
-        System.out.println("방문 버튼 클릭됨");
+        // System.out.println("방문 버튼 클릭됨");
 
         try {
             if (isVisiting) {
                 // 현재 방문 중이면 나가기 - 로딩 스피너 표시
-                System.out.println("현재 방문 중 - 방 나가기 시도");
+                // System.out.println("현재 방문 중 - 방 나가기 시도");
                 loadingSpinner.show();
 
                 // 백그라운드에서 방 나가기 처리
@@ -404,7 +428,7 @@ public class MiniroomController implements Initializable {
                     try {
                         networkManager.leaveRoom();
                     } catch (Exception e) {
-                        System.out.println("방 나가기 처리 중 오류: " + e.getMessage());
+                        // System.out.println("방 나가기 처리 중 오류: " + e.getMessage());
                         e.printStackTrace();
 
                         Platform.runLater(() -> {
@@ -422,12 +446,34 @@ public class MiniroomController implements Initializable {
                 leaveThread.start();
 
             } else if (isHosting) {
-                // 호스팅 중에는 다른 방을 방문할 수 없음
-                CustomAlert.showWarning(roomPane, "경고",
-                        "현재 서버를 호스팅 중입니다. 먼저 호스팅을 중지해주세요.");
+                // 호스팅 중일 때는 자동으로 호스팅을 중지하고 방문 모드로 전환
+                System.out.println("호스팅 중지 후 방 선택 다이얼로그 표시");
+                
+                // 백그라운드에서 호스팅 중지 처리
+                Thread stopHostingThread = new Thread(() -> {
+                    try {
+                        networkManager.stopHosting();
+                        
+                        // 호스팅 중지 완료 후 방 선택 다이얼로그 표시
+                        Platform.runLater(() -> {
+                            networkManager.showRoomSelectionDialog();
+                        });
+                        
+                    } catch (Exception e) {
+                        // System.out.println("호스팅 중지 중 오류: " + e.getMessage());
+                        e.printStackTrace();
+                        
+                        Platform.runLater(() -> {
+                            CustomAlert.showError(roomPane, "오류",
+                                    "호스팅 중지 중 오류가 발생했습니다: " + e.getMessage());
+                        });
+                    }
+                });
+                stopHostingThread.setDaemon(true);
+                stopHostingThread.start();
             } else {
                 // 사용 가능한 방 목록 표시
-                System.out.println("방 선택 다이얼로그 표시");
+                // System.out.println("방 선택 다이얼로그 표시");
                 networkManager.showRoomSelectionDialog();
             }
         } catch (Exception e) {
@@ -445,25 +491,6 @@ public class MiniroomController implements Initializable {
     protected void onDiaryClick() {
         System.out.println("다이어리 버튼 클릭");
         // 다이어리 기능 구현
-        try {
-            /* diaryBtn → Scene → Window(=Stage) */
-            Stage stage = (Stage) diaryBtn.getScene().getWindow();
-
-            Parent root = FXMLLoader.load(
-                    Objects.requireNonNull(getClass()
-                            .getResource("/allday/minico/view/diary/myroom.fxml")));
-
-            stage.setScene(new Scene(root));
-            Scene scene = stage.getScene();
-
-            // ✅ 타자게임 CSS 적용
-            scene.getStylesheets().clear(); // 기존 main.css 제거
-            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
-
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -515,6 +542,11 @@ public class MiniroomController implements Initializable {
         }
     }
 
+    @FXML
+    protected void onFriendsClick() {
+        System.out.println("친구찾기 버튼 클릭");
+    }
+
     public void cleanup() {
         // 이동 컨트롤러 정리
         if (movementController != null) {
@@ -529,6 +561,19 @@ public class MiniroomController implements Initializable {
         // 채팅 입력 관리자 정리
         if (chatInputManager != null) {
             chatInputManager.cleanup();
+        }
+    }
+    
+    private void updateVisitButtonText() {
+        if (visitBtn != null) {
+            javafx.scene.control.Label label = (javafx.scene.control.Label) 
+                ((javafx.scene.layout.StackPane) visitBtn.getGraphic()).getChildren().get(0);
+            
+            if (isVisiting) {
+                label.setText("미니룸 나가기");
+            } else {
+                label.setText("미니룸 방문");
+            }
         }
     }
 }

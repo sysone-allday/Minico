@@ -35,5 +35,9 @@ build/
 ### VS Code ###
 .vscode/
 
-### Mac OS ### hello
+
+### Mac OS ###
 .DS_Store
+src/main/resources/database.properties
+
+
