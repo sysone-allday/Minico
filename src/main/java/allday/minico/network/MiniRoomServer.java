@@ -19,6 +19,7 @@ public class MiniRoomServer {
     private long lastUpdateTime = 0;
     private static final long UPDATE_INTERVAL = 50; // 50ms 간격으로 업데이트 (20fps)
     private HostUpdateListener hostUpdateListener;
+    private int actualPort; // 실제 사용된 포트 저장
 
     public interface HostUpdateListener {
         void onVisitorJoined(String visitorName);
@@ -53,11 +54,33 @@ public class MiniRoomServer {
 
     public void startServer() {
         try {
-            serverSocket = new ServerSocket(DEFAULT_PORT);
-            serverSocket.setReuseAddress(true);
+            // 동적 포트 할당: 기본 포트부터 시작해서 사용 가능한 포트 찾기
+            int portToTry = DEFAULT_PORT;
+            boolean serverStarted = false;
+            
+            while (!serverStarted && portToTry < DEFAULT_PORT + 100) { // 최대 100개 포트까지 시도
+                try {
+                    serverSocket = new ServerSocket(portToTry);
+                    serverSocket.setReuseAddress(true);
+                    actualPort = portToTry;
+                    serverStarted = true;
+                    System.out.println("미니룸 서버 시작됨 - 포트: " + actualPort);
+                    System.out.println("방 주인: " + roomOwner);
+                } catch (IOException e) {
+                    if (e.getMessage().contains("Address already in use")) {
+                        portToTry++;
+                        System.out.println("포트 " + (portToTry - 1) + " 사용 중, 다음 포트 시도: " + portToTry);
+                    } else {
+                        throw e;
+                    }
+                }
+            }
+            
+            if (!serverStarted) {
+                throw new IOException("사용 가능한 포트를 찾을 수 없습니다. (시도한 범위: " + DEFAULT_PORT + "-" + (DEFAULT_PORT + 99) + ")");
+            }
+            
             isRunning = true;
-            System.out.println("미니룸 서버 시작됨 - 포트: " + DEFAULT_PORT);
-            System.out.println("방 주인: " + roomOwner);
 
             // 클라이언트 연결 대기
             while (isRunning) {
@@ -90,6 +113,10 @@ public class MiniRoomServer {
         } catch (IOException e) {
             System.out.println("서버 중지 오류: " + e.getMessage());
         }
+    }
+    
+    public int getActualPort() {
+        return actualPort;
     }
 
     public void updateCharacterPosition(double x, double y, String direction) {

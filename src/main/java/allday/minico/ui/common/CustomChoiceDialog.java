@@ -83,8 +83,8 @@ public class CustomChoiceDialog {
             roomButton.setPrefHeight(60); // 높이 증가
             roomButton.setMinHeight(60);
             
-            // 방 정보 텍스트 설정
-            String roomText = String.format("🏠 %s\n📍 %s", room.owner, room.ipAddress);
+            // 방 정보 텍스트 설정 - IP 주소 대신 닉네임만 표시
+            String roomText = String.format("🏠 %s의 미니룸", room.owner);
             roomButton.setText(roomText);
             roomButton.setStyle("-fx-font-size: 12px; " +
                                "-fx-background-color: #f8f9fa; -fx-text-fill: #333; " +

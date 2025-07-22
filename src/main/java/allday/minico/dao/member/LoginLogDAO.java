@@ -1,7 +1,7 @@
 package allday.minico.dao.member;
 
 import allday.minico.sql.member.LoginLogSQL;
-import allday.minico.sql.member.MemberSQL;
+//import allday.minico.sql.member.MemberSQL;
 
 import java.sql.*;
 

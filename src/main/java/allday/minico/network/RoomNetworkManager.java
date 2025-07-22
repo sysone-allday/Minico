@@ -133,7 +133,7 @@ public class RoomNetworkManager {
             // 방 정보 브로드캐스트 시작
             broadcastThread = new Thread(() -> {
                 while (isHosting) {
-                    discovery.broadcastRoom(playerName, 8080);
+                    discovery.broadcastRoom(playerName, server.getActualPort());
                     try {
                         Thread.sleep(5000); // 5초마다 브로드캐스트
                     } catch (InterruptedException e) {
@@ -193,7 +193,7 @@ public class RoomNetworkManager {
         }
     }
     
-    public void visitRoom(String hostIP) {
+    public void visitRoom(String hostIP, int port) {
         if (isVisiting) {
             System.out.println("이미 방문 중입니다. 기존 연결을 종료하고 새로운 연결을 시작합니다.");
             leaveRoom();
@@ -292,10 +292,10 @@ public class RoomNetworkManager {
                 }
             });
 
-            if (client.connectToRoom(hostIP, 8080)) {
-                System.out.println("방 접속 시도: " + hostIP);
+            if (client.connectToRoom(hostIP, port)) {
+                System.out.println("방 접속 시도: " + hostIP + ":" + port);
             } else {
-                System.out.println("방 접속 실패: " + hostIP);
+                System.out.println("방 접속 실패: " + hostIP + ":" + port);
                 // 연결 실패 시 클라이언트 객체 정리
                 client = null;
                 Platform.runLater(() -> {
@@ -389,7 +389,7 @@ public class RoomNetworkManager {
         } else {
             // 방 선택 다이얼로그
             CustomChoiceDialog.showRoomSelection(callback.getParentPane(), rooms, 
-                                               room -> visitRoom(room.ipAddress));
+                                               room -> visitRoom(room.ipAddress, room.port));
         }
     }
     

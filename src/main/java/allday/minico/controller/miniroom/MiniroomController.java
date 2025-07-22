@@ -59,7 +59,7 @@ public class MiniroomController implements Initializable {
     private CharacterMovementController movementController;
 
     // 네트워크 관련 변수
-    private RoomNetworkManager networkManager;
+    private RoomNetworkManager networkManager; //로그인 완료시 자동 호출
     private String playerName = "Player1";
     private boolean isHosting = false;
     private boolean isVisiting = false;
@@ -175,6 +175,14 @@ public class MiniroomController implements Initializable {
 
         // 플레이어 이름이 설정된 후 네트워크 매니저 초기화
         initializeNetworkManager();
+        
+        // 로그인 완료 시 자동으로 서버 호스팅 시작
+        Platform.runLater(() -> {
+            if (networkManager != null && !isHosting) {
+                System.out.println("로그인 완료 - 자동으로 서버 호스팅 시작");
+                networkManager.startHosting();
+            }
+        });
     }
 
     private void initializeNetworkManager() {
@@ -220,6 +228,16 @@ public class MiniroomController implements Initializable {
                     public void onVisitingStatusChanged(boolean isVisiting) {
                         MiniroomController.this.isVisiting = isVisiting;
                         System.out.println("방문 상태 변경: " + isVisiting); // 디버깅용 로그 추가
+                        
+                        // 방문이 끝나면 자동으로 다시 호스팅 시작
+                        if (!isVisiting && !MiniroomController.this.isHosting) {
+                            System.out.println("방문 종료 - 자동으로 호스팅 재시작");
+                            Platform.runLater(() -> {
+                                if (networkManager != null) {
+                                    networkManager.startHosting();
+                                }
+                            });
+                        }
                         // 네트워크 기능 제거됨
                     }
 
@@ -420,9 +438,31 @@ public class MiniroomController implements Initializable {
                 leaveThread.start();
 
             } else if (isHosting) {
-                // 호스팅 중에는 다른 방을 방문할 수 없음
-                CustomAlert.showWarning(roomPane, "경고",
-                        "현재 서버를 호스팅 중입니다. 먼저 호스팅을 중지해주세요.");
+                // 호스팅 중일 때는 자동으로 호스팅을 중지하고 방문 모드로 전환
+                System.out.println("호스팅 중지 후 방 선택 다이얼로그 표시");
+                
+                // 백그라운드에서 호스팅 중지 처리
+                Thread stopHostingThread = new Thread(() -> {
+                    try {
+                        networkManager.stopHosting();
+                        
+                        // 호스팅 중지 완료 후 방 선택 다이얼로그 표시
+                        Platform.runLater(() -> {
+                            networkManager.showRoomSelectionDialog();
+                        });
+                        
+                    } catch (Exception e) {
+                        System.out.println("호스팅 중지 중 오류: " + e.getMessage());
+                        e.printStackTrace();
+                        
+                        Platform.runLater(() -> {
+                            CustomAlert.showError(roomPane, "오류",
+                                    "호스팅 중지 중 오류가 발생했습니다: " + e.getMessage());
+                        });
+                    }
+                });
+                stopHostingThread.setDaemon(true);
+                stopHostingThread.start();
             } else {
                 // 사용 가능한 방 목록 표시
                 System.out.println("방 선택 다이얼로그 표시");
@@ -492,6 +532,11 @@ public class MiniroomController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    protected void onFriendsClick() {
+        System.out.println("친구찾기 버튼 클릭");
     }
 
     public void cleanup() {
