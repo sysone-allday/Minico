@@ -1,5 +1,6 @@
 package allday.minico.ui.miniroom;
 
+import allday.minico.session.AppSession;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -40,8 +41,8 @@ public class CharacterManager {
             }
         }
         try {
-            String imageName = getCharacterImageName(direction);
-            Image newImage = new Image(getClass().getResource("/allday/minico/images/char/" + imageName).toExternalForm());
+            String imagePath = getUserCharacterImagePath(direction);
+            Image newImage = new Image(getClass().getResource(imagePath).toExternalForm());
             hostCharacter.setImage(newImage);
         } catch (Exception e) {
             System.out.println("호스트 캐릭터 이미지 업데이트 오류: " + e.getMessage());
@@ -61,8 +62,8 @@ public class CharacterManager {
                 updateNameLabelPosition(nameLabel, visitorChar);
             }
             try {
-                String imageName = getCharacterImageName(direction);
-                Image newImage = new Image(getClass().getResource("/allday/minico/images/char/" + imageName).toExternalForm());
+                String imagePath = getUserCharacterImagePath(direction);
+                Image newImage = new Image(getClass().getResource(imagePath).toExternalForm());
                 visitorChar.setImage(newImage);
             } catch (Exception e) {
                 System.out.println("방문자 캐릭터 이미지 업데이트 오류: " + e.getMessage());
@@ -72,8 +73,8 @@ public class CharacterManager {
 
     public void createVisitorCharacter(String visitorName, double x, double y, String direction, boolean isHosting) {
         try {
-            String imageName = getCharacterImageName(direction);
-            Image visitorImage = new Image(getClass().getResource("/allday/minico/images/char/" + imageName).toExternalForm());
+            String imagePath = getUserCharacterImagePath(direction);
+            Image visitorImage = new Image(getClass().getResource(imagePath).toExternalForm());
             ImageView visitorChar = new ImageView(visitorImage);
             visitorChar.setFitWidth(100);
             visitorChar.setFitHeight(100);
@@ -178,8 +179,8 @@ public class CharacterManager {
 
     private ImageView createCharacterImageView(double x, double y, String direction) {
         try {
-            String imageName = getCharacterImageName(direction);
-            Image image = new Image(getClass().getResource("/allday/minico/images/char/" + imageName).toExternalForm());
+            String imagePath = getUserCharacterImagePath(direction);
+            Image image = new Image(getClass().getResource(imagePath).toExternalForm());
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(100);
             imageView.setFitHeight(100);
@@ -189,18 +190,73 @@ public class CharacterManager {
             return imageView;
         } catch (Exception e) {
             System.out.println("캐릭터 이미지를 로드할 수 없습니다: " + e.getMessage());
+            // 기본 이미지 사용 시도
+            return createDefaultCharacterImageView(x, y, direction);
+        }
+    }
+    
+    private ImageView createDefaultCharacterImageView(double x, double y, String direction) {
+        try {
+            // 기본 캐릭터 이미지 (대호 사용)
+            String imageName = getDefaultCharacterImageName(direction);
+            Image image = new Image(getClass().getResource("/allday/minico/images/char/male/" + imageName).toExternalForm());
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(100);
+            imageView.setPreserveRatio(true);
+            imageView.setLayoutX(x);
+            imageView.setLayoutY(y);
+            return imageView;
+        } catch (Exception e) {
+            System.out.println("기본 캐릭터 이미지도 로드할 수 없습니다: " + e.getMessage());
             return null;
         }
     }
-
-    private String getCharacterImageName(String direction) {
+    
+    private String getUserCharacterImagePath(String direction) {
+        try {
+            // SkinService를 통해 현재 사용자의 스킨 정보 가져오기
+            String memberId = AppSession.getLoginMember().getMemberId();
+            String minimiType = AppSession.getLoginMember().getMinimi();
+            
+            if (minimiType != null && memberId != null) {
+                // SKIN 테이블에서 사용자의 실제 캐릭터 정보 조회
+                String characterName = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterName(memberId);
+                String gender = minimiType.toLowerCase(); // "male" 또는 "female"
+                
+                // 방향에 따른 이미지 파일명 생성
+                String directionSuffix = getDirectionSuffix(direction);
+                String imagePath = String.format("/allday/minico/images/char/%s/%s_%s.png", 
+                                   gender, characterName, directionSuffix);
+                
+                System.out.println("생성된 이미지 경로: " + imagePath);
+                System.out.println("사용자 캐릭터: " + characterName + ", 방향: " + direction + " → " + directionSuffix);
+                
+                return imagePath;
+            }
+        } catch (Exception e) {
+            System.out.println("사용자 캐릭터 정보를 가져올 수 없습니다: " + e.getMessage());
+        }
+        
+        // 정보가 없으면 기본 캐릭터 사용
+        String defaultPath = "/allday/minico/images/char/male/대호_" + getDirectionSuffix(direction) + ".png";
+        System.out.println("기본 이미지 경로: " + defaultPath);
+        return defaultPath;
+    }
+    
+    private String getDirectionSuffix(String direction) {
         switch (direction) {
-            case "LEFT": return "Left.png";
-            case "RIGHT": return "Right.png";
-            case "UP": return "back.png";
+            case "LEFT": return "left";
+            case "RIGHT": return "right";
+            case "UP": return "back";
             case "DOWN":
             case "front":
-            default: return "front.png";
+            default: return "front";
         }
+    }
+
+    private String getDefaultCharacterImageName(String direction) {
+        String suffix = getDirectionSuffix(direction);
+        return "대호_" + suffix + ".png";
     }
 }

@@ -16,24 +16,23 @@ public class LoadingSpinner {
     }
     
     private void createSpinner() {
-        // 스피너만 생성 (오버레이 배경 제거)
         spinner = new ProgressIndicator();
         spinner.setMaxSize(60, 60);
         spinner.setStyle("-fx-progress-color: #b2fbb5ff;");
         
-        // 스피너 컨테이너 (배경 없이)
+  
         spinnerContainer = new StackPane();
         spinnerContainer.getChildren().add(spinner);
         spinnerContainer.setVisible(false);
         
-        // 스피너를 중앙에 위치시키기
+     
         spinnerContainer.setLayoutX(0);
         spinnerContainer.setLayoutY(0);
     }
     
     public void show() {
         Platform.runLater(() -> {
-            // 스피너를 부모 패널의 중앙에 위치시키기
+        
             double centerX = (parentPane.getWidth() - 60) / 2;
             double centerY = (parentPane.getHeight() - 60) / 2;
             

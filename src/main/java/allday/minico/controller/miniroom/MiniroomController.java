@@ -48,18 +48,11 @@ public class MiniroomController implements Initializable {
     @FXML
     private Button friendsButton;
 
-    @FXML
-    private void friendsButtonClick(){
-        SceneManager.showModal("FriendInfo", "친구 찾기");
-    }
-
-
-
     private ImageView character;
     private CharacterMovementController movementController;
 
     // 네트워크 관련 변수
-    private RoomNetworkManager networkManager; //로그인 완료시 자동 호출
+    private RoomNetworkManager networkManager; // 로그인 완료시 자동 호출
     private String playerName = "Player1";
     private boolean isHosting = false;
     private boolean isVisiting = false;
@@ -175,14 +168,14 @@ public class MiniroomController implements Initializable {
 
         // 플레이어 이름이 설정된 후 네트워크 매니저 초기화
         initializeNetworkManager();
-        
+
         // 로그인 완료 시 자동으로 서버 호스팅 시작
         Platform.runLater(() -> {
             if (networkManager != null && !isHosting) {
                 // System.out.println("로그인 완료 - 자동으로 서버 호스팅 시작");
                 networkManager.startHosting();
             }
-            
+
             // 버튼 텍스트 초기화
             updateVisitButtonText();
         });
@@ -230,13 +223,13 @@ public class MiniroomController implements Initializable {
                     @Override
                     public void onVisitingStatusChanged(boolean isVisiting) {
                         MiniroomController.this.isVisiting = isVisiting;
-                        // System.out.println("방문 상태 변경: " + isVisiting); 
-                        
+                        // System.out.println("방문 상태 변경: " + isVisiting);
+
                         // 버튼 변경
                         Platform.runLater(() -> {
                             MiniroomController.this.updateVisitButtonText();
                         });
-                        
+
                         // 방문이 끝 호스팅 시작
                         if (!isVisiting && !MiniroomController.this.isHosting) {
                             // System.out.println("방문 종료 - 자동으로 호스팅 재시작");
@@ -290,7 +283,8 @@ public class MiniroomController implements Initializable {
 
     private void createHostCharacter(double x, double y, String direction) {
         hostCharacter = characterManager.createHostCharacter(hostName, x, y, direction);
-        // System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction + ", 호스트명=" + hostName);
+        // System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction +
+        // ", 호스트명=" + hostName);
     }
 
     private void updateHostCharacter(double x, double y, String direction) {
@@ -324,10 +318,9 @@ public class MiniroomController implements Initializable {
             targetCharacter = visitorCharacters.get(senderName);
         }
 
-        // 디버그 출력 (임시)
-        System.out.println("채팅 메시지 - 발신자: " + senderName + ", 플레이어: " + playerName +
-                ", 호스트명: " + hostName + ", 호스팅: " + isHosting + ", 방문: " + isVisiting +
-                ", 타겟 캐릭터: " + (targetCharacter != null ? "찾음" : "null"));
+        // System.out.println("채팅 메시지 - 발신자: " + senderName + ", 플레이어: " + playerName +
+        // ", 호스트명: " + hostName + ", 호스팅: " + isHosting + ", 방문: " + isVisiting +
+        // ", 타겟 캐릭터: " + (targetCharacter != null ? "찾음" : "null"));
 
         chatManager.showChatBubble(senderName, message, targetCharacter);
     }
@@ -339,21 +332,21 @@ public class MiniroomController implements Initializable {
     private void removeCharacterAndLabels(String characterName) {
         // 특별한 신호를 받으면 모든 캐릭터 제거
         if ("__REMOVE_ALL__".equals(characterName)) {
-            System.out.println("__REMOVE_ALL__ 신호 수신 - 모든 캐릭터 제거 시작");
+            // System.out.println("__REMOVE_ALL__ 신호 수신 - 모든 캐릭터 제거 시작");
 
             // 호스트 캐릭터 제거 (방문 모드에서 볼 수 있는 호스트)
             if (hostCharacter != null) {
-                System.out.println("호스트 캐릭터 제거: " + hostName);
+                // System.out.println("호스트 캐릭터 제거: " + hostName);
                 characterManager.removeHostCharacter(hostCharacter, hostName);
                 hostCharacter = null;
             }
 
             // 모든 방문자 캐릭터들 제거
-            System.out.println("모든 방문자 캐릭터 제거");
+            // System.out.println("모든 방문자 캐릭터 제거");
             characterManager.removeAllVisitorCharacters();
 
             // 모든 말풍선 제거 (자신의 말풍선 제외)
-            System.out.println("다른 플레이어 말풍선 제거");
+            // System.out.println("다른 플레이어 말풍선 제거");
             for (String name : chatBubbles.keySet()) {
                 if (!name.equals(playerName)) {
                     javafx.scene.Group bubble = chatBubbles.get(name);
@@ -368,7 +361,7 @@ public class MiniroomController implements Initializable {
             // 캐릭터가 사라진 즉시 스피너 숨김
             loadingSpinner.hide();
 
-            System.out.println("__REMOVE_ALL__ 신호 처리 완료");
+            // System.out.println("__REMOVE_ALL__ 신호 처리 완료");
             return;
         }
 
@@ -448,21 +441,21 @@ public class MiniroomController implements Initializable {
             } else if (isHosting) {
                 // 호스팅 중일 때는 자동으로 호스팅을 중지하고 방문 모드로 전환
                 System.out.println("호스팅 중지 후 방 선택 다이얼로그 표시");
-                
+
                 // 백그라운드에서 호스팅 중지 처리
                 Thread stopHostingThread = new Thread(() -> {
                     try {
                         networkManager.stopHosting();
-                        
+
                         // 호스팅 중지 완료 후 방 선택 다이얼로그 표시
                         Platform.runLater(() -> {
                             networkManager.showRoomSelectionDialog();
                         });
-                        
+
                     } catch (Exception e) {
                         // System.out.println("호스팅 중지 중 오류: " + e.getMessage());
                         e.printStackTrace();
-                        
+
                         Platform.runLater(() -> {
                             CustomAlert.showError(roomPane, "오류",
                                     "호스팅 중지 중 오류가 발생했습니다: " + e.getMessage());
@@ -499,8 +492,7 @@ public class MiniroomController implements Initializable {
         // 타자게임 기능 구현
         try {
             Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
-                    getClass().getResource("/allday/minico/view/typinggame/typing_game.fxml")
-            ));
+                    getClass().getResource("/allday/minico/view/typinggame/typing_game.fxml")));
 
             // 현재 Stage와 Scene 가져오기
             Stage stage = (Stage) typingBtn.getScene().getWindow();
@@ -522,7 +514,8 @@ public class MiniroomController implements Initializable {
     public void onOxClick(ActionEvent event) {
         System.out.println("OX게임 버튼 클릭");
         try {
-            FXMLLoader oxGameRoot = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
+            FXMLLoader oxGameRoot = new FXMLLoader(
+                    getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
             Parent root = oxGameRoot.load();
 
             OxGameSettingController controller = oxGameRoot.getController();
@@ -543,8 +536,8 @@ public class MiniroomController implements Initializable {
     }
 
     @FXML
-    protected void onFriendsClick() {
-        System.out.println("친구찾기 버튼 클릭");
+    private void friendsButtonClick() {
+        SceneManager.showModal("FriendInfo", "친구 찾기");
     }
 
     public void cleanup() {
@@ -563,12 +556,12 @@ public class MiniroomController implements Initializable {
             chatInputManager.cleanup();
         }
     }
-    
+
     private void updateVisitButtonText() {
         if (visitBtn != null) {
-            javafx.scene.control.Label label = (javafx.scene.control.Label) 
-                ((javafx.scene.layout.StackPane) visitBtn.getGraphic()).getChildren().get(0);
-            
+            javafx.scene.control.Label label = (javafx.scene.control.Label) ((javafx.scene.layout.StackPane) visitBtn
+                    .getGraphic()).getChildren().get(0);
+
             if (isVisiting) {
                 label.setText("미니룸 나가기");
             } else {
