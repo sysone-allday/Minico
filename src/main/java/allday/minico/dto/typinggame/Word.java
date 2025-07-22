@@ -7,6 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Word {
-    private int id;
+    private int word_id;
     private String text;
+    private String difficulty;
+    private int type_id;
 }

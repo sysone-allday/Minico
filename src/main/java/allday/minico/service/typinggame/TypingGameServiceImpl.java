@@ -27,7 +27,7 @@ public class TypingGameServiceImpl implements TypingGameService {
         } else {
             System.out.println("[DEBUG] 단어 리스트 불러옴 (" + wordList.size() + "개):");
             for (Word word : wordList) {
-                System.out.println("→ " + word.getId() + " : " + word.getText());
+                System.out.println("→ " + word.getWord_id() + " : " + word.getText());
             }
         }
 
