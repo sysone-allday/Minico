@@ -60,6 +60,13 @@
                             </StackPane>
                         </graphic>
                     </Button>
+                    <Button fx:id="myProfileButton" onAction="#myProfileButtonClick" styleClass="menu-btn">
+                        <graphic>
+                            <StackPane>
+                                    <Label styleClass="menu-btn-label" text="내 정보" />
+                            </StackPane>
+                        </graphic>
+                    </Button>
                 </VBox>
 
                 <!-- 미니룸-->
@@ -69,15 +76,6 @@
                         <Image url="@../images/room.png" />
                     </ImageView>
                 </Pane>
-            <Button fx:id="myProfileButton" layoutX="1004.0" layoutY="631.0" onAction="#myProfileButtonClick" styleClass="menu-btn">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Label styleClass="menu-btn-label" text="내 정보" />
-                     </children>
-                  </StackPane>
-               </graphic>
-            </Button>
             </Pane>
         </AnchorPane>
     </center>

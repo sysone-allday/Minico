@@ -20,6 +20,11 @@ public class RoomNetworkManager {
     private String hostName = null;
     private Thread broadcastThread; // 브로드캐스트 스레드 참조 추가
     
+    // UDP 위치 통신 관련 변수
+    private UDPPositionServer udpServer;
+    private UDPPositionClient udpClient;
+    private static final int UDP_PORT_OFFSET = 1000; // TCP 포트 + 1000을 UDP 포트로 사용
+    
     // 캐릭터 관련 참조
     private ImageView character;
     private ImageView hostCharacter;
@@ -75,6 +80,77 @@ public class RoomNetworkManager {
         });
 
         discovery.startDiscovery();
+    }
+    
+    /**
+     * UDP 위치 서버 시작 (호스팅용)
+     */
+    private void startUDPPositionServer() {
+        if (server == null) return;
+        
+        int udpPort = server.getActualPort() + UDP_PORT_OFFSET;
+        udpServer = new UDPPositionServer();
+        
+        // UDP 위치 업데이트 리스너 설정
+        udpServer.setPositionUpdateListener(new UDPPositionServer.PositionUpdateListener() {
+            @Override
+            public void onClientConnected(String clientId) {
+                System.out.println("UDP 클라이언트 연결: " + clientId);
+            }
+            
+            @Override
+            public void onClientDisconnected(String clientId) {
+                System.out.println("UDP 클라이언트 연결 해제: " + clientId);
+            }
+            
+            @Override
+            public void onPositionUpdate(String clientId, double x, double y, String direction) {
+                // TCP로 받던 위치 업데이트를 UDP로 대체
+                Platform.runLater(() -> {
+                    callback.onVisitorCharacterUpdate(clientId, x, y, direction);
+                });
+            }
+        });
+        
+        if (udpServer.startServer(udpPort)) {
+            System.out.println("UDP 위치 서버 시작됨 - 포트: " + udpPort);
+        } else {
+            System.err.println("UDP 위치 서버 시작 실패");
+        }
+    }
+    
+    /**
+     * UDP 위치 클라이언트 시작 (방문용)
+     */
+    private void startUDPPositionClient(String serverIP, int tcpPort) {
+        int udpPort = tcpPort + UDP_PORT_OFFSET;
+        
+        udpClient = new UDPPositionClient(playerName);
+        if (udpClient.connect(serverIP, udpPort)) {
+            System.out.println("UDP 위치 클라이언트 연결됨 - " + serverIP + ":" + udpPort);
+        } else {
+            System.err.println("UDP 위치 클라이언트 연결 실패");
+        }
+    }
+    
+    /**
+     * UDP 위치 서버 중지
+     */
+    private void stopUDPPositionServer() {
+        if (udpServer != null) {
+            udpServer.stopServer();
+            udpServer = null;
+        }
+    }
+    
+    /**
+     * UDP 위치 클라이언트 중지
+     */
+    private void stopUDPPositionClient() {
+        if (udpClient != null) {
+            udpClient.disconnect();
+            udpClient = null;
+        }
     }
     
     public void startHosting() {
@@ -141,6 +217,9 @@ public class RoomNetworkManager {
             serverThread.setDaemon(true);
             serverThread.start();
 
+            // UDP 위치 서버 시작
+            startUDPPositionServer();
+
             // UI 쓰레드에서 호스트의 현재 위치를 설정 (서버 시작 후)
             Platform.runLater(() -> {
                 if (character != null) {
@@ -197,6 +276,9 @@ public class RoomNetworkManager {
                 server.stopServer();
                 server = null;
             }
+            
+            // UDP 위치 서버 중지
+            stopUDPPositionServer();
 
             // 호스팅 중지 시 모든 방문자 캐릭터 제거
             Platform.runLater(() -> {
@@ -236,6 +318,9 @@ public class RoomNetworkManager {
                         callback.onVisitingStatusChanged(true);
                         // 방문 모드에서도 자신의 캐릭터는 보이게 유지
                         // System.out.println("방 접속 성공: " + roomOwner);
+
+                        // UDP 위치 클라이언트 시작
+                        startUDPPositionClient(hostIP, port);
 
                         // 접속 직후 자신의 초기 위치를 서버에 전송 (캐릭터 정보 포함)
                         if (client != null && character != null) {
@@ -394,6 +479,9 @@ public class RoomNetworkManager {
                 client = null;
             }
             
+            // UDP 위치 클라이언트 중지
+            stopUDPPositionClient();
+            
             // 상태 초기화는 onDisconnected() 콜백에서 처리되므로 여기서는 제거
             // System.out.println("방 나가기 완료");
             
@@ -428,17 +516,17 @@ public class RoomNetworkManager {
     }
     
     public void updateCharacterPosition(double x, double y, String direction) {
-        String characterInfo = getUserCharacterInfo();
-        // System.out.println("[RoomNetworkManager] updateCharacterPosition - 전송할 캐릭터 정보: " + characterInfo);
-        
         if (isHosting && server != null) {
-            // 호스팅 중이면 서버에 업데이트
+            // 호스팅 중이면 TCP 서버에 업데이트 (기본 정보용)
             server.updateCharacterPosition(x, y, direction);
+        } else if (isVisiting && udpClient != null && udpClient.isConnected()) {
+            // 방문 중이면 UDP로 위치 정보 전송 (빠른 실시간 업데이트)
+            udpClient.sendPositionUpdate(x, y, direction);
         } else if (isVisiting && client != null) {
-            // 방문 중이면 클라이언트에서 서버로 전송 (캐릭터 정보 포함)
+            // UDP 연결이 실패한 경우 TCP로 폴백
+            String characterInfo = getUserCharacterInfo();
             String visitorMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
                     playerName, x, y, direction, characterInfo);
-            // System.out.println("[RoomNetworkManager] 방문자 메시지 전송: " + visitorMessage);
             client.sendMessage(visitorMessage);
         }
     }
