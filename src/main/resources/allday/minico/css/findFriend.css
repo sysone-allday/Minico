@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.findfriend-root {
+    -fx-background-color: #ffffff;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo";
+}
+
+.findfriend-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+.findfriend-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.findfriend-input {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #CFCFCF;
+    -fx-border-radius: 20;
+    -fx-border-width: 2;
+    -fx-pref-height: 30;
+    -fx-pref-width: 180;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #C0C0C0;
+}
+
+.findfriend-button {
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 4 14;
+}
+
+.findfriend-button:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255, 20, 147, 0.4), 8, 0, 0, 2);
+}
+
+.findfriend-result-text {
+    -fx-text-fill: #757575;
+    -fx-font-size: 13px;
+}
+
+.findfriend-list {
+    -fx-background-radius: 15;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 15;
+    -fx-font-size: 14px;
+}

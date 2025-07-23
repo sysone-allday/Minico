@@ -16,9 +16,9 @@
 
             <Label styleClass="login-title" text="로그인" />
 
-            <TextField fx:id="idField" promptText="아이디" styleClass="login-input" />
+            <TextField fx:id="idField" promptText="아이디" styleClass="login-input" onAction="#login"/>
 
-            <PasswordField fx:id="pwField" promptText="비밀번호" styleClass="login-input" />
+            <PasswordField fx:id="pwField" promptText="비밀번호" styleClass="login-input"  onAction="#login"/>
 
             <Button fx:id="loginButton" onAction="#login" prefHeight="72" prefWidth="373" styleClass="login-btn" text="로그인하기" />
 

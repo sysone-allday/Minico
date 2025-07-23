@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class CharacterSelectController {
+
     @FXML private Button backToSignUpButton;
     @FXML private Button selectMaleButton;
     @FXML private Button selectFemaleButton;
@@ -30,6 +31,7 @@ public class CharacterSelectController {
     
     @FXML private ImageView selectedMinimiPreview;
     @FXML private Label selectedMinimiInfo;
+
     @FXML private Button characterSelectConfirmButton;
 
     private Member member;
@@ -44,8 +46,9 @@ public class CharacterSelectController {
     void showMaleOptions(ActionEvent event) {
         selectedGender = "Male";
         showMinimiOptions("male");
+
     }
-    
+
     @FXML
     void showFemaleOptions(ActionEvent event) {
         selectedGender = "Female";
@@ -149,6 +152,7 @@ public class CharacterSelectController {
         
         boolean success = memberService.signUp(member);
 
+
         if (success) {
             // 회원가입 성공 시 기본 스킨 생성
             if (selectedGender != null && selectedVariant != null) {
@@ -160,9 +164,11 @@ public class CharacterSelectController {
             System.out.println("회원가입 오류 발생");
         }
     }
-
+    
     @FXML
     void backToSignUp(ActionEvent event) { // 회원가입 창으로 돌아가기
         SceneManager.switchTo("SignUp");
     }
+
+
 }
