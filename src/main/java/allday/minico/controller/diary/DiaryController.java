@@ -1,19 +1,16 @@
 package allday.minico.controller.diary;
 
 import allday.minico.dto.diary.Diary;
-import allday.minico.dto.member.Member;
 import allday.minico.service.diary.DiaryService;
 import allday.minico.session.AppSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DiaryController implements Initializable {
