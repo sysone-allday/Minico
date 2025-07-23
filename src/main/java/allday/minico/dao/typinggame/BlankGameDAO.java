@@ -57,7 +57,7 @@ public class BlankGameDAO{
 
         // word_id만 추출
         List<Integer> wordIds = blankGameList.stream()
-                .map(BlankGame::getWord_id)
+                .map(BlankGame::getWordId)
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -85,10 +85,10 @@ public class BlankGameDAO{
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     BlankGame blankGame = new BlankGame();
-                    blankGame.setBlank_id(rs.getInt("blank_id"));
-                    blankGame.setWord_id(rs.getInt("word_id"));
-                    blankGame.setQuestion_text(rs.getString("question_text"));
-                    blankGame.setType_id(rs.getInt("type_id"));
+                    blankGame.setBlankId(rs.getInt("blank_id"));
+                    blankGame.setWordId(rs.getInt("word_id"));
+                    blankGame.setQuestionText(rs.getString("question_text"));
+                    blankGame.setTypeId(rs.getInt("type_id"));
 
                     problemList.add(blankGame);
                 }
