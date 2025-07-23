@@ -34,10 +34,10 @@ public class UDPPositionClient {
             // 연결 확인 메시지 전송
             sendConnectMessage();
             
-            System.out.println("UDP Position Client 연결 성공: " + serverIP + ":" + port);
+            // System.out.println("UDP Position Client 연결 성공: " + serverIP + ":" + port);
             return true;
         } catch (IOException e) {
-            System.err.println("UDP Position Client 연결 실패: " + e.getMessage());
+            // System.err.println("UDP Position Client 연결 실패: " + e.getMessage());
             return false;
         }
     }
@@ -49,7 +49,7 @@ public class UDPPositionClient {
         if (!isConnected) return;
         
         String message = "CONNECT:" + clientId;
-        System.out.println("UDP 연결 메시지 전송: " + message);
+        // System.out.println("UDP 연결 메시지 전송: " + message);
         sendMessage(message);
     }
     
@@ -114,7 +114,7 @@ public class UDPPositionClient {
             socket = null;
         }
         
-        System.out.println("UDP Position Client 연결 종료");
+        // System.out.println("UDP Position Client 연결 종료");
     }
     
     /**

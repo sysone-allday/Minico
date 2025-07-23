@@ -74,7 +74,7 @@ public class UDPPositionServer {
             socket = new DatagramSocket(port);
             isRunning = true;
             
-            System.out.println("UDP Position Server 시작됨 - 포트: " + port);
+            // System.out.println("UDP Position Server 시작됨 - 포트: " + port);
             
             // 메시지 수신 스레드 시작
             threadPool.execute(this::listenForMessages);
@@ -85,7 +85,7 @@ public class UDPPositionServer {
             return true;
             
         } catch (SocketException e) {
-            System.err.println("UDP Position Server 시작 실패: " + e.getMessage());
+            // System.err.println("UDP Position Server 시작 실패: " + e.getMessage());
             return false;
         }
     }
@@ -106,7 +106,7 @@ public class UDPPositionServer {
                 
             } catch (IOException e) {
                 if (isRunning) {
-                    System.err.println("UDP 메시지 수신 오류: " + e.getMessage());
+                    // System.err.println("UDP 메시지 수신 오류: " + e.getMessage());
                 }
             }
         }
@@ -119,7 +119,7 @@ public class UDPPositionServer {
         String message = new String(packet.getData(), 0, packet.getLength());
         int clientPort = packet.getPort();
         
-        System.out.println("UDP 서버 수신: " + message + " from " + packet.getAddress() + ":" + clientPort);
+        // System.out.println("UDP 서버 수신: " + message + " from " + packet.getAddress() + ":" + clientPort);
         
         String[] parts = message.split(":");
         if (parts.length < 2) return;
@@ -142,7 +142,7 @@ public class UDPPositionServer {
                         handlePositionUpdate(clientId, x, y, direction, 
                                            packet.getAddress(), clientPort);
                     } catch (NumberFormatException e) {
-                        System.err.println("잘못된 위치 데이터: " + message);
+                        // System.err.println("잘못된 위치 데이터: " + message);
                     }
                 }
                 break;
@@ -160,7 +160,7 @@ public class UDPPositionServer {
         ClientInfo clientInfo = new ClientInfo(clientId, address, port);
         connectedClients.put(clientId, clientInfo);
         
-        System.out.println("UDP 클라이언트 연결: " + clientId + " (" + address + ":" + port + ")");
+        // System.out.println("UDP 클라이언트 연결: " + clientId + " (" + address + ":" + port + ")");
         
         if (positionListener != null) {
             positionListener.onClientConnected(clientId);
@@ -196,7 +196,7 @@ public class UDPPositionServer {
     private void handleClientDisconnect(String clientId) {
         connectedClients.remove(clientId);
         
-        System.out.println("UDP 클라이언트 연결 해제: " + clientId);
+        // System.out.println("UDP 클라이언트 연결 해제: " + clientId);
         
         if (positionListener != null) {
             positionListener.onClientDisconnected(clientId);
@@ -220,7 +220,7 @@ public class UDPPositionServer {
                         buffer, buffer.length, client.address, client.port);
                     socket.send(packet);
                 } catch (IOException e) {
-                    System.err.println("브로드캐스트 전송 실패 to " + client.clientId + ": " + e.getMessage());
+                    // System.err.println("브로드캐스트 전송 실패 to " + client.clientId + ": " + e.getMessage());
                 }
             }
         }
@@ -240,7 +240,7 @@ public class UDPPositionServer {
                 connectedClients.entrySet().removeIf(entry -> {
                     ClientInfo client = entry.getValue();
                     if (currentTime - client.lastUpdateTime > timeout) {
-                        System.out.println("비활성 클라이언트 제거: " + client.clientId);
+                        // System.out.println("비활성 클라이언트 제거: " + client.clientId);
                         
                         if (positionListener != null) {
                             positionListener.onClientDisconnected(client.clientId);
@@ -272,7 +272,7 @@ public class UDPPositionServer {
         
         connectedClients.clear();
         
-        System.out.println("UDP Position Server 중지됨");
+        // System.out.println("UDP Position Server 중지됨");
     }
     
     /**
@@ -309,11 +309,11 @@ public class UDPPositionServer {
                     buffer, buffer.length, client.address, client.port);
                 socket.send(packet);
             } catch (IOException e) {
-                System.err.println("호스트 위치 브로드캐스트 실패 to " + client.clientId + ": " + e.getMessage());
+                // System.err.println("호스트 위치 브로드캐스트 실패 to " + client.clientId + ": " + e.getMessage());
             }
         }
         
-        System.out.printf("[UDP] 호스트 위치 브로드캐스트: %s (%.1f, %.1f) %s -> %d 클라이언트%n", 
-                         hostName, x, y, direction, connectedClients.size());
+        // System.out.printf("[UDP] 호스트 위치 브로드캐스트: %s (%.1f, %.1f) %s -> %d 클라이언트%n", 
+        //                  hostName, x, y, direction, connectedClients.size());
     }
 }
