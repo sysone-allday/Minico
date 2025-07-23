@@ -204,15 +204,18 @@ public class DiaryController implements Initializable {
             // 메인 화면 FXML 로드
             Parent mainRoot = FXMLLoader.load(getClass().getResource("/allday/minico/view/diary/myroom.fxml"));
 
-            // 현재 Stage와 Scene 가져오기
+            // ① 새 Scene 생성
+            Scene myRoomScene = new Scene(mainRoot, 1280, 800);
+            myRoomScene.getStylesheets().add(
+                    getClass().getResource("/allday/minico/css/diary.css")
+                            .toExternalForm());
+
+            // ② Stage 에 세팅
             Stage stage = (Stage) backButton.getScene().getWindow();
-            Scene scene = stage.getScene();
-
-            // Root 교체
-            stage.getScene().setRoot(mainRoot);
-
-            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
-
+            stage.setScene(myRoomScene);
+            stage.setResizable(false);
+            stage.sizeToScene();
+            stage.show();
         } catch (IOException e) {
             System.err.println("🚫 [화면 전환 실패] myroom.fxml 로드 중 오류 발생");
             System.err.println("경로 확인: /allday/minico/view/diary/myroom.fxml");

@@ -29,11 +29,11 @@
       </AnchorPane>
       <fx:include fx:id="todolist" source="todolist.fxml" />
       <!-- ★ TextArea에 스타일 클래스 추가 -->
-      <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="245" prefHeight="394" prefWidth="459" styleClass="text-field" />
+      <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="265" prefHeight="394" prefWidth="459" wrapText="true" styleClass="text-field" />
 
-      <Text fx:id="diaryContentText" layoutX="719" layoutY="245" visible="false" />
+      <Text fx:id="diaryContentText" layoutX="719" layoutY="265" visible="false" wrappingWidth="459"  />
       <HBox layoutX="710" layoutY="180" spacing="8">
-         <Text text="Today's emotion" styleClass="text"/>
+         <Text text="Today's emotion" styleClass="text-emoji"/>
          <Text fx:id="emotionEmoji" text="😐" styleClass="emoji"/> <!-- 기본값은 무표정 -->
       </HBox>
       <Text fx:id="dateText" layoutX="547" layoutY="105" styleClass="text" text="오늘" />
