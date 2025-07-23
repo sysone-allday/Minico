@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxPlayController">
+   <children>
+      <ImageView fitHeight="815.0" fitWidth="1304.0">
+         <image>
+            <Image url="@../../images/oxgame/background1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="800.0" fitWidth="1280.0">
+         <image>
+            <Image url="@../../images/oxgame/background1-2.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="58.0" layoutY="43.0" prefHeight="713.0" prefWidth="1163.0">
+         <children>
+            <ImageView fitHeight="713.0" fitWidth="1163.0">
+               <image>
+                  <Image url="@../../images/oxgame/background2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="correctEffect" fitHeight="713.0" fitWidth="1163.0" visible="false">
+               <image>
+                  <Image url="@../../images/oxgame/firecracker.gif" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="wrongBackground" fitHeight="713.0" fitWidth="1163.0" visible="false">
+               <image>
+                  <Image url="@../../images/oxgame/background2-1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="wrongEffect" fitHeight="713.0" fitWidth="1163.0" visible="false">
+               <image>
+                  <Image url="@../../images/oxgame/rain4.gif" />
+               </image>
+            </ImageView>
+            <HBox fx:id="topBar" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="1163.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <StackPane fx:id="handlerBtnBackHover" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageBackHover" onMouseClicked="#handleBackToSetting" visible="false">
+                                 <image>
+                                    <Image url="@../../images/oxgame/back_ver2.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="imageBackNormal" onMouseClicked="#handleBackToSetting">
+                                 <image>
+                                    <Image url="@../../images/oxgame/back_ver1.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Text fill="#ffe3ed" stroke="#a85c6f" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="5.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="문제 " textAlignment="CENTER">
+                           <font>
+                              <Font name="NeoDunggeunmo" size="48.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="cntText" fill="#ffe3ed" stroke="#a85c6f" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="5.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="1" textAlignment="CENTER">
+                           <font>
+                              <Font name="NeoDunggeunmo" size="48.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <StackPane fx:id="handlerBtnSkipHover" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageSkipHover" visible="false">
+                                 <image>
+                                    <Image url="@../../images/oxgame/skip_ver2.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="imageSkipNomal">
+                                 <image>
+                                    <Image url="@../../images/oxgame/skip_ver1.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <AnchorPane layoutX="50.0" layoutY="112.0" prefHeight="273.0" prefWidth="1061.0">
+               <children>
+                  <ImageView fitHeight="287.0" fitWidth="1064.0">
+                     <image>
+                        <Image url="@../../images/oxgame/ox_text_box.png" />
+                     </image>
+                  </ImageView>
+                  <StackPane alignment="TOP_CENTER" layoutX="-1.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="287.0" prefWidth="1064.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Text fx:id="questionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="980.0">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </Text>
+                        <Text fx:id="explanationText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="1000.0">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </Text>
+                        <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="980.0">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets bottom="30.0" top="30.0" />
+                     </padding>
+                  </StackPane>
+               </children>
+            </AnchorPane>
+            <HBox alignment="CENTER" layoutX="50.0" layoutY="412.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="300.0" prefWidth="1064.0">
+               <children>
+                  <StackPane fx:id="stackPaneO" onMouseClicked="#handleOButtonClick" prefHeight="318.0" prefWidth="394.0">
+                     <children>
+                        <ImageView fx:id="oPopupSign" fitHeight="276.0" fitWidth="354.0" translateX="57.0" translateY="20.0" visible="false">
+                           <image>
+                              <Image url="@../../images/oxgame/ox_sign.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgBtnO" fitHeight="166.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/oxgame/correct_o.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+                  <VBox alignment="CENTER" prefHeight="113.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="90.0" prefWidth="278.0">
+                           <children>
+                              <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="89.0" prefWidth="220.0" style="-fx-background-color: #FEE8E1; -fx-background-radius: 40; -fx-border-radius: 40; -fx-border-width: 3; -fx-border-color: #BEA5A9;" text="00:00" textAlignment="CENTER" textFill="RED">
+                                 <font>
+                                    <Font size="48.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="87.0" prefWidth="278.0">
+                           <children>
+                              <ImageView fx:id="minimiEffectFeel" fitHeight="90.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true" />
+                           </children></VBox>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="278.0">
+                           <children>
+                              <ImageView fx:id="minimi" fitHeight="120.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true" />
+                           </children></VBox>
+                     </children>
+                  </VBox>
+                  <StackPane fx:id="stackPaneX" onMouseClicked="#handleXButtonClick" prefHeight="318.0" prefWidth="394.0">
+                     <children>
+                        <ImageView fitHeight="276.0" fitWidth="354.0" scaleX="-1.0" translateX="-59.0" translateY="20.0" visible="false" fx:id="xPopupSign">
+                           <image>
+                              <Image url="@../../images/oxgame/ox_sign.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgBtnX" fitHeight="151.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/oxgame/wrong_x.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
