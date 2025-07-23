@@ -18,6 +18,9 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +30,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class OxPlayController {
 
@@ -100,9 +105,80 @@ public class OxPlayController {
         clip2.setArcHeight(50);
         wrongEffect.setClip(clip2);
 
+        handlerBtnSkipHover.setOnMouseClicked(e -> skipGame());
+        handlerBtnSkipHover.setOnMouseClicked(this::handleSkipButtonClick);
+
 
 
     }
+    @FXML
+    private void handleSkipButtonClick(MouseEvent e) {
+        // 1) 확인용 Alert
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("게임 중단");
+        alert.setHeaderText(null);                          // 헤더 숨김
+        alert.setContentText("게임을 중단하시겠습니까?");
+
+        // 아이콘·버튼 순서 커스터마이즈 (선택)
+        ButtonType yes = new ButtonType("네", ButtonBar.ButtonData.YES);
+        ButtonType no  = new ButtonType("아니오", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(yes, no);
+
+        // 2) 모달(=현재 창을 잠그고)로 보여주기
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // 3) 사용자 선택에 따른 분기
+        if (result.isPresent() && result.get() == yes) {
+            skipGame();       // → 실제 스킵 로직
+        }
+    }
+
+    // 스킵 버튼(또는 긴급 종료)에 공통 사용 가능
+    private void skipGame() {
+
+        // 1) 진행 중인 타이머 정지
+        if (countdown != null) {
+            countdown.stop();
+            countdown = null;
+        }
+        if (timerLabel.textProperty().isBound()) {
+            timerLabel.textProperty().unbind();
+        }
+
+        // 2) 실행 대기 중인 PauseTransition 정지
+        //    → 보여주기/해설용 Transition이 있을 수 있음
+        //    → 전역 리스트로 관리해 두었다면 loop 돌면서 stop()
+        activeTransitions.forEach(PauseTransition::stop);
+        activeTransitions.clear();
+
+        // 3) 문제 인덱스를 끝으로 이동
+        currentIndex = questionList.size();
+
+        // 4) 즉시 결과 화면
+        saveGameResult();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-result.fxml"));
+            Parent root = loader.load();
+
+            // 컨트롤러 주입
+            OxResultController controller = loader.getController();
+            controller.setResultData(oxGameResult);  // oxGameResult 전달
+
+            // 화면 전환
+            Scene scene = new Scene(root, 1280, 800);
+            SceneManager.getPrimaryStage().setScene(scene);
+
+        } catch (Exception e) {
+            System.err.println("OX 결과 화면으로 전환 실패: " + e.getMessage());
+        }
+
+
+    }
+
+    // 예시: Transition을 등록/해제해 두는 전역 리스트
+    private final List<PauseTransition> activeTransitions = new ArrayList<>();
+
 
     // 유저 선택 팻말 처리
     private void showPopupSign(ImageView popupSign) {
@@ -163,6 +239,7 @@ public class OxPlayController {
         startGameIntro();
     }
 
+    private OxGameResult oxGameResult;
     private List<OxQuestion> questionList;
     private OxUserSetting setting;
     private int currentIndex = 0;       // 문제 회차
@@ -207,7 +284,6 @@ public class OxPlayController {
         });
         pause1.play();
     }
-
 
 
     private void runGameLoop() {
@@ -272,6 +348,7 @@ public class OxPlayController {
 
         // 1초 후 → 정답 공개
         PauseTransition pause1 = new PauseTransition(Duration.seconds(1));
+        activeTransitions.add(pause1);
         pause1.setOnFinished(e -> {
             infoText.setText(String.format("정답은 [ %s ] 입니다.", question.getAnswer()));
 
@@ -288,12 +365,18 @@ public class OxPlayController {
                     currentIndex++;
                     clearAllTexts();
                     clearAllBackgroundAndEffect();
-                    infoText.setVisible(true);
-                    infoText.setText("다음 문제입니다.");
+                    
+                    // 마지막 문제 판별
+                    if (currentIndex < questionList.size()) {
+                        infoText.setVisible(true);
+                        infoText.setText("다음 문제입니다.");
 
-                    PauseTransition pause4 = new PauseTransition(Duration.seconds(1));
-                    pause4.setOnFinished(e4 -> runGameLoop());
-                    pause4.play();
+                        PauseTransition pause4 = new PauseTransition(Duration.seconds(1));
+                        pause4.setOnFinished(e4 -> runGameLoop());
+                        pause4.play();
+                    } else {
+                        runGameLoop();
+                    }
                 });
                 pause3.play();
             });
@@ -322,11 +405,14 @@ public class OxPlayController {
     }
 
     private void saveGameResult() {
-        OxGameResult result = new OxGameResult();
-        result.setCorrectCount(correctCount);
-        result.setTotalCount(setting.getCount());
-        result.setDifficulty(setting.getDifficulty());
-        System.out.println("정답률 : " + result.getAccuracy());
+        if (oxGameResult == null) {
+            oxGameResult = new OxGameResult();
+        }
+        oxGameResult.setCorrectCount(correctCount);
+        oxGameResult.setTotalCount(setting.getCount());
+        oxGameResult.setDifficulty(setting.getDifficulty());
+        oxGameResult.setTypeName(setting.getProblemType().getTypeName());
+        System.out.println("정답률 : " + oxGameResult.getAccuracy());
     }
 
 
