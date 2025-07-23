@@ -74,16 +74,7 @@ public class OxGameSettingController {
             imageHover.setVisible(isNowHover);
             imageHover.setCursor(Cursor.HAND); // 손 모양 커서
         });
-
-        // 테스트용 마우스 핸들러는 개발 모드에서만 작동
-        if (DEBUG_MOUSE_BORDER) {
-            Platform.runLater(() -> {
-                rootPane.requestLayout();
-                rootPane.layout();
-                addMouseTestHandler(rootPane);
-            });
-        }
-
+        
         // start 이미지 크기 변화
         btnStartImage.setOnMouseEntered(e -> {
             btnStartImage.setScaleX(1.05);
@@ -100,7 +91,6 @@ public class OxGameSettingController {
         setupComboBox();
     }
 
-    // ======= 로직 처리 =======
     // 콤보박스(주제 선택) 내용 불러오기
     private void setupComboBox() {
         List<ProblemTypeDTO> typeList = settingService.getProblemType();
@@ -111,7 +101,6 @@ public class OxGameSettingController {
         });
     }
 
-    // ====== FXML 이벤트 처리 ======
     // 클릭 이벤트 - 버튼 클릭 시 스타일 변경
     @FXML
     private void handleBackToMiniroom(MouseEvent event) {
@@ -126,6 +115,7 @@ public class OxGameSettingController {
         }
     }
 
+    // 사용자가 선택한 값 저장 및 css 업데이트
     @FXML
     public void handleSettingSelect(ActionEvent event) {
         Button clickedBtn = (Button) event.getSource();
@@ -170,30 +160,6 @@ public class OxGameSettingController {
     // 문제 시작 버튼을 클릭했을 때
     @FXML
     public void startGame(MouseEvent mouseEvent) {
-//        // 선택된 난이도
-//        String selectedLevel = lvButtons.stream()
-//                .filter(btn -> btn.getStyleClass().contains("selected"))
-//                .map(Button::getText)
-//                .findFirst()
-//                .orElse(null);
-//
-//        // 선택된 타이머
-//        int selectedTimer = tmButtons.stream()
-//                .filter(btn -> btn.getStyleClass().contains("selected"))
-//                .map(btn -> Integer.parseInt(btn.getText()))
-//                .findFirst()
-//                .orElse(0);
-//
-//        // 선택된 문제 수
-//        int selectedCount = ctButtons.stream()
-//                .filter(btn -> btn.getStyleClass().contains("selected"))
-//                .map(btn -> Integer.parseInt(btn.getText()))
-//                .findFirst()
-//                .orElse(0);
-//
-//        // 선택된 주제
-//        ProblemTypeDTO selectedProblemType = selectProblemType.getValue();
-
         // 검증 - 추후 모달같은 창이 있으면 띄우면 좋을 것 같음
         if (oxUserSetting.getDifficulty() == null
                 || oxUserSetting.getTimer() == 0
@@ -203,6 +169,7 @@ public class OxGameSettingController {
             return;
         }
 
+        // 게임 화면으로 전환
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-play.fxml"));
             Parent root = loader.load();
