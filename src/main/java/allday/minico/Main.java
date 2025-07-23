@@ -3,7 +3,7 @@ package allday.minico;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.AudioManager;
 import javafx.application.Application;
-// import javafx.fxml.FXMLLoader;
+// import javafx.fxml.FXMLLoader;d
 // import javafx.scene.Scene;
 import javafx.stage.Stage;
 

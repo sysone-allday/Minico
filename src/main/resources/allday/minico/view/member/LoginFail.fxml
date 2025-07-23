@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
+<AnchorPane prefHeight="200.0" prefWidth="400.0"
+            styleClass="loginfail-root"
+            stylesheets="@../../css/loginFail.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="allday.minico.controller.member.LoginFailController">
 
-<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.LoginFailController">
-   <children>
-      <Label layoutX="-177.0" layoutY="-38.0" text="Label" />
-      <Label alignment="CENTER" layoutX="62.0" layoutY="34.0" prefHeight="65.0" prefWidth="275.0" text="ID 혹은 비밀번호가 틀렸습니다">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="backToLoginButton" layoutX="174.0" layoutY="132.0" mnemonicParsing="false" onAction="#backToLogin" text="확인" />
-   </children>
+   <VBox alignment="CENTER" spacing="30"
+         AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="30.0"
+         AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="20.0">
+
+      <!-- 실패 메시지 -->
+      <Label text="ID 혹은 비밀번호가 틀렸습니다"
+             styleClass="loginfail-message"/>
+
+      <!-- 확인 버튼 -->
+      <Button fx:id="backToLoginButton" text="확인"
+              onAction="#backToLogin"
+              styleClass="loginfail-button"/>
+   </VBox>
 </AnchorPane>

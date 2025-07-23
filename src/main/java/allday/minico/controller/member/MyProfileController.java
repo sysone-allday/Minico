@@ -48,6 +48,10 @@ public class MyProfileController {
         String formattedTime = loginmember.getJoinDate() != null
                 ? loginmember.getJoinDate().format(formatter) : "가입일 알 수 없음";
         joindateText.setText(formattedTime);
+
+        // 미니미 불러오기
+        //String minimiPath = memberService.getMinimiPath(loginmember.getMemberId());
+        //myMinimiImg.setImage(new Image(minimiPath));
     }
 
     @FXML

@@ -78,8 +78,8 @@ public class LoginController {
    void login(ActionEvent event) { // 로그인 버튼 클릭 시 마이룸으로 이동
 
         // 동시 로그인이 되지 않도록 로그아웃정보를 기반으로 로그인 가능여부 체크
-        boolean isMultipleLogin = memberService.preventMultipleLogins(idField.getText());
-        if(Boolean.FALSE.equals(isMultipleLogin)) {
+        Boolean isMultipleLogin = memberService.preventMultipleLogins(idField.getText()); // boolean 이 아니라 Boolean 이어야 함!!!!!!!
+        if (Boolean.FALSE.equals(isMultipleLogin)) { // false면 중복 로그인 → 차단
             SceneManager.showModal("MultipleLoginError", "중복 로그인");
             return;
         }
