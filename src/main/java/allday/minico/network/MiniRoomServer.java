@@ -27,6 +27,9 @@ public class MiniRoomServer {
         void onVisitorLeft(String visitorName);
 
         void onVisitorUpdate(String visitorName, double x, double y, String direction);
+        
+        // 캐릭터 정보 포함한 방문자 업데이트 (새로 추가)
+        void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
 
         void onChatMessage(String senderName, String message);
     }
@@ -169,8 +172,30 @@ public class MiniRoomServer {
     }
 
     public String getRoomInfo() {
-        return String.format("ROOM_INFO:%s:%.2f:%.2f:%s",
-                roomOwner, characterX, characterY, characterDirection);
+        // 호스트의 캐릭터 정보도 함께 전송
+        String hostCharacterInfo = getHostCharacterInfo();
+        return String.format("ROOM_INFO:%s:%.2f:%.2f:%s:%s",
+                roomOwner, characterX, characterY, characterDirection, hostCharacterInfo);
+    }
+    
+    /**
+     * 호스트의 캐릭터 정보를 가져옵니다
+     */
+    private String getHostCharacterInfo() {
+        try {
+            // SkinUtil을 사용하여 현재 로그인된 사용자의 캐릭터 정보 조회
+            allday.minico.dto.member.Member loginMember = allday.minico.session.AppSession.getLoginMember();
+            if (loginMember != null) {
+                String characterInfo = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(loginMember.getMemberId());
+                System.out.println("[MiniRoomServer] 호스트 캐릭터 정보: " + characterInfo);
+                return characterInfo;
+            }
+        } catch (Exception e) {
+            System.out.println("[MiniRoomServer] 호스트 캐릭터 정보 조회 실패: " + e.getMessage());
+        }
+        
+        // 기본값 반환
+        return "Male:대호";
     }
 
     public void sendChatMessage(String message) {
@@ -228,20 +253,25 @@ public class MiniRoomServer {
             // 방문자 캐릭터 업데이트 처리
             if (message.startsWith("VISITOR_UPDATE:")) {
                 String[] parts = message.split(":");
-                if (parts.length >= 5) {
+                if (parts.length >= 6) { // Female:민서 형태를 고려하여 최소 6개 필요
                     String visitorName = parts[1];
                     double x = Double.parseDouble(parts[2]);
                     double y = Double.parseDouble(parts[3]);
                     String direction = parts[4];
+                    // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
+                    String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
+                    
+                    System.out.println("[MiniRoomServer] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
 
-                    String updateMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s",
-                            visitorName, x, y, direction);
+                    // 캐릭터 정보 포함한 업데이트 메시지
+                    String updateMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
+                            visitorName, x, y, direction, characterInfo);
                     // 다른 클라이언트들에게 방문자 움직임 브로드캐스트
                     server.broadcastToClients(updateMessage);
 
-                    // 호스트에게도 방문자 업데이트 알림
+                    // 호스트에게도 방문자 업데이트 알림 (캐릭터 정보 포함)
                     if (server.hostUpdateListener != null) {
-                        server.hostUpdateListener.onVisitorUpdate(visitorName, x, y, direction);
+                        server.hostUpdateListener.onVisitorUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
                     }
                 }
             }
