@@ -1,6 +1,6 @@
 package allday.minico.controller.oxgame;
 
-import allday.minico.dto.member.Member;
+import allday.minico.dto.oxgame.OxUserSetting;
 import allday.minico.dto.oxgame.ProblemTypeDTO;
 import allday.minico.service.oxgame.OxGameSettingService;
 import allday.minico.utils.member.SceneManager;
@@ -22,15 +22,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 public class OxGameSettingController {
     private static final OxGameSettingService settingService = OxGameSettingService.getInstance();
+    private final OxUserSetting oxUserSetting = new OxUserSetting();
 
     // === 버튼 그룹 - 난도, 타이머, 문제 횟수 설정 ===
     @FXML private Button btnLvLow, btnLvMid, btnLvHigh, btnLvRandom;
-    @FXML private Button btnTM10, btnTM15, btnTM20;
+    @FXML private Button btnTM5, btnTM10, btnTM15;
     @FXML private Button btnCT5, btnCT10, btnCT15;
 
     // 버튼을 List에 담아, 중복 선택 방지
@@ -64,7 +64,7 @@ public class OxGameSettingController {
 
         // 버튼 그룹 초기화
         lvButtons = List.of(btnLvLow, btnLvMid, btnLvHigh, btnLvRandom);
-        tmButtons = List.of(btnTM10, btnTM15, btnTM20);
+        tmButtons = List.of(btnTM5, btnTM10, btnTM15);
         ctButtons = List.of(btnCT5, btnCT10, btnCT15);
 
         // Hover 이미지 전환 처리
@@ -106,6 +106,9 @@ public class OxGameSettingController {
         List<ProblemTypeDTO> typeList = settingService.getProblemType();
         System.out.println(typeList.isEmpty());
         selectProblemType.setItems(FXCollections.observableArrayList(typeList));
+        selectProblemType.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            oxUserSetting.setProblemType(newVal);
+        });
     }
 
     // ====== FXML 이벤트 처리 ======
@@ -118,8 +121,8 @@ public class OxGameSettingController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1280, 800);
             SceneManager.getPrimaryStage().setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("미니룸 이동 화면 전환 실패 " + e.getMessage());
         }
     }
 
@@ -129,10 +132,13 @@ public class OxGameSettingController {
 
         if (lvButtons.contains(clickedBtn)) {
             updateSelectedStyle(clickedBtn, lvButtons);
+            oxUserSetting.setDifficulty(clickedBtn.getText());
         } else if (tmButtons.contains(clickedBtn)) {
             updateSelectedStyle(clickedBtn, tmButtons);
+            oxUserSetting.setTimer(Integer.parseInt(clickedBtn.getText()));
         } else if (ctButtons.contains(clickedBtn)) {
             updateSelectedStyle(clickedBtn, ctButtons);
+            oxUserSetting.setCount(Integer.parseInt(clickedBtn.getText()));
         }
     }
 
@@ -160,4 +166,55 @@ public class OxGameSettingController {
         }
 
     }
+
+    // 문제 시작 버튼을 클릭했을 때
+    @FXML
+    public void startGame(MouseEvent mouseEvent) {
+//        // 선택된 난이도
+//        String selectedLevel = lvButtons.stream()
+//                .filter(btn -> btn.getStyleClass().contains("selected"))
+//                .map(Button::getText)
+//                .findFirst()
+//                .orElse(null);
+//
+//        // 선택된 타이머
+//        int selectedTimer = tmButtons.stream()
+//                .filter(btn -> btn.getStyleClass().contains("selected"))
+//                .map(btn -> Integer.parseInt(btn.getText()))
+//                .findFirst()
+//                .orElse(0);
+//
+//        // 선택된 문제 수
+//        int selectedCount = ctButtons.stream()
+//                .filter(btn -> btn.getStyleClass().contains("selected"))
+//                .map(btn -> Integer.parseInt(btn.getText()))
+//                .findFirst()
+//                .orElse(0);
+//
+//        // 선택된 주제
+//        ProblemTypeDTO selectedProblemType = selectProblemType.getValue();
+
+        // 검증 - 추후 모달같은 창이 있으면 띄우면 좋을 것 같음
+        if (oxUserSetting.getDifficulty() == null
+                || oxUserSetting.getTimer() == 0
+                || oxUserSetting.getCount() == 0
+                || oxUserSetting.getProblemType() == null) {
+            System.out.println("모든 설정을 선택해주세요.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-play.fxml"));
+            Parent root = loader.load();
+
+            // OxViewController 컨트롤러에 데이터(사용자가 선택한 게임 세팅 값) 넘김
+            OxPlayController controller = loader.getController();
+            controller.initData(oxUserSetting);
+
+            SceneManager.getPrimaryStage().setScene(new Scene(root, 1280, 800));
+        } catch (Exception e) {
+            System.err.println("게임 시작 화면 전환 실패 " + e.getMessage());
+        }
+    }
+
 }
