@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.MyRoomController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../css/diary.css" fx:controller="allday.minico.controller.diary.MyRoomController">
     <children>
         <!-- 전체 배경 -->
         <ImageView fitHeight="800.0" fitWidth="1280.0" mouseTransparent="true">
@@ -40,9 +40,9 @@
 
         <Pane fx:id="groundPane" prefHeight="300" prefWidth="1180" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50">
             <!-- 캐릭터 1명 -->
-            <ImageView fitHeight="256.0" fitWidth="206.0" layoutX="465.0" layoutY="-159.0">
-                <image><Image url="@../../images/character/민서미니미.png" /></image>
-            </ImageView>
+            <ImageView fx:id="minimiImageView"
+                       fitHeight="256.0" fitWidth="206.0"
+                       layoutX="465.0" layoutY="-159.0"/>
 
             <!-- 잡초 7개 (달성률에 따라 visible 토글) -->
             <ImageView fx:id="weed1" fitHeight="91.0" fitWidth="92.0" layoutX="859.0" layoutY="41.0">
@@ -69,7 +69,7 @@
         </Pane>
 
         <Button fx:id="backButton"
-                layoutX="60" layoutY="56"
+                layoutX="70" layoutY="66"
                 prefWidth="120" prefHeight="40"
                 text="〈 Back"
                 styleClass="back-button"

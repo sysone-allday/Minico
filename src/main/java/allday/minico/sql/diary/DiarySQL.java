@@ -22,4 +22,8 @@ public class DiarySQL {
         WHERE TO_CHAR(WRITTEN_AT, 'YYYY-MM-DD') = ?
           AND MEMBER_ID = ?
         """;
+
+    public static final String IMAGE_INSERT = """
+            SELECT image_path FROM skin WHERE member_id = ?
+            """;
 }
