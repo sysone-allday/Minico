@@ -13,6 +13,7 @@ module allday.minico {
     requires java.sql;
     requires static lombok;
     requires java.desktop;
+    requires java.net.http;
     requires annotations;
 
     opens allday.minico.controller.member to javafx.fxml;

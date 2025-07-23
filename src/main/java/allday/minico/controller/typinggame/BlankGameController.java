@@ -120,7 +120,8 @@ public class BlankGameController {
             blankGameList.add(blankGame);
         }
 
-        this.problemList = blankGameService.getBlankProblems(blankGameList);
+        this.problemList = blankGameService.getBlankProblems(blankGameList, successWords);
+
         currentProblemIndex = 0;
         success = 0;
         fail = 0;
