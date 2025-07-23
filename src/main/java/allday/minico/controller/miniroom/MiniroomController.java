@@ -318,6 +318,12 @@ public class MiniroomController implements Initializable {
         System.out.println("호스트 캐릭터 생성 (캐릭터 정보 포함): X=" + x + ", Y=" + y + ", 방향=" + direction + 
                          ", 호스트명=" + hostName + ", 캐릭터:" + characterInfo);
     }
+    
+    private void createHostCharacterWithInfo(double x, double y, String direction, String characterInfo) {
+        hostCharacter = characterManager.createHostCharacterWithInfo(hostName, x, y, direction, characterInfo);
+        System.out.println("호스트 캐릭터 생성 (캐릭터 정보 포함): X=" + x + ", Y=" + y + ", 방향=" + direction + 
+                         ", 호스트명=" + hostName + ", 캐릭터:" + characterInfo);
+    }
 
     private void updateHostCharacter(double x, double y, String direction) {
         if (hostCharacter == null) {
