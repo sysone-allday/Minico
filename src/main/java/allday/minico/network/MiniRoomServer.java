@@ -187,11 +187,11 @@ public class MiniRoomServer {
             allday.minico.dto.member.Member loginMember = allday.minico.session.AppSession.getLoginMember();
             if (loginMember != null) {
                 String characterInfo = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(loginMember.getMemberId());
-                System.out.println("[MiniRoomServer] 호스트 캐릭터 정보: " + characterInfo);
+                // System.out.println("[MiniRoomServer] 호스트 캐릭터 정보: " + characterInfo);
                 return characterInfo;
             }
         } catch (Exception e) {
-            System.out.println("[MiniRoomServer] 호스트 캐릭터 정보 조회 실패: " + e.getMessage());
+            // System.out.println("[MiniRoomServer] 호스트 캐릭터 정보 조회 실패: " + e.getMessage());
         }
         
         // 기본값 반환
@@ -261,7 +261,7 @@ public class MiniRoomServer {
                     // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
                     String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
                     
-                    System.out.println("[MiniRoomServer] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
+                    // System.out.println("[MiniRoomServer] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
 
                     // 캐릭터 정보 포함한 업데이트 메시지
                     String updateMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
