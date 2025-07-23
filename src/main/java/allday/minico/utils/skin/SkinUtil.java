@@ -7,10 +7,7 @@ import allday.minico.session.AppSession;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 스킨 관련 유틸리티 클래스
- * 레벨업 시 자동 스킨 해금 및 미니룸 캐릭터 업데이트
- */
+
 public class SkinUtil {
     
     private static final SkinService skinService = SkinService.getInstance();
@@ -48,10 +45,7 @@ public class SkinUtil {
         }
     }
     
-    /**
-     * 현재 사용자의 스킨 이미지 경로 반환 (미니룸에서 사용)
-     * @return 현재 레벨에 맞는 스킨 이미지 경로
-     */
+
     public static String getCurrentSkinImagePath() {
         Member loginMember = AppSession.getLoginMember();
         if (loginMember != null) {
@@ -60,10 +54,7 @@ public class SkinUtil {
         return null;
     }
     
-    /**
-     * 멤버의 미니미 변형 정보 조회
-     * SKIN 테이블에서 사용자의 실제 캐릭터 이름을 조회
-     */
+
     private static String getMinimiVariant(String memberId, String minimiType) {
         return getCurrentUserCharacterName(memberId);
     }
