@@ -7,6 +7,17 @@ public class AppSession {
     private static Member loginMember;
     private static long loginlogId = -1;
     private static String playerNickname; // 플레이어 닉네임 저장
+    private static AppSession instance = new AppSession(); // 싱글톤 인스턴스
+    
+    private AppSession() {} // private 생성자
+    
+    public static AppSession getInstance() {
+        return instance;
+    }
+    
+    public Member getCurrentUser() {
+        return loginMember;
+    }
 
     public static void setLoginMember(Member member) {
         loginMember = member;
