@@ -1,6 +1,7 @@
 package allday.minico.controller.diary;
 
 import allday.minico.dto.diary.Todolist;
+import allday.minico.service.diary.DiaryService;
 import allday.minico.service.diary.TodolistService;
 import allday.minico.session.AppSession;
 import com.google.gson.JsonObject;
@@ -21,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,7 +39,9 @@ public class MyRoomController {
 
     @FXML private ImageView weatherImageView;
     @FXML private Pane calendarContainer;
+    @FXML private ImageView minimiImageView;
     private final TodolistService todoService = new TodolistService();
+    private final DiaryService diaryService = new DiaryService();
 
     // 잡초 ImageView 7개 주입
     @FXML private ImageView weed1; @FXML private ImageView weed2; @FXML private ImageView weed3;
@@ -48,25 +52,39 @@ public class MyRoomController {
     private List<ImageView> weeds;   // 편하게 리스트로 묶기
     private String memberId;
 
-    private static final String API_KEY = getApiKey();
+    // 날씨 api 키
+    private static final String API_KEY = "c1b35f20fb45fd683ea1a60795b70f0d";
 
-    private static String getApiKey() {
-        String key = System.getenv("WEATHER_API_KEY");
-        if (key == null || key.isBlank()) {
-            throw new IllegalStateException("환경 변수 WEATHER_API_KEY 가 설정되지 않았습니다.");
-        }
-        return key;
-    }
     @FXML
     public void initialize() {
         memberId = AppSession.getLoginMember().getMemberId();
         weeds = List.of(weed1, weed2, weed3, weed4, weed5, weed6, weed7, weed8, weed9, weed10, weed11);
         linkTodoController();      // Todo 컨트롤러 연결(화면엔 안 붙임)
 
-        updateWeatherImage("Seoul");
+        updateWeatherImage("Seoul"); // 날씨 이미지 도시 설정
         embedCalendar(); // 달력 넣기
 
         updateWeedDensity(loadTodayProgress());      // 초기값(0% 달성 → 잡초 전체 노출)
+
+        /* 미니미 이미지 변경 */
+        // skin DB에서 image_path 조회
+        String imagePath = diaryService.getImagePathFor(memberId);
+
+        // 경로 유형에 따라 이미지 로드
+        Image img;
+        if (imagePath.startsWith("/") || imagePath.startsWith("@")) {      // 클래스패스 자원
+            URL res = getClass().getResource(imagePath.startsWith("@")
+                    ? imagePath.substring(1)      // "@../" → "../"
+                    : imagePath);
+            img = new Image(res.toExternalForm());
+        } else if (imagePath.startsWith("http")) {                         // URL
+            img = new Image(imagePath, true);
+        } else {                                                           // 로컬 파일 시스템
+            img = new Image(new File(imagePath).toURI().toString());
+        }
+
+        // 4) ImageView에 세팅
+        minimiImageView.setImage(img);
     }
 
     private double loadTodayProgress() {

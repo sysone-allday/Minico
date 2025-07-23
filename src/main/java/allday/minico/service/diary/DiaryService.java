@@ -19,4 +19,11 @@ public class DiaryService {
     public boolean editDiary(Diary diary) {
         return diaryDao.updateDiary(diary);
     }
+    public String getImagePathFor(String memberId) {
+        String path = DiaryDAO.findImagePathByMemberId(memberId);
+        return (path == null || path.isBlank())
+                ? "/allday/minico/images/character/민서미니미.png"
+                : path;
+    }
+
 }
