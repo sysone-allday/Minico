@@ -24,4 +24,10 @@ public class MemberSQL {
 			FROM MEMBER
 			WHERE MEMBER_ID = ? AND MEMBER_PASSWORD = ?
 			""";
+	
+	public static String getMemberByNicknameSQL = """
+			SELECT *
+			FROM MEMBER
+			WHERE NICKNAME = ?
+			""";
 }

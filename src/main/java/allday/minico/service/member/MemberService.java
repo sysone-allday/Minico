@@ -54,4 +54,19 @@ public class MemberService implements MemberServiceInterface {
             return null;
         }
     }
+
+    /**
+     * 닉네임으로 회원 정보 조회
+     * @param nickname
+     * @return
+     */
+    public Member getMemberByNickname(String nickname) {
+        try {
+            return memberDAO.getMemberByNickname(nickname);
+        } catch (SQLException e) {
+            System.out.println("닉네임으로 회원정보 가져오는 중 SQL 예외 발생");
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

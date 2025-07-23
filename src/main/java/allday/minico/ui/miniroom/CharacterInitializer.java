@@ -60,21 +60,12 @@ public class CharacterInitializer {
      */
     private String getUserCharacterImagePath() {
         try {
-            // SkinService를 통해 현재 사용자의 스킨 정보 가져오기
             String memberId = AppSession.getLoginMember().getMemberId();
-            String minimiType = AppSession.getLoginMember().getMinimi();
             
-            if (minimiType != null && memberId != null) {
-                // SKIN 테이블에서 사용자의 실제 캐릭터 정보 조회
-                String characterName = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterName(memberId);
-                String gender = minimiType.toLowerCase(); // "male" 또는 "female"
-                
-                String imagePath = String.format("/allday/minico/images/char/%s/%s_front.png", 
-                                   gender, characterName);
-                
+            if (memberId != null) {
+                // 캐싱된 최적화 메서드 사용 - DB 조회를 최소화
+                String imagePath = allday.minico.utils.skin.SkinUtil.getCharacterImagePath(memberId, "front");
                 System.out.println("[CharacterInitializer] 생성된 초기 이미지 경로: " + imagePath);
-                System.out.println("[CharacterInitializer] 사용자 캐릭터: " + characterName);
-                
                 return imagePath;
             }
         } catch (Exception e) {

@@ -143,7 +143,7 @@ public class SkinDAO {
         return null;
     }
     
-    // 레벨업 시 새 스킨 자동 해금
+    
     public boolean insertLevelUpSkin(String memberId, int levelNo, String imagePath) throws SQLException {
         String sql = SkinSQL.insertLevelUpSkinSQL;
 

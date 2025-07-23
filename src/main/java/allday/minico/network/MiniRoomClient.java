@@ -1,5 +1,8 @@
 package allday.minico.network;
 
+import allday.minico.session.AppSession;
+import allday.minico.utils.skin.SkinUtil;
+
 import java.io.*;
 import java.net.*;
 
@@ -19,6 +22,12 @@ public class MiniRoomClient {
         void onVisitorUpdate(String visitorName, double x, double y, String direction);
         void onChatMessage(String senderName, String message);
         void onVisitorLeft(String visitorName); // 새로 추가
+    }
+    
+    // 캐릭터 정보 포함한 확장 인터페이스
+    public interface MiniRoomClientListenerWithCharacterInfo extends MiniRoomClientListener {
+        void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
+        void onRoomInfoWithCharacterInfo(String owner, double x, double y, String direction, String characterInfo);
     }
     
     public MiniRoomClient(String clientId, MiniRoomClientListener listener) {
@@ -85,6 +94,17 @@ public class MiniRoomClient {
         }
     }
     
+    public void sendPositionUpdate(double x, double y, String direction) {
+        if (writer != null && isConnected) {
+            String characterInfo = SkinUtil.getCurrentUserCharacterInfo(AppSession.getLoginMember().getMemberId());
+            String message = String.format("UPDATE_POSITION:%s:%.2f:%.2f:%s:%s",
+                    clientId, x, y, direction, characterInfo);
+            writer.println(message);
+            System.out.println("클라이언트 - 위치 및 캐릭터 정보 전송: " + message);
+            System.out.println("클라이언트 - 전송된 캐릭터 정보 상세: " + characterInfo + " (clientId: " + clientId + ")");
+        }
+    }
+
     private void listenForMessages() {
         try {
             String message;
@@ -110,12 +130,23 @@ public class MiniRoomClient {
         
         switch (messageType) {
             case "ROOM_INFO":
-                if (parts.length >= 5) {
+                if (parts.length >= 6) { // 캐릭터 정보 포함으로 6개 필요
                     String owner = parts[1];
                     double x = Double.parseDouble(parts[2]);
                     double y = Double.parseDouble(parts[3]);
                     String direction = parts[4];
-                    listener.onRoomInfo(owner, x, y, direction);
+                    // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Male:온유)
+                    String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
+                    
+                    // System.out.println("[MiniRoomClient] 호스트 방 정보 - 이름: " + owner + ", 캐릭터: " + characterInfo);
+                    
+                    // 캐릭터 정보 포함한 콜백 호출
+                    if (listener instanceof MiniRoomClientListenerWithCharacterInfo) {
+                        ((MiniRoomClientListenerWithCharacterInfo) listener).onRoomInfoWithCharacterInfo(owner, x, y, direction, characterInfo);
+                    } else {
+                        // 기존 방식으로 폴백
+                        listener.onRoomInfo(owner, x, y, direction);
+                    }
                 }
                 break;
                 
@@ -130,12 +161,23 @@ public class MiniRoomClient {
                 break;
                 
             case "VISITOR_UPDATE":
-                if (parts.length >= 5) {
+                if (parts.length >= 6) { // Female:민서 형태를 고려하여 최소 6개 필요
                     String visitorName = parts[1];
                     double x = Double.parseDouble(parts[2]);
                     double y = Double.parseDouble(parts[3]);
                     String direction = parts[4];
-                    listener.onVisitorUpdate(visitorName, x, y, direction);
+                    // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
+                    String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
+                    
+                    // System.out.println("[MiniRoomClient] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
+                    
+                    // 캐릭터 정보 포함한 업데이트 콜백
+                    if (listener instanceof MiniRoomClientListenerWithCharacterInfo) {
+                        ((MiniRoomClientListenerWithCharacterInfo) listener).onVisitorUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
+                    } else {
+                        // 기존 방식으로 폴백
+                        listener.onVisitorUpdate(visitorName, x, y, direction);
+                    }
                 }
                 break;
                 

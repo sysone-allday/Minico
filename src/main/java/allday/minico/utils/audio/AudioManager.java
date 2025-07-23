@@ -60,7 +60,7 @@ public class AudioManager {
             // 재생 시작
             currentPlayer.play();
             
-            System.out.println("배경음악 재생 시작: " + audioFileName);
+            // System.out.println("배경음악 재생 시작: " + audioFileName);
             
         } catch (Exception e) {
             System.err.println("오디오 재생 실패: " + e.getMessage());
@@ -68,10 +68,6 @@ public class AudioManager {
         }
     }
     
-    /**
-     * 효과음을 재생합니다 (한 번만)
-     * @param audioFileName 오디오 파일명
-     */
     public void playSound(String audioFileName) {
         try {
             URL audioUrl = getClass().getResource("/allday/minico/audio/" + audioFileName);

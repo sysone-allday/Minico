@@ -76,10 +76,10 @@ public class SkinService {
         }
     }
     
-    // 회원가입 시 선택한 미니미의 기본 스킨 생성 (통일된 파일명 규칙)
+    // 회원가입 시 선택한 미니미의 기본 스킨 생성
     public boolean createDefaultSkin(String memberId, String minimiType, String minimiVariant) {
         try {
-            // 남자/여자 모두 동일한 파일명 규칙: {캐릭터명}_front.png
+            // 남/여 모두 동일한 파일명 규칙: {캐릭터명}_front.png
             String imagePath = String.format("/allday/minico/images/char/%s/%s_front.png", 
                                minimiType.toLowerCase(), minimiVariant);
 

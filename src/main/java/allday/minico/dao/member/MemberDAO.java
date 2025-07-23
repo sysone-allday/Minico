@@ -77,6 +77,34 @@ public class MemberDAO {
 
     }
 
+    public Member getMemberByNickname(String nickname) throws SQLException {
+        String getMemberByNicknameSQL = MemberSQL.getMemberByNicknameSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(getMemberByNicknameSQL)) {
+            pstmt.setString(1, nickname);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Member member = new Member();
+                member.setMemberId(rs.getString("MEMBER_ID"));
+                member.setPassword(rs.getString("MEMBER_PASSWORD"));
+                member.setMinimi(rs.getString("MINIMI_TYPE"));
+                member.setCoin(rs.getInt("COIN"));
+                member.setEmail(rs.getString("EMAIL"));
+                member.setExperience(rs.getInt("EXPERIENCE"));
+                member.setLevel(rs.getInt("LV"));
+                member.setNickname(rs.getString("NICKNAME"));
+                member.setJoinDate(rs.getTimestamp("JOIN_DATE").toLocalDateTime());
+                member.setPasswordHint(rs.getString("PW_HINT"));
+                member.setVisitCount(rs.getInt("VISIT_COUNT"));
+                return member;
+            } else {
+                return null;
+            }
+        }
+    }
+
     public Member tryLogin(String memberId, String memberPw) throws SQLException { // 로그인 시도
         String getAllMemberInfoSQL = MemberSQL.getAllMemberInfoSQL;
         try (Connection conn = getConnection();

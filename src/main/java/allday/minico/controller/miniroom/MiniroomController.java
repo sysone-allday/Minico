@@ -183,10 +183,15 @@ public class MiniroomController implements Initializable {
 
     private void initializeNetworkManager() {
         networkManager = new RoomNetworkManager(playerName, characterManager, character,
-                new RoomNetworkManager.NetworkCallback() {
+                new RoomNetworkManager.NetworkCallbackWithCharacterInfo() {
                     @Override
                     public void onHostCharacterCreate(double x, double y, String direction) {
                         createHostCharacter(x, y, direction);
+                    }
+                    
+                    @Override
+                    public void onHostCharacterCreateWithCharacterInfo(double x, double y, String direction, String characterInfo) {
+                        createHostCharacterWithInfo(x, y, direction, characterInfo);
                     }
 
                     @Override
@@ -198,10 +203,20 @@ public class MiniroomController implements Initializable {
                     public void onVisitorCharacterCreate(String visitorName, double x, double y, String direction) {
                         createVisitorCharacter(visitorName, x, y, direction);
                     }
+                    
+                    @Override
+                    public void onVisitorCharacterCreateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                        createVisitorCharacterWithInfo(visitorName, x, y, direction, characterInfo);
+                    }
 
                     @Override
                     public void onVisitorCharacterUpdate(String visitorName, double x, double y, String direction) {
                         updateVisitorCharacter(visitorName, x, y, direction);
+                    }
+                    
+                    @Override
+                    public void onVisitorCharacterUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                        updateVisitorCharacterWithInfo(visitorName, x, y, direction, characterInfo);
                     }
 
                     @Override
@@ -286,6 +301,12 @@ public class MiniroomController implements Initializable {
         // System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction +
         // ", 호스트명=" + hostName);
     }
+    
+    private void createHostCharacterWithInfo(double x, double y, String direction, String characterInfo) {
+        hostCharacter = characterManager.createHostCharacterWithInfo(hostName, x, y, direction, characterInfo);
+        System.out.println("호스트 캐릭터 생성 (캐릭터 정보 포함): X=" + x + ", Y=" + y + ", 방향=" + direction + 
+                         ", 호스트명=" + hostName + ", 캐릭터:" + characterInfo);
+    }
 
     private void updateHostCharacter(double x, double y, String direction) {
         if (hostCharacter == null) {
@@ -301,6 +322,14 @@ public class MiniroomController implements Initializable {
 
     private void createVisitorCharacter(String visitorName, double x, double y, String direction) {
         characterManager.createVisitorCharacter(visitorName, x, y, direction, isHosting);
+    }
+    
+    private void createVisitorCharacterWithInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+        characterManager.createVisitorCharacter(visitorName, x, y, direction, isHosting, null, characterInfo);
+    }
+    
+    private void updateVisitorCharacterWithInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+        characterManager.updateVisitorCharacter(playerName, visitorName, x, y, direction, isHosting, null, characterInfo);
     }
 
     public void showChatBubble(String senderName, String message) {

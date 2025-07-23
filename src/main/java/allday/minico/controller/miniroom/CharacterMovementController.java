@@ -174,44 +174,18 @@ public class CharacterMovementController {
     
     private String getUserCharacterImagePath(String direction) {
         try {
-            // SkinService를 통해 현재 사용자의 스킨 정보 가져오기
             String memberId = AppSession.getLoginMember().getMemberId();
-            String minimiType = AppSession.getLoginMember().getMinimi();
             
-            if (minimiType != null && memberId != null) {
-                // SKIN 테이블에서 사용자의 실제 캐릭터 정보 조회
-                String characterName = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterName(memberId);
-                String gender = minimiType.toLowerCase(); // "male" 또는 "female"
-                
-                // 방향에 따른 이미지 파일명 생성
-                String directionSuffix = getDirectionSuffix(direction);
-                String imagePath = String.format("/allday/minico/images/char/%s/%s_%s.png", 
-                                   gender, characterName, directionSuffix);
-                
-                // System.out.println("[MovementController] 생성된 이미지 경로: " + imagePath);
-                // System.out.println("[MovementController] 사용자 캐릭터: " + characterName + ", 방향: " + direction + " → " + directionSuffix);
-                
-                return imagePath;
+            if (memberId != null) {
+                // 캐싱된 최적화 메서드 사용 - DB 조회를 최소화
+                return allday.minico.utils.skin.SkinUtil.getCharacterImagePath(memberId, direction);
             }
         } catch (Exception e) {
-            // System.out.println("[MovementController] 사용자 캐릭터 정보를 가져올 수 없습니다: " + e.getMessage());
+            System.out.println("[MovementController] 캐릭터 이미지 경로 생성 실패: " + e.getMessage());
         }
         
-        // 정보가 없으면 기본 캐릭터 사용
-        String defaultPath = "/allday/minico/images/char/male/대호_" + getDirectionSuffix(direction) + ".png";
-        // System.out.println("[MovementController] 기본 이미지 경로: " + defaultPath);
-        return defaultPath;
-    }
-    
-    private String getDirectionSuffix(String direction) {
-        switch (direction) {
-            case "LEFT": return "left";
-            case "RIGHT": return "right";
-            case "UP": return "back";
-            case "DOWN":
-            case "front":
-            default: return "front";
-        }
+        // 정보가 없으면 기본 캐릭터 사용 - SkinUtil의 메서드 활용
+        return allday.minico.utils.skin.SkinUtil.getCharacterImagePath("default", direction);
     }
     
     public void stopMovementTimer() {
