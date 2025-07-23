@@ -38,6 +38,11 @@ public class MiniRoomClient {
     public boolean connectToRoom(String hostIP, int port) {
         try {
             socket = new Socket(hostIP, port);
+            
+            // TCP 성능 최적화 옵션 설정
+            socket.setTcpNoDelay(true); // Nagle 알고리즘 비활성화로 지연 감소
+            socket.setKeepAlive(true); // Keep-alive 활성화
+            
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
             
@@ -119,7 +124,7 @@ public class MiniRoomClient {
     }
     
     private void handleServerMessage(String message) {
-        // System.out.println("서버 메시지: " + message); // 성능 최적화를 위해 주석 처리
+        // System.out.println("서버 메시지: " + message);
         
         if (listener == null) return;
         
