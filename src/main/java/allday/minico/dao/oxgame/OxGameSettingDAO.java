@@ -16,7 +16,6 @@ import java.util.Properties;
 public class OxGameSettingDAO {
 	private static OxGameSettingDAO instance; // 2. 자기 자신을 참조하는 변수를 만듬
 
-        // properties 처리
 	public static OxGameSettingDAO getInstance() {
 		if (instance == null) {
 			instance = new OxGameSettingDAO();
