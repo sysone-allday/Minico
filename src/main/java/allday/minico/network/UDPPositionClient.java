@@ -49,6 +49,7 @@ public class UDPPositionClient {
         if (!isConnected) return;
         
         String message = "CONNECT:" + clientId;
+        System.out.println("UDP 연결 메시지 전송: " + message);
         sendMessage(message);
     }
     
@@ -63,6 +64,7 @@ public class UDPPositionClient {
         String message = String.format("POS:%s:%.1f:%.1f:%s", 
                 clientId, x, y, direction);
         
+        System.out.printf("UDP 위치 전송: %s (%.1f, %.1f) %s%n", clientId, x, y, direction);
         sendMessage(message);
     }
     

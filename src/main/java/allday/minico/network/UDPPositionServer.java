@@ -119,6 +119,8 @@ public class UDPPositionServer {
         String message = new String(packet.getData(), 0, packet.getLength());
         int clientPort = packet.getPort();
         
+        System.out.println("UDP 서버 수신: " + message + " from " + packet.getAddress() + ":" + clientPort);
+        
         String[] parts = message.split(":");
         if (parts.length < 2) return;
         
@@ -285,5 +287,33 @@ public class UDPPositionServer {
      */
     public boolean isRunning() {
         return isRunning;
+    }
+    
+    /**
+     * 호스트 위치를 모든 클라이언트에게 브로드캐스트
+     */
+    public void broadcastHostPosition(String hostName, double x, double y, String direction) {
+        if (!isRunning || socket == null || socket.isClosed()) {
+            return;
+        }
+        
+        String message = String.format("HOST_UPDATE:%s:%.1f:%.1f:%s", 
+                hostName, x, y, direction);
+        
+        byte[] buffer = message.getBytes();
+        
+        // 모든 연결된 클라이언트에게 전송
+        for (ClientInfo client : connectedClients.values()) {
+            try {
+                DatagramPacket packet = new DatagramPacket(
+                    buffer, buffer.length, client.address, client.port);
+                socket.send(packet);
+            } catch (IOException e) {
+                System.err.println("호스트 위치 브로드캐스트 실패 to " + client.clientId + ": " + e.getMessage());
+            }
+        }
+        
+        System.out.printf("[UDP] 호스트 위치 브로드캐스트: %s (%.1f, %.1f) %s -> %d 클라이언트%n", 
+                         hostName, x, y, direction, connectedClients.size());
     }
 }
