@@ -107,6 +107,14 @@
                                                     </Label>
                                                     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="455.0" spacing="30.0">
                                                         <children>
+                                                            <Button fx:id="btnTM5" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="5" textAlignment="CENTER" textFill="#bea5a9">
+                                                                <font>
+                                                                    <Font size="36.0" />
+                                                                </font>
+                                                                <opaqueInsets>
+                                                                    <Insets />
+                                                                </opaqueInsets>
+                                                            </Button>
                                                             <Button fx:id="btnTM10" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
@@ -115,15 +123,7 @@
                                                                     <Insets />
                                                                 </opaqueInsets>
                                                             </Button>
-                                                            <Button fx:id="btnTM15" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="15" textAlignment="CENTER" textFill="#bea5a9">
-                                                                <font>
-                                                                    <Font size="36.0" />
-                                                                </font>
-                                                                <opaqueInsets>
-                                                                    <Insets />
-                                                                </opaqueInsets>
-                                                            </Button>
-                                                            <Button fx:id="btnTM20" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" styleClass="level-btn" text="20" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnTM15" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" styleClass="level-btn" text="15" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
@@ -182,7 +182,7 @@
                                                 <children>
                                                     <VBox alignment="CENTER" layoutY="-12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="749.0">
                                                         <children>
-                                                            <ImageView fx:id="btnStartImage" fitHeight="102.0" fitWidth="238.0" pickOnBounds="true">
+                                                            <ImageView fx:id="btnStartImage" fitHeight="102.0" fitWidth="238.0" onMouseClicked="#startGame" pickOnBounds="true">
                                                                 <image>
                                                                     <Image url="@../../images/oxgame/start_button.png" />
                                                                 </image>

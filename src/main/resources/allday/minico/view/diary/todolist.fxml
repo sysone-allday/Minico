@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- 부모 Diary.fxml 에서 이미 diary.css 를 불러오므로
+     이 파일엔 stylesheets 속성을 둘 필요가 없습니다 -->
+<VBox fx:id="todolist"
+      layoutX="100" layoutY="170"
+      prefWidth="450" prefHeight="500"
+      spacing="30"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="allday.minico.controller.diary.TodolistController">
+
+    <!-- 입력 박스 & + 버튼 -->
+    <HBox spacing="10">
+        <!-- ★ StyleClass = text-field -->
+        <TextField fx:id="inputField"
+                   promptText="새 할 일 입력"
+                   styleClass="text-field"
+                   HBox.hgrow="ALWAYS"/>
+
+        <!-- ★ StyleClass = add-btn -->
+        <Button fx:id="addBtn"
+                text="＋"
+                styleClass="add-btn"/>
+    </HBox>
+
+    <!-- Todo 목록 -->
+    <!-- ★ StyleClass = list-view -->
+    <ListView fx:id="listView"
+              fixedCellSize="40"
+              prefHeight="390"
+              styleClass="list-view"
+              VBox.vgrow="ALWAYS"/>
+
+    <!-- 진행률 -->
+    <!-- ★ StyleClass = progress-bar -->
+    <ProgressBar fx:id="progress"
+                 prefWidth="450" prefHeight="14"
+                 styleClass="progress-bar"/>
+</VBox>

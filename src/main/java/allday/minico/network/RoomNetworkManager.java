@@ -38,6 +38,13 @@ public class RoomNetworkManager {
         javafx.scene.layout.Pane getParentPane(); // UI 참조를 위한 메소드 추가
     }
     
+    // 캐릭터 정보 포함한 확장 인터페이스
+    public interface NetworkCallbackWithCharacterInfo extends NetworkCallback {
+        void onVisitorCharacterUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
+        void onVisitorCharacterCreateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
+        void onHostCharacterCreateWithCharacterInfo(double x, double y, String direction, String characterInfo);
+    }
+    
     private NetworkCallback callback;
     
     public RoomNetworkManager(String playerName, CharacterManager characterManager, 
@@ -81,7 +88,7 @@ public class RoomNetworkManager {
                 @Override
                 public void onVisitorJoined(String visitorName) {
                     Platform.runLater(() -> {
-                        System.out.println("방문자 접속: " + visitorName);
+                        // System.out.println("방문자 접속: " + visitorName);
                         // 방문자 캐릭터를 기본 위치에 생성 (나중에 실제 위치로 업데이트됨)
                         callback.onVisitorCharacterCreate(visitorName, 100, 100, "front");
                     });
@@ -90,7 +97,7 @@ public class RoomNetworkManager {
                 @Override
                 public void onVisitorLeft(String visitorName) {
                     Platform.runLater(() -> {
-                        System.out.println("방문자 나감: " + visitorName);
+                        // System.out.println("방문자 나감: " + visitorName);
                         // 방문자 캐릭터 제거
                         callback.onCharacterRemove(visitorName);
                     });
@@ -101,15 +108,30 @@ public class RoomNetworkManager {
                     Platform.runLater(() -> {
                         // System.out.println(String.format("호스트 - 방문자 업데이트: %s - X:%.2f Y:%.2f 방향:%s",
                         // visitorName, x, y, direction)); // 성능 최적화를 위해 주석 처리
-                        // 호스트 화면에 방문자 캐릭터 업데이트
+                        // 호스트 화면에 방문자 캐릭터 업데이트 (캐릭터 정보 없음)
                         callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                    });
+                }
+
+                @Override
+                public void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                    Platform.runLater(() -> {
+                        // System.out.println(String.format("호스트 - 방문자 업데이트 (캐릭터 정보 포함): %s - X:%.2f Y:%.2f 방향:%s 캐릭터:%s",
+                        //         visitorName, x, y, direction, characterInfo));
+                        // 호스트 화면에 방문자 캐릭터 업데이트 (캐릭터 정보 포함)
+                        if (callback instanceof NetworkCallbackWithCharacterInfo) {
+                            ((NetworkCallbackWithCharacterInfo) callback).onVisitorCharacterUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
+                        } else {
+                            // 기존 방식으로 폴백
+                            callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                        }
                     });
                 }
 
                 @Override
                 public void onChatMessage(String senderName, String message) {
                     Platform.runLater(() -> {
-                        System.out.println("채팅 메시지: " + senderName + " - " + message);
+                        // System.out.println("채팅 메시지: " + senderName + " - " + message);
                         callback.onChatMessage(senderName, message);
                     });
                 }
@@ -146,10 +168,10 @@ public class RoomNetworkManager {
 
             isHosting = true;
             callback.onHostingStatusChanged(true);
-            System.out.println("미니룸 호스팅 시작");
+            // System.out.println("미니룸 호스팅 시작");
 
         } catch (Exception e) {
-            System.out.println("호스팅 시작 오류: " + e.getMessage());
+            // System.out.println("호스팅 시작 오류: " + e.getMessage());
         }
     }
     
@@ -182,10 +204,10 @@ public class RoomNetworkManager {
             });
 
             callback.onHostingStatusChanged(false);
-            System.out.println("미니룸 호스팅 중지");
+            // System.out.println("미니룸 호스팅 중지");
             
         } catch (Exception e) {
-            System.out.println("호스팅 중지 중 오류 발생: " + e.getMessage());
+            // System.out.println("호스팅 중지 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
             // 오류가 발생해도 상태는 초기화
             isHosting = false;
@@ -195,7 +217,7 @@ public class RoomNetworkManager {
     
     public void visitRoom(String hostIP, int port) {
         if (isVisiting) {
-            System.out.println("이미 방문 중입니다. 기존 연결을 종료하고 새로운 연결을 시작합니다.");
+            // System.out.println("이미 방문 중입니다. 기존 연결을 종료하고 새로운 연결을 시작합니다.");
             leaveRoom();
             // 짧은 대기 시간을 두어 완전히 정리되도록 함
             try {
@@ -206,19 +228,20 @@ public class RoomNetworkManager {
         }
 
         try {
-            client = new MiniRoomClient(playerName, new MiniRoomClient.MiniRoomClientListener() {
+            client = new MiniRoomClient(playerName, new MiniRoomClient.MiniRoomClientListenerWithCharacterInfo() {
                 @Override
                 public void onConnected(String roomOwner) {
                     Platform.runLater(() -> {
                         isVisiting = true;
                         callback.onVisitingStatusChanged(true);
                         // 방문 모드에서도 자신의 캐릭터는 보이게 유지
-                        System.out.println("방 접속 성공: " + roomOwner);
+                        // System.out.println("방 접속 성공: " + roomOwner);
 
-                        // 접속 직후 자신의 초기 위치를 서버에 전송
+                        // 접속 직후 자신의 초기 위치를 서버에 전송 (캐릭터 정보 포함)
                         if (client != null && character != null) {
-                            client.sendMessage(String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s",
-                                    playerName, character.getLayoutX(), character.getLayoutY(), "front"));
+                            String characterInfo = getUserCharacterInfo();
+                            client.sendMessage(String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
+                                    playerName, character.getLayoutX(), character.getLayoutY(), "front", characterInfo));
                         }
                     });
                 }
@@ -237,7 +260,7 @@ public class RoomNetworkManager {
                         callback.setHostName(null);
                         hostCharacter = null;
                         
-                        System.out.println("방 접속 종료 및 캐릭터 정리 완료");
+                        // System.out.println("방 접속 종료 및 캐릭터 정리 완료");
                     });
                 }
 
@@ -254,13 +277,32 @@ public class RoomNetworkManager {
                 @Override
                 public void onRoomInfo(String owner, double x, double y, String direction) {
                     Platform.runLater(() -> {
-                        System.out.println(String.format("방 정보: %s - X:%.2f Y:%.2f 방향:%s",
-                                owner, x, y, direction));
+                        // System.out.println(String.format("방 정보: %s - X:%.2f Y:%.2f 방향:%s",
+                                // owner, x, y, direction));
                         // 호스트 이름 저장
                         hostName = owner;
                         callback.setHostName(owner);
                         // 호스트 캐릭터 초기 위치 설정
                         callback.onHostCharacterCreate(x, y, direction);
+                    });
+                }
+                
+                @Override
+                public void onRoomInfoWithCharacterInfo(String owner, double x, double y, String direction, String characterInfo) {
+                    Platform.runLater(() -> {
+                        // System.out.println(String.format("방 정보 (캐릭터 정보 포함): %s - X:%.2f Y:%.2f 방향:%s 캐릭터:%s",
+                        //         owner, x, y, direction, characterInfo));
+                        // 호스트 이름 저장
+                        hostName = owner;
+                        callback.setHostName(owner);
+                        
+                        // 캐릭터 정보 포함한 호스트 생성 콜백이 있는지 확인
+                        if (callback instanceof NetworkCallbackWithCharacterInfo) {
+                            ((NetworkCallbackWithCharacterInfo) callback).onHostCharacterCreateWithCharacterInfo(x, y, direction, characterInfo);
+                        } else {
+                            // 기존 방식으로 폴백
+                            callback.onHostCharacterCreate(x, y, direction);
+                        }
                     });
                 }
 
@@ -271,6 +313,22 @@ public class RoomNetworkManager {
                         // visitorName, x, y, direction)); // 성능 최적화를 위해 주석 처리
                         // 다른 방문자 캐릭터 업데이트
                         callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                    });
+                }
+
+                @Override
+                public void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                    Platform.runLater(() -> {
+                        // System.out.println(String.format("방문자 업데이트 (캐릭터 정보 포함): %s - X:%.2f Y:%.2f 방향:%s 캐릭터:%s",
+                                // visitorName, x, y, direction, characterInfo));
+                        
+                        // 캐릭터 정보 포함한 업데이트 콜백이 있는지 확인
+                        if (callback instanceof NetworkCallbackWithCharacterInfo) {
+                            ((NetworkCallbackWithCharacterInfo) callback).onVisitorCharacterUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
+                        } else {
+                            // 기존 방식으로 폴백
+                            callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                        }
                     });
                 }
 
@@ -286,16 +344,16 @@ public class RoomNetworkManager {
                 @Override
                 public void onChatMessage(String senderName, String message) {
                     Platform.runLater(() -> {
-                        System.out.println("채팅 메시지: " + senderName + " - " + message);
+                        // System.out.println("채팅 메시지: " + senderName + " - " + message);
                         callback.onChatMessage(senderName, message);
                     });
                 }
             });
 
             if (client.connectToRoom(hostIP, port)) {
-                System.out.println("방 접속 시도: " + hostIP + ":" + port);
+                // System.out.println("방 접속 시도: " + hostIP + ":" + port);
             } else {
-                System.out.println("방 접속 실패: " + hostIP + ":" + port);
+                // System.out.println("방 접속 실패: " + hostIP + ":" + port);
                 // 연결 실패 시 클라이언트 객체 정리
                 client = null;
                 Platform.runLater(() -> {
@@ -304,7 +362,7 @@ public class RoomNetworkManager {
                 });
             }
         } catch (Exception e) {
-            System.out.println("방 접속 중 오류 발생: " + e.getMessage());
+            // System.out.println("방 접속 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
             client = null;
             Platform.runLater(() -> {
@@ -337,10 +395,10 @@ public class RoomNetworkManager {
             }
             
             // 상태 초기화는 onDisconnected() 콜백에서 처리되므로 여기서는 제거
-            System.out.println("방 나가기 완료");
+            // System.out.println("방 나가기 완료");
             
         } catch (Exception e) {
-            System.out.println("방 나가기 중 오류 발생: " + e.getMessage());
+            // System.out.println("방 나가기 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
             
             // 오류가 발생해도 상태는 초기화 (UI 스레드에서)
@@ -370,15 +428,42 @@ public class RoomNetworkManager {
     }
     
     public void updateCharacterPosition(double x, double y, String direction) {
+        String characterInfo = getUserCharacterInfo();
+        // System.out.println("[RoomNetworkManager] updateCharacterPosition - 전송할 캐릭터 정보: " + characterInfo);
+        
         if (isHosting && server != null) {
             // 호스팅 중이면 서버에 업데이트
             server.updateCharacterPosition(x, y, direction);
         } else if (isVisiting && client != null) {
-            // 방문 중이면 클라이언트에서 서버로 전송
-            String visitorMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s",
-                    playerName, x, y, direction);
+            // 방문 중이면 클라이언트에서 서버로 전송 (캐릭터 정보 포함)
+            String visitorMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
+                    playerName, x, y, direction, characterInfo);
+            // System.out.println("[RoomNetworkManager] 방문자 메시지 전송: " + visitorMessage);
             client.sendMessage(visitorMessage);
         }
+    }
+    
+    /**
+     * 현재 사용자의 캐릭터 정보를 가져옵니다 (성별:캐릭터명 형식)
+     */
+    private String getUserCharacterInfo() {
+        try {
+            if (allday.minico.session.AppSession.getLoginMember() != null) {
+                String memberId = allday.minico.session.AppSession.getLoginMember().getMemberId();
+                
+                // SkinUtil을 사용해서 캐릭터 정보 가져오기 (형식: "Male:온유")
+                String result = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(memberId);
+                // System.out.println("[RoomNetworkManager] getUserCharacterInfo 반환: " + result + " (memberId: " + memberId + ")");
+                return result;
+            }
+        } catch (Exception e) {
+            // // System.out.println("[RoomNetworkManager] 캐릭터 정보 조회 실패: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        // 기본값
+        // System.out.println("[RoomNetworkManager] 기본값 반환: Male:대호");
+        return "Male:대호";
     }
     
     public void showRoomSelectionDialog() {
@@ -453,7 +538,7 @@ public class RoomNetworkManager {
             System.out.println("네트워크 매니저 정리 완료");
             
         } catch (Exception e) {
-            System.out.println("네트워크 매니저 정리 중 오류 발생: " + e.getMessage());
+            // System.out.println("네트워크 매니저 정리 중 오류 발생: " + e.getMessage());
             e.printStackTrace();
         }
     }

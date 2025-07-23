@@ -1,5 +1,6 @@
 package allday.minico.controller.miniroom;
 
+import allday.minico.session.AppSession;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -90,7 +91,7 @@ public class CharacterMovementController {
                     character.setLayoutX(nextX);
                     currentDirection = "LEFT";
                     if (!lastDirection.equals("LEFT")) {
-                        updateCharacterImage("Left.png");
+                        updateCharacterImage("LEFT");
                     }
                 }
                 // 오른쪽 이동 (D, RIGHT)
@@ -101,7 +102,7 @@ public class CharacterMovementController {
                     character.setLayoutX(nextX);
                     currentDirection = "RIGHT";
                     if (!lastDirection.equals("RIGHT")) {
-                        updateCharacterImage("Right.png");
+                        updateCharacterImage("RIGHT");
                     }
                 }
                 // 위쪽 이동 (W, UP)
@@ -112,7 +113,7 @@ public class CharacterMovementController {
                     character.setLayoutY(nextY);
                     currentDirection = "UP";
                     if (!lastDirection.equals("UP")) {
-                        updateCharacterImage("back.png");
+                        updateCharacterImage("UP");
                     }
                 }
                 // 아래쪽 이동 (S, DOWN)
@@ -123,7 +124,7 @@ public class CharacterMovementController {
                     character.setLayoutY(nextY);
                     currentDirection = "DOWN";
                     if (!lastDirection.equals("DOWN")) {
-                        updateCharacterImage("front.png");
+                        updateCharacterImage("DOWN");
                     }
                 }
 
@@ -151,14 +152,40 @@ public class CharacterMovementController {
         moveTimer.start();
     }
     
-    private void updateCharacterImage(String imageName) {
+    private void updateCharacterImage(String direction) {
         try {
-            Image newImage = new Image(
-                    getClass().getResource("/allday/minico/images/char/" + imageName).toExternalForm());
+            String imagePath = getUserCharacterImagePath(direction);
+            Image newImage = new Image(getClass().getResource(imagePath).toExternalForm());
             character.setImage(newImage);
+            // System.out.println("캐릭터 이미지 변경 성공: " + imagePath);
         } catch (Exception e) {
-            System.out.println("캐릭터 이미지를 변경할 수 없습니다: " + e.getMessage());
+            // System.out.println("캐릭터 이미지를 변경할 수 없습니다: " + e.getMessage());
+            // 기본 이미지로 폴백
+            try {
+                String defaultPath = "/allday/minico/images/char/male/대호_front.png";
+                Image defaultImage = new Image(getClass().getResource(defaultPath).toExternalForm());
+                character.setImage(defaultImage);
+                // System.out.println("기본 이미지로 변경됨: " + defaultPath);
+            } catch (Exception fallbackException) {
+                // System.out.println("기본 이미지도 로드할 수 없습니다: " + fallbackException.getMessage());
+            }
         }
+    }
+    
+    private String getUserCharacterImagePath(String direction) {
+        try {
+            String memberId = AppSession.getLoginMember().getMemberId();
+            
+            if (memberId != null) {
+                // 캐싱된 최적화 메서드 사용 - DB 조회를 최소화
+                return allday.minico.utils.skin.SkinUtil.getCharacterImagePath(memberId, direction);
+            }
+        } catch (Exception e) {
+            System.out.println("[MovementController] 캐릭터 이미지 경로 생성 실패: " + e.getMessage());
+        }
+        
+        // 정보가 없으면 기본 캐릭터 사용 - SkinUtil의 메서드 활용
+        return allday.minico.utils.skin.SkinUtil.getCharacterImagePath("default", direction);
     }
     
     public void stopMovementTimer() {

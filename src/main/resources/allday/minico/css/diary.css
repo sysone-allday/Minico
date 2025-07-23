@@ -1,0 +1,200 @@
+/* 1.  Color Variables (SCSS 형식이 아니므로 주석으로 기록)
+   pastel‑pink  #FFC9D8   | pastel‑mint   #C9F3E6
+   pastel‑yellow #FFF1BC   | cocoa‑text    #5A4A4A
+   light‑grey   #E9E9E9   | rgba(0,0,0,0.08)   rgba(0,0,0,0.08)  */
+
+/* ---------------- Global Root (diary‑root) ---------------- */
+.diary-root {
+
+    -fx-background-image: url("../images/background.png");
+    /* 1) 한 장만 표시 */
+    -fx-background-repeat: no-repeat;
+    /* 2) 비율 유지하면서 창 전체를 채우도록 확대/축소 */
+    -fx-background-size: cover;          /* contain 으로 바꾸면 잘리지 않음 */
+    /* 3) 가운데 정렬 */
+    -fx-background-position: center center;
+    /* ↓ 글꼴 등 기존 설정 유지 */
+    -fx-font-family: "NeoDunggeunmo", "Pretendard", sans-serif;
+    -fx-font-size: 15px;
+    -fx-text-fill: #5A4A4A;
+}
+
+/* ---------------- Core White Panel ---------------- */
+.board-pane {
+    /* 흰 패널 + 반투명 */
+    -fx-background-color: rgba(255,255,255,0.92);
+
+    /* ✿ 핑크 테두리 추가 */
+    -fx-border-color: pink;
+    -fx-border-width: 6;
+
+    /* 둥근 모서리 ↔ 테두리 동일 반경 */
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
+
+    /* 안쪽 여백 */
+    -fx-padding: 50 60 60 60;
+
+    /* 그림자 */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 16, 0.2, 0, 6);
+}
+
+
+/* ---------------- Header (날짜 & 네비) ---------------- */
+.date-nav {
+    -fx-background-color: transparent;
+    -fx-text-fill: #E48AA3;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+.date-nav:hover  { -fx-text-fill: #B26880; }
+.date-nav:pressed{ -fx-translate-y: 1; }
+
+#dateText {
+    -fx-font-size: 26px;
+    -fx-font-weight: 700;
+}
+
+/* ---------------- Todo 입력 ---------------- */
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #FFC9D8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 6 10 6 10;
+}
+.text-field:focused {
+    -fx-border-color: #E48AA3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 4, 0, 0, 1);
+}
+
+/* Plus 버튼 */
+.add-btn {
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-weight: 700;
+    -fx-cursor: hand;
+}
+.add-btn:hover  { -fx-background-color: #FFB1C8; }
+.add-btn:pressed{ -fx-translate-y: 1; }
+
+/* ---------------- ListView ---------------- */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0;
+    -fx-border-color: #FFC9D8;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+}
+.list-cell {
+    -fx-padding: 6 10 6 10;
+    -fx-font-size: 15px;
+}
+.list-cell:selected {
+    -fx-background-color: #FFF1BC;
+}
+
+/* CheckBox inside cell */
+.check-box > .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #FFC9D8;
+    -fx-border-radius: 4;
+    -fx-background-insets: 0;
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+}
+.check-box:selected > .box {
+    -fx-background-color: #C9F3E6;
+    -fx-border-color: #58CBB0;
+}
+
+/* Progress Bar ---------------- */
+.progress-bar {
+    -fx-background-color: #E9E9E9;
+    -fx-background-radius: 6;
+}
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(#C9F3E6 0%, #58CBB0 100%);
+    -fx-background-radius: 6;
+}
+
+/* ---------------- TextArea ---------------- */
+.text-area {
+    -fx-background-color: #FFF9FB;
+    -fx-control-inner-background: #FFF9FB;
+    -fx-border-color: #FFC9D8;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-font-size: 16px;
+    -fx-text-fill: #5A4A4A;
+    -fx-padding: 12;
+}
+.text-area:focused {
+    -fx-border-color: #E48AA3;
+}
+
+/* 버튼 공통 ---------------- */
+.action-button, .back-button {
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 700;
+    -fx-padding: 6 24 6 24;
+}
+.action-button:hover, .back-button:hover {
+    -fx-background-color: #FFB1C8;
+}
+.action-button:pressed, .back-button:pressed {
+    -fx-translate-y: 1;
+}
+
+/* 모달 딤 ---------------- */
+.modal-dim {
+    -fx-background-color: rgba(0, 0, 0, 0.35);
+}
+.calendar-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 18, 0.22, 0, 6);
+}
+
+/* 달력 셀 ---------------- */
+.date-picker > .calendar-grid > .day-name-cell {
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF9DB8;
+}
+.date-picker > .calendar-grid > .day-cell {
+    -fx-font-size: 14px;
+}
+.date-picker > .calendar-grid > .day-cell:today {
+    -fx-background-color: #FFF1BC;
+    -fx-border-color: #FFC9D8;
+}
+
+/* 투두리스트 버튼 스타일 **/
+.todo-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+    -fx-text-fill: #A38D8D;
+    -fx-cursor: hand;
+}
+.todo-btn:hover   { -fx-text-fill: #E48AA3; }
+.todo-btn:pressed { -fx-translate-y: 1; }
+
+.edit-btn {}                              /* 연회색 */
+.ok-btn   { -fx-text-fill: #58CBB0; }      /* 민트 */
+.del-btn  { -fx-text-fill: #E57373; }      /* 핑크‑레드 */
+
+.todo-label { -fx-text-fill: #5A4A4A; -fx-font-size: 15px; }
+.todo-edit  {
+    -fx-background-color: #FFF9FB;
+    -fx-border-color: #FFC9D8;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
