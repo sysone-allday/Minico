@@ -473,6 +473,20 @@ public class MiniroomController implements Initializable {
     protected void onGuestbookClick() {
         // System.out.println("게시판 버튼 클릭");
         // 게시판 기능 구현
+        try {
+            Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/allday/minico/view/note/note-view.fxml")));
+
+            // 현재 Stage와 Scene 가져오기
+            Stage stage = (Stage) typingBtn.getScene().getWindow();
+            Scene scene = stage.getScene();
+
+            // Root 교체
+            scene.setRoot(gameRoot);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
