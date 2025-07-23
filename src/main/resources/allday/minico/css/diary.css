@@ -172,7 +172,7 @@
 .date-picker > .calendar-grid > .day-cell {
     -fx-font-size: 14px;
 }
-.date-picker > .calendar-grid > .day-cell:today {
+.date-picker > .calendar-grid > .day-cell {
     -fx-background-color: #FFF1BC;
     -fx-border-color: #FFC9D8;
 }
