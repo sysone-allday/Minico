@@ -140,6 +140,15 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ojdbc11.jar</systemPath>
         </dependency>
+
+
+        <!-- pom.xml에 HttpClient는 Java 11 이상이면 기본 포함되어 있어 따로 필요 없음 -->
+        <!-- JSON 파싱을 위해 Gson 추가 (선택) -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
 
     <build>

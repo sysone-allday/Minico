@@ -15,6 +15,42 @@ import java.util.stream.Collectors;
 public class BlankGameDAO{
 
 
+    // 현재 word_id의 문제가 몇개 있는지 확인
+    public int getProblemCountByWordId(int wordId) {
+        String sql = "SELECT COUNT(*) FROM blank_game WHERE word_id = ?";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, wordId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // word_id의 문제가 3개 이하면 문제 생성
+    public void insertBlankGame(int wordId, String questionText, int typeId) {
+        String sql = "INSERT INTO blank_game (blank_id, word_id, question_text, type_id) VALUES (SEQ_BLANK_GAME_ID.NEXTVAL, ?, ?, ?)";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            System.out.println("✅ 삽입 전 확인: word_id=" + wordId + ", type_id=" + typeId);
+
+            pstmt.setInt(1, wordId);
+            pstmt.setString(2, questionText);
+            pstmt.setInt(3, typeId); // 단어의 type_id와 동일하게 넣으면 됨
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // 문제 5개 가져오는 로직
     public List<BlankGame> selectBlankProblems(List<BlankGame> blankGameList) {
 
         List<BlankGame> problemList = new ArrayList<>();

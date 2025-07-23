@@ -1,7 +1,9 @@
 package allday.minico.service.typinggame;
 
+import allday.minico.controller.typinggame.ClovaController;
 import allday.minico.dao.typinggame.BlankGameDAO;
 import allday.minico.dto.typinggame.BlankGame;
+import allday.minico.dto.typinggame.Word;
 
 import java.util.List;
 
@@ -16,20 +18,27 @@ public class BlankGameServiceImpl implements BlankGameService {
     }
 
     @Override
-    public List<BlankGame> getBlankProblems(List<BlankGame> blankGameList) {
+    public List<BlankGame> getBlankProblems(List<BlankGame> blankGameList, List<Word> successWords) {
 
-        List<BlankGame> ProblemList = blankGameDAO.selectBlankProblems(blankGameList);
+        for (Word word : successWords) {
+            int count = blankGameDAO.getProblemCountByWordId(word.getWord_id());
+            if (count <= 3) {
+                try {
 
-        // ✅ 콘솔 출력 확인
-        if (ProblemList.isEmpty()) {
-            System.out.println("[DEBUG] 단어가 없습니다.");
-        } else {
-            System.out.println("[DEBUG] 단어 리스트 불러옴 (" + ProblemList.size() + "개):");
-            for (BlankGame blankGame: ProblemList) {
-                System.out.println("→ " + blankGame.getWord_id() + " : " + blankGame.getQuestion_text());
+                    // clova studio 호출
+                    String questionText = ClovaController.generateQuestion(word.getText());
+                    blankGameDAO.insertBlankGame(word.getWord_id(), questionText, word.getType_id());
+                    System.out.println("[Clova 생성] word_id: " + word.getWord_id() + " → " + questionText);
+                } catch (Exception e) {
+                    System.err.println("[Clova 오류] word_id: " + word.getWord_id());
+                    e.printStackTrace();
+                }
             }
         }
 
-        return ProblemList;
+
+        // 기존 방식으로 5문제 뽑기
+        return blankGameDAO.selectBlankProblems(blankGameList);
     }
+
 }

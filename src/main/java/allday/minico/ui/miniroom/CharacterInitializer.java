@@ -1,5 +1,6 @@
 package allday.minico.ui.miniroom;
 
+import allday.minico.session.AppSession;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -18,15 +19,17 @@ public class CharacterInitializer {
     
     public void initializeCharacter(CharacterInitCallback callback) {
         try {
-            // 캐릭터 이미지 로드
-            Image characterImage = new Image(
-                    getClass().getResource("/allday/minico/images/char/front.png").toExternalForm());
+            // 사용자의 실제 캐릭터 이미지 로드
+            String userCharacterImagePath = getUserCharacterImagePath();
+            Image characterImage = new Image(getClass().getResource(userCharacterImagePath).toExternalForm());
             ImageView character = new ImageView(characterImage);
             character.setFitWidth(100);
             character.setFitHeight(100);
             character.setPreserveRatio(true);
 
             roomPane.getChildren().add(character);
+
+            System.out.println("[CharacterInitializer] 초기 캐릭터 이미지 로드: " + userCharacterImagePath);
 
             // UI가 완전히 렌더링된 후 캐릭터 위치 설정
             javafx.application.Platform.runLater(() -> {
@@ -37,10 +40,6 @@ public class CharacterInitializer {
 
                 // 캐릭터 초기화 완료 콜백 호출
                 callback.onCharacterInitialized(character);
-
-//                System.out.println("=== 캐릭터 초기화 (렌더링 후) ===");
-//                System.out.println("캐릭터 초기 위치 - X: " + character.getLayoutX() + ", Y: " + character.getLayoutY());
-//                System.out.println("미니룸 실제 크기 - Width: " + roomPane.getWidth() + ", Height: " + roomPane.getHeight());
             });
 
         } catch (Exception e) {
@@ -57,7 +56,8 @@ public class CharacterInitializer {
      */
     private String getUserCharacterImagePath() {
         try {
-            String memberId = allday.minico.session.AppSession.getLoginMember().getMemberId();
+
+            String memberId = AppSession.getLoginMember().getMemberId();
             
             if (memberId != null) {
                 // 캐싱된 최적화 메서드 사용 - DB 조회를 최소화
