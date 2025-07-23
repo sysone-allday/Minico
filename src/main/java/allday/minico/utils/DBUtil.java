@@ -19,10 +19,6 @@ public class DBUtil {
             DB_USER = prop.getProperty("db.username");
             DB_PASS = prop.getProperty("db.password");
 
-            System.out.println("DB_URL: " + DB_URL);
-            System.out.println("DB_USER: " + DB_USER);
-            System.out.println("DB_PASS: " + DB_PASS);
-
         } catch (Exception e) {
             System.err.println("DB 설정 파일 로딩 실패");
             e.printStackTrace();
@@ -31,10 +27,6 @@ public class DBUtil {
 
     // DB 연결 반환
     public static Connection getConnection() throws SQLException {
-
-        System.out.println("TNS_ADMIN: " + System.getProperty("oracle.net.tns_admin"));
-        System.out.println("연결 시도!!");
-
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
     }
 
