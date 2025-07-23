@@ -45,7 +45,7 @@ public class SignUpController {
         System.out.println("사용자가 가입하려는 ID : " + memberId);
 
         if(!Validator.isIdFormat(memberId)){// id 양식이 적합한지 체크
-            signUpResultText.setText("※ 아이디는 영문자와 숫자를 포함해 6자 이상 30자 이내로 입력하세요.");
+            signUpResultText.setText("※ 아이디는 영문자와 숫자를 포함해 8자 이상 30자 이내로 입력하세요.");
             signUpResultText.setStyle("-fx-text-fill: red;");
             return;}
 

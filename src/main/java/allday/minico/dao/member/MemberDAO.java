@@ -146,18 +146,18 @@ public class MemberDAO {
             pstmt.setString(1, checkId);
 
             ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
+            if (rs.next()) { // 결과가 존재할때(해당 MEMBER_ID가 존재할때) 실행
                 String result = rs.getString("LOGOUT_TIME");
                 if(result != null){
                     System.out.println("로그인 중 아님, 로그인 가능");
-                    return true;
+                    return true; // LOGOUT_TIME 컬럼이 null 아니면 로그아웃 한 것이므로 로그인 가능
                 } else{
                     System.out.println("다른 곳에서 로그인 중이므로 로그인 불가");
-                    return false;
+                    return false; // LOGOUT_TIME 컬럼이 null 이면 로그아웃을 하지 않은 것이므로 로그인 불가
                 }
             }
         }
         System.out.println("없는 멤버거나 로그아웃기록이 없는 ID");
-        return null;
+        return null; // 조회된 행이 아예 없으면 없는 MEMBER_ID
     }
 }

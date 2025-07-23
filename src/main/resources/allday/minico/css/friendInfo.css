@@ -1,0 +1,51 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.friendinfo-root {
+    -fx-background-color: #ffffff;
+    -fx-background-image: url("../images/background.png");  /* 원래 배경으로 복구 */
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo";
+}
+
+/* 타이틀: 친구목록 */
+.friendinfo-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 소제목: 요청 받은 친구 */
+.friendinfo-subtitle {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 버튼 */
+.friendinfo-button {
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-padding: 6 18;
+}
+
+.friendinfo-button:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255, 20, 147, 0.4), 8, 0, 0, 2);
+}
+
+/* 친구 목록 리스트 */
+.friendinfo-list {
+    -fx-background-radius: 15;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 15;
+    -fx-font-size: 18px;
+}

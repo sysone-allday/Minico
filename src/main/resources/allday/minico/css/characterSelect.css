@@ -1,0 +1,41 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.characterselect-root {
+    -fx-background-color: #ffffff;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo";
+}
+
+/* 버튼 */
+.characterselect-button {
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 6 18;
+}
+
+.characterselect-button:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255, 20, 147, 0.4), 8, 0, 0, 2);
+}
+
+/* 소제목 */
+.characterselect-subtitle {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 일반 라벨 */
+.characterselect-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}

@@ -12,10 +12,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class CharacterSelectController {
-    @FXML private ImageView ViewSelectedCharacter;
+    @FXML private ImageView selectedMinimiPreview;
     @FXML private Button backToSignUpButton;
-    @FXML private Button selectFemaleMinimiButton;
-    @FXML private Button selectMaleMinimiButton;
+    @FXML private Button selectFemaleButton;
+    @FXML private Button selectMaleButton;
     @FXML private Button characterSelectConfirmButton;
 
     private Member member;
@@ -23,15 +23,19 @@ public class CharacterSelectController {
     LoginLogService loginLogService;
 
     @FXML
-    void selectFemaleMinimi(ActionEvent event) { // 여자 미니미 클릭 시
-        ViewSelectedCharacter.setImage(new Image(getClass().getResource("/allday/minico/images/member/Minimi_Female.png").toExternalForm()));
+    void showFemaleOptions(ActionEvent event) { // 여자 미니미 클릭 시
+        System.out.println("여자");
+        selectedMinimiPreview.setImage(new Image(getClass().getResource("/allday/minico/images/member/Minimi_Female.png").toExternalForm()));
         member.setMinimi("Female");
+        characterSelectConfirmButton.setVisible(true);
     }
 
     @FXML
-    void selectMaleMinimi(ActionEvent event) { // 남자 미니미 클릭 시
-        ViewSelectedCharacter.setImage(new Image(getClass().getResource("/allday/minico/images/member/Minimi_Male.png").toExternalForm()));
+    void showMaleOptions(ActionEvent event) { // 남자 미니미 클릭 시
+        System.out.println("남자");
+        selectedMinimiPreview.setImage(new Image(getClass().getResource("/allday/minico/images/member/Minimi_Male.png").toExternalForm()));
         member.setMinimi("Male");
+        characterSelectConfirmButton.setVisible(true);
     }
 
     public void setPendingMember(Member member) {
@@ -46,11 +50,6 @@ public class CharacterSelectController {
         loginLogService = LoginLogService.getInstance();
         boolean logRecordSuccess =  loginLogService.recordLogForSignUp(memberId);
 
-
-
-
-
-
         if(success) {// Insert 성공 시 모달창 뜨고 메인으로 돌아가기
             System.out.println("회원가입 성공");
             SceneManager.showModal("signUpComplete", "회원가입 완료");
@@ -58,9 +57,18 @@ public class CharacterSelectController {
             System.out.println("회원가입 오류 발생");
         }
     }
-
+    
     @FXML
     void backToSignUp(ActionEvent event) { // 회원가입 창으로 돌아가기
         SceneManager.switchTo("SignUp");
+    }
+
+    public void selectMinimiOption1(ActionEvent actionEvent) {
+    }
+
+    public void selectMinimiOption2(ActionEvent actionEvent) {
+    }
+
+    public void selectMinimiOption3(ActionEvent actionEvent) {
     }
 }
