@@ -24,6 +24,7 @@ public class CharacterMovementController {
         void onNameLabelUpdate(Text nameLabel, ImageView character);
         String getPlayerName();
         Map<String, Text> getCharacterNameLabels();
+        void onSpacebarPressed(double charX, double charY);
     }
     
     private MovementCallback callback;
@@ -41,6 +42,17 @@ public class CharacterMovementController {
 
         roomPane.setOnKeyPressed(event -> {
             String keyCode = event.getCode().toString();
+            
+            // 스페이스바 처리
+            if ("SPACE".equals(keyCode)) {
+                if (character != null && callback != null) {
+                    callback.onSpacebarPressed(character.getLayoutX(), character.getLayoutY());
+                }
+                event.consume();
+                return;
+            }
+            
+            // 일반 이동키 처리
             if (!pressedKeys.contains(keyCode)) {
                 pressedKeys.add(keyCode);
             }
