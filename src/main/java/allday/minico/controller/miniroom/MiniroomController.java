@@ -1,18 +1,14 @@
 package allday.minico.controller.miniroom;
 
-import allday.minico.controller.oxgame.OxGameSettingController;
 import allday.minico.utils.member.SceneManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import javafx.scene.layout.Pane;
@@ -49,6 +45,14 @@ public class MiniroomController implements Initializable {
     private Button friendsButton;
     @FXML
     private Button myProfileButton;
+    @FXML
+    private ImageView oxGameIcon;
+    @FXML
+    private ImageView typingGameIcon;
+    @FXML
+    private ImageView spaceTooltipOx;
+    @FXML
+    private ImageView spaceTooltipTyping;
 
     @FXML
     private void friendsButtonClick(){
@@ -146,6 +150,11 @@ public class MiniroomController implements Initializable {
     private void onCharacterInitialized(ImageView character) {
         this.character = character;
         initializeMovementController();
+        
+        // 초기 툴팁 상태 업데이트
+        if (character != null) {
+            updateSpaceTooltips(character.getLayoutX(), character.getLayoutY());
+        }
     }
 
     private void handleChatMessage(String message) {
@@ -289,6 +298,8 @@ public class MiniroomController implements Initializable {
                         if (networkManager != null) {
                             networkManager.updateCharacterPosition(x, y, direction);
                         }
+                        // 툴팁 업데이트
+                        updateSpaceTooltips(x, y);
                     }
 
                     @Override
@@ -304,6 +315,23 @@ public class MiniroomController implements Initializable {
                     @Override
                     public java.util.Map<String, Text> getCharacterNameLabels() {
                         return characterNameLabels;
+                    }
+
+                    @Override
+                    public void onSpacebarPressed(double charX, double charY) {
+                        // 거리 확인
+                        if (isNearIcon(charX, charY, oxGameIcon)) {
+                            System.out.println("OX게임 아이콘 근처에서 스페이스바 눌림");
+                            onOxClick(new ActionEvent(oxGameIcon, null));
+                            return;
+                        }
+                        
+        
+                        if (isNearIcon(charX, charY, typingGameIcon)) {
+                            System.out.println("타자게임 아이콘 근처에서 스페이스바 눌림");
+                            onTypingClick();
+                            return;
+                        }
                     }
                 });
     }
@@ -575,7 +603,6 @@ public class MiniroomController implements Initializable {
                     getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
             Parent root = oxGameRoot.load();
 
-            OxGameSettingController controller = oxGameRoot.getController();
             Scene oxScene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(oxScene);
@@ -590,6 +617,40 @@ public class MiniroomController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateSpaceTooltips(double charX, double charY) {
+        // 근처 체크
+        boolean nearOx = isNearIcon(charX, charY, oxGameIcon);
+        if (spaceTooltipOx != null) {
+            spaceTooltipOx.setVisible(nearOx);
+            if (nearOx) {
+
+                spaceTooltipOx.setLayoutX(charX + 15); 
+                spaceTooltipOx.setLayoutY(charY + 105); 
+            }
+        }
+        
+        boolean nearTyping = isNearIcon(charX, charY, typingGameIcon);
+        if (spaceTooltipTyping != null) {
+            spaceTooltipTyping.setVisible(nearTyping);
+            if (nearTyping) {
+
+                spaceTooltipTyping.setLayoutX(charX + 15); 
+                spaceTooltipTyping.setLayoutY(charY + 105);
+            }
+        }
+    }
+
+    private boolean isNearIcon(double charX, double charY, ImageView icon) {
+        if (icon == null) return false;
+        
+        double iconX = icon.getLayoutX();
+        double iconY = icon.getLayoutY();
+        double distance = Math.sqrt(Math.pow(charX - iconX, 2) + Math.pow(charY - iconY, 2));
+
+        //80픽셀 이내일 시 
+        return distance <= 80;
     }
 
     public void cleanup() {
