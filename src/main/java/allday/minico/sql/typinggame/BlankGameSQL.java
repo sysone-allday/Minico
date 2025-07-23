@@ -10,6 +10,6 @@ public class BlankGameSQL {
             WHERE WORD_ID IN (%s)
         )
         WHERE PROBLEMS = 1
-        AND ROWNUM <= 5        
+        AND ROWNUM <= 5
         """;
 }

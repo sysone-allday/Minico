@@ -1,6 +1,7 @@
 package allday.minico.controller.diary;
 
 import allday.minico.dto.diary.Todolist;
+import allday.minico.service.diary.DiaryService;
 import allday.minico.service.diary.TodolistService;
 import allday.minico.session.AppSession;
 import com.google.gson.JsonObject;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.skin.DatePickerSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,8 +39,12 @@ public class MyRoomController {
     @FXML private Button backButton;
 
     @FXML private ImageView weatherImageView;
-    @FXML private Pane calendarContainer;
+    @FXML private ImageView minimiImageView;
     private final TodolistService todoService = new TodolistService();
+    private final DiaryService diaryService = new DiaryService();
+    // 일력
+    @FXML private Label monthLabel;
+    @FXML private Label dayLabel;
 
     // 잡초 ImageView 7개 주입
     @FXML private ImageView weed1; @FXML private ImageView weed2; @FXML private ImageView weed3;
@@ -48,33 +55,53 @@ public class MyRoomController {
     private List<ImageView> weeds;   // 편하게 리스트로 묶기
     private String memberId;
 
-    private static final String API_KEY = getApiKey();
+    // 날씨 api 키
+    private static final String API_KEY = "c1b35f20fb45fd683ea1a60795b70f0d";
 
-    private static String getApiKey() {
-        String key = System.getenv("WEATHER_API_KEY");
-        if (key == null || key.isBlank()) {
-            throw new IllegalStateException("환경 변수 WEATHER_API_KEY 가 설정되지 않았습니다.");
-        }
-        return key;
-    }
     @FXML
     public void initialize() {
         memberId = AppSession.getLoginMember().getMemberId();
         weeds = List.of(weed1, weed2, weed3, weed4, weed5, weed6, weed7, weed8, weed9, weed10, weed11);
         linkTodoController();      // Todo 컨트롤러 연결(화면엔 안 붙임)
 
-        updateWeatherImage("Seoul");
-        embedCalendar(); // 달력 넣기
+        updateWeatherImage("Seoul"); // 날씨 이미지 도시 설정
 
         updateWeedDensity(loadTodayProgress());      // 초기값(0% 달성 → 잡초 전체 노출)
+
+        /* 미니미 이미지 변경 */
+        // skin DB에서 image_path 조회
+        String imagePath = diaryService.getImagePathFor(memberId);
+
+        // 경로 유형에 따라 이미지 로드
+        Image img;
+        if (imagePath.startsWith("/") || imagePath.startsWith("@")) {      // 클래스패스 자원
+            URL res = getClass().getResource(imagePath.startsWith("@")
+                    ? imagePath.substring(1)      // "@../" → "../"
+                    : imagePath);
+            img = new Image(res.toExternalForm());
+        } else if (imagePath.startsWith("http")) {                         // URL
+            img = new Image(imagePath, true);
+        } else {                                                           // 로컬 파일 시스템
+            img = new Image(new File(imagePath).toURI().toString());
+        }
+
+        // 4) ImageView에 세팅
+        minimiImageView.setImage(img);
+
+        /* 일력 삽입 */
+        LocalDate today = LocalDate.now();
+        monthLabel.setText(today.getMonthValue() + "월");
+        dayLabel.setText(String.valueOf(today.getDayOfMonth()));
     }
 
+    // 달성률 로드
     private double loadTodayProgress() {
         List<Todolist> list = todoService.getTodos(memberId, LocalDate.now());
         long done = list.stream().filter(Todolist::isDone).count();
         return list.isEmpty() ? 0 : (double) done / list.size();
     }
 
+    // todo 리스트 불러오기
     private void linkTodoController() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass()
@@ -94,33 +121,6 @@ public class MyRoomController {
         for (int i = 0; i < maxWeed; i++) {
             weeds.get(i).setVisible(i < weedToShow);   // 앞에서부터 숨김 처리
         }
-    }
-
-
-    // 달력 삽입
-    private void embedCalendar() {
-        DatePicker picker = new DatePicker(LocalDate.now());
-        picker.setShowWeekNumbers(false);
-
-        // 오늘 날짜만 빨간 배경/테두리
-        picker.setDayCellFactory(dp -> new DateCell() {
-            @Override
-            public void updateItem(LocalDate item, boolean empty) {
-                super.updateItem(item, empty);
-                if (!empty && item.equals(LocalDate.now())) {
-                    setStyle("-fx-background-color:#FFCCCC; -fx-border-color:red;");
-                }
-            }
-        });
-
-        // DatePickerSkin 으로 달력 Node 추출
-        DatePickerSkin skin = new DatePickerSkin(picker);
-        Node calendarGrid = skin.getPopupContent();     // VBox 타입
-
-        // 달력 클릭 → diary 페이지
-        calendarGrid.setOnMouseClicked(this::goToDiaryPage);
-
-        calendarContainer.getChildren().add(calendarGrid);
     }
 
 

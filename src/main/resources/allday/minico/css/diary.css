@@ -172,7 +172,7 @@
 .date-picker > .calendar-grid > .day-cell {
     -fx-font-size: 14px;
 }
-.date-picker > .calendar-grid > .day-cell:today {
+.date-picker > .calendar-grid > .day-cell {
     -fx-background-color: #FFF1BC;
     -fx-border-color: #FFC9D8;
 }
@@ -197,4 +197,40 @@
     -fx-border-color: #FFC9D8;
     -fx-border-radius: 6;
     -fx-background-radius: 6;
+}
+
+/* 일력 ----------------- */
+/* 전체 박스 */
+.tear-cal {
+    -fx-background-color: #FFF7F7;      /* 아이보리 톤 */
+    -fx-border-color: #FFB5CF;
+    -fx-border-width: 2;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 6 8 10 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,.15), 4, 0, 0, 2);
+    -fx-cursor: hand;
+}
+
+/* 상단 뜯기는 바 */
+.tear-bar {
+    -fx-background-color: #FFB5CF;      /* 핑크 */
+    -fx-background-radius: 2 2 0 0;
+}
+
+/* 월– 작은 글씨 */
+.tear-month {
+    -fx-font-family: "NeoDunggeunmo", "Pretendard";
+    -fx-font-size: 15;
+    -fx-text-fill: #5A4A4A;
+    -fx-padding: 4 0 2 0;
+}
+
+/* 일– 큰 글씨 */
+.tear-day {
+    -fx-font-family: "NeoDunggeunmo", "Pretendard";
+    -fx-font-size: 80;
+    -fx-text-fill: #5A4A4A;
+    -fx-alignment: CENTER;
+    -fx-padding: 0 0 2 0;
 }
