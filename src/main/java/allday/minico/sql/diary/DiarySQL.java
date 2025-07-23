@@ -12,7 +12,7 @@ public class DiarySQL {
     // 일기 등록
     public static final String INSERT = """
         INSERT INTO DIARY (CONTENT, WRITTEN_AT,MEMBER_ID, EMOTION_ID)
-        VALUES (?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?)
         """;
 
     // 일기 수정

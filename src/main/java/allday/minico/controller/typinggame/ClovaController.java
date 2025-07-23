@@ -60,7 +60,7 @@ public class ClovaController {
         return quizText;
     }
 
-    private static String parseClovaResponse(String json) {
+    public static String parseClovaResponse(String json) {
         JsonObject root = JsonParser.parseString(json).getAsJsonObject();
 
         // Clova Studio 응답은 "result" → "message" → "content"

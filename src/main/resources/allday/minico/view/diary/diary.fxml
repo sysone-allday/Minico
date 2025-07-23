@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.layout.HBox?>
 <AnchorPane styleClass="diary-root" stylesheets="@../../css/diary.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
    <children>
       <!-- 메인 패널 -->
@@ -31,7 +32,10 @@
       <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="245" prefHeight="394" prefWidth="459" styleClass="text-field" />
 
       <Text fx:id="diaryContentText" layoutX="719" layoutY="245" visible="false" />
-      <Text layoutX="719" layoutY="190" styleClass="text" text="Today's emotion" wrappingWidth="233.33" />
+      <HBox layoutX="710" layoutY="180" spacing="8">
+         <Text text="Today's emotion" styleClass="text"/>
+         <Text fx:id="emotionEmoji" text="😐" styleClass="emoji"/> <!-- 기본값은 무표정 -->
+      </HBox>
       <Text fx:id="dateText" layoutX="547" layoutY="105" styleClass="text" text="오늘" />
 
             <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" text="◁" />

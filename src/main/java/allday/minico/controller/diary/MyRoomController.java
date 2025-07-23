@@ -29,7 +29,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -134,6 +137,16 @@ public class MyRoomController {
 
             JsonObject json = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
             String weather = json.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
+
+            // ★ 1) 전체 응답 찍기
+            System.out.println("[RAW] " + json);
+
+// ★ 2) 데이터 타임스탬프 → 현지 시각으로 변환
+            long dt   = json.get("dt").getAsLong();        // UTC epoch
+            int tzSec = json.get("timezone").getAsInt();   // 예: +32400 = KST
+            ZonedDateTime obsTime = Instant.ofEpochSecond(dt)
+                    .atZone(ZoneOffset.ofTotalSeconds(tzSec));
+            System.out.println("[TIME] 관측시각 = " + obsTime);
 
             // 밤·낮 판별 (00~05, 19~23시는 night)
             boolean isNight = java.time.LocalTime.now().getHour() >= 19

@@ -3,6 +3,7 @@ package allday.minico.controller.diary;
 import allday.minico.dto.diary.Diary;
 import allday.minico.service.diary.DiaryService;
 import allday.minico.session.AppSession;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 public class DiaryController implements Initializable {
     @FXML private Button dateBackButton;
@@ -37,6 +39,7 @@ public class DiaryController implements Initializable {
     @FXML private StackPane calendarModalContainer;
     @FXML private VBox todolist;
     @FXML private Button backButton;
+    @FXML private Text emotionEmoji;
 
     private TodolistController todolistController;
     private final DiaryService diaryService = new DiaryService();
@@ -107,6 +110,7 @@ public class DiaryController implements Initializable {
         boolean result = diaryService.registerDiary(diary);
         if (result) {
             System.out.println("일기 등록 성공!");
+            analyzeEmotionAsync(content);
             loadDiaryForDate(selectedDate);
         } else {
             System.out.println("일기 등록 실패.");
@@ -130,6 +134,7 @@ public class DiaryController implements Initializable {
         boolean result = diaryService.editDiary(diary);
         if (result) {
             System.out.println("일기 수정 완료!");
+            analyzeEmotionAsync(content);
             loadDiaryForDate(selectedDate);
         } else {
             System.out.println("일기 수정 실패.");
@@ -142,12 +147,16 @@ public class DiaryController implements Initializable {
         // 일기 내용 유무에 따라 textfield 변경
         if (diary != null) {
             diaryContentText.setText(diary.getContent());
+            analyzeEmotionAsync(diary.getContent());   // 감정 분석
+
             diaryContentText.setVisible(true); // 읽기 모드로 전환
             diaryTextArea.setVisible(false); // 수정 모드 숨김
             diaryEditButton.setVisible(true);
             diaryRegisterButton.setVisible(false);
             diaryEditDoneButton.setVisible(false);
         } else {
+            emotionEmoji.setText("😐"); // 일기 없으면 디폴트
+
             diaryContentText.setVisible(false);
             diaryTextArea.setVisible(true);
             diaryTextArea.clear();
@@ -209,6 +218,21 @@ public class DiaryController implements Initializable {
             System.err.println("경로 확인: /allday/minico/view/diary/myroom.fxml");
             e.printStackTrace();
         }
+    }
+
+    // 감정 분석
+    private void analyzeEmotionAsync(String text) {
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                ClovaController.Emotion em = ClovaController.analyzeEmotion(text);
+                return ClovaController.toEmoji(em);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "😐";   // 실패 시 기본값
+            }
+        }).thenAccept(emoji ->
+                Platform.runLater(() -> emotionEmoji.setText(emoji))
+        );
     }
 
 }
