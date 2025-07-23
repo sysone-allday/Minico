@@ -9,7 +9,7 @@
     -fx-font-family: "Tmoney RoundWind Regular";
 }
 
-// 게임 세팅에서 버튼 관련 css
+/*게임 세팅에서 버튼 관련 css*/
 /* 공통 버튼 스타일 */
 .level-btn {
     -fx-background-color: transparent;

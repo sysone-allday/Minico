@@ -26,6 +26,8 @@ public class TypingGameDAOImpl implements TypingGameDAO {
                 Word word = new Word();
                 word.setWord_id(rs.getInt("word_id"));
                 word.setText(rs.getString("word_text"));
+                word.setDifficulty(rs.getString("difficulty"));
+                word.setType_id(rs.getInt("type_id"));
                 wordList.add(word);
             }
 
