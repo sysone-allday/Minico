@@ -79,7 +79,7 @@ public class LoginController {
 
         // 동시 로그인이 되지 않도록 로그아웃정보를 기반으로 로그인 가능여부 체크
         boolean isMultipleLogin = memberService.preventMultipleLogins(idField.getText());
-        if(isMultipleLogin == false) {
+        if(Boolean.FALSE.equals(isMultipleLogin)) {
             SceneManager.showModal("MultipleLoginError", "중복 로그인");
             return;
         }

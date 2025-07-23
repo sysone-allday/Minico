@@ -107,7 +107,7 @@ public class DiaryController implements Initializable {
             System.out.println("내용을 입력해주세요.");
             return;
         }
-        Diary diary = new Diary(null, content, selectedDate, "public", memberId, 1);
+        Diary diary = new Diary(null, content, selectedDate, memberId, 1);
         boolean result = diaryService.registerDiary(diary);
         if (result) {
             System.out.println("일기 등록 성공!");
@@ -130,7 +130,7 @@ public class DiaryController implements Initializable {
     // 일기 수정 완료
     public void diaryEditDoneButtonAction() {
         String content = diaryTextArea.getText();
-        Diary diary = new Diary(null, content, selectedDate, "public", memberId, 1);
+        Diary diary = new Diary(null, content, selectedDate, memberId, 1);
         boolean result = diaryService.editDiary(diary);
         if (result) {
             System.out.println("일기 수정 완료!");
