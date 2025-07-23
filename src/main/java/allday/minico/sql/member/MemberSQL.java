@@ -43,4 +43,10 @@ public class MemberSQL {
 			ORDER BY LOG_ID DESC
 			FETCH FIRST 1 ROWS ONLY
 			""";
+	
+	public static String getMemberByNicknameSQL = """
+			SELECT *
+			FROM MEMBER
+			WHERE NICKNAME = ?
+			""";
 }

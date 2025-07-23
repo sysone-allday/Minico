@@ -157,8 +157,33 @@ public class CharacterMovementController {
                     getClass().getResource("/allday/minico/images/char/" + imageName).toExternalForm());
             character.setImage(newImage);
         } catch (Exception e) {
-            System.out.println("캐릭터 이미지를 변경할 수 없습니다: " + e.getMessage());
+            // System.out.println("캐릭터 이미지를 변경할 수 없습니다: " + e.getMessage());
+            // 기본 이미지로 폴백
+            try {
+                String defaultPath = "/allday/minico/images/char/male/대호_front.png";
+                Image defaultImage = new Image(getClass().getResource(defaultPath).toExternalForm());
+                character.setImage(defaultImage);
+                // System.out.println("기본 이미지로 변경됨: " + defaultPath);
+            } catch (Exception fallbackException) {
+                // System.out.println("기본 이미지도 로드할 수 없습니다: " + fallbackException.getMessage());
+            }
         }
+    }
+    
+    private String getUserCharacterImagePath(String direction) {
+        try {
+            String memberId = allday.minico.session.AppSession.getLoginMember().getMemberId();
+            
+            if (memberId != null) {
+                // 캐싱된 최적화 메서드 사용 - DB 조회를 최소화
+                return allday.minico.utils.skin.SkinUtil.getCharacterImagePath(memberId, direction);
+            }
+        } catch (Exception e) {
+            System.out.println("[MovementController] 캐릭터 이미지 경로 생성 실패: " + e.getMessage());
+        }
+        
+        // 정보가 없으면 기본 캐릭터 사용 - SkinUtil의 메서드 활용
+        return allday.minico.utils.skin.SkinUtil.getCharacterImagePath("default", direction);
     }
     
     public void stopMovementTimer() {

@@ -38,6 +38,13 @@ public class RoomNetworkManager {
         javafx.scene.layout.Pane getParentPane(); // UI 참조를 위한 메소드 추가
     }
     
+    // 캐릭터 정보 포함한 확장 인터페이스
+    public interface NetworkCallbackWithCharacterInfo extends NetworkCallback {
+        void onVisitorCharacterUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
+        void onVisitorCharacterCreateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
+        void onHostCharacterCreateWithCharacterInfo(double x, double y, String direction, String characterInfo);
+    }
+    
     private NetworkCallback callback;
     
     public RoomNetworkManager(String playerName, CharacterManager characterManager, 
@@ -101,8 +108,23 @@ public class RoomNetworkManager {
                     Platform.runLater(() -> {
                         // System.out.println(String.format("호스트 - 방문자 업데이트: %s - X:%.2f Y:%.2f 방향:%s",
                         // visitorName, x, y, direction)); // 성능 최적화를 위해 주석 처리
-                        // 호스트 화면에 방문자 캐릭터 업데이트
+                        // 호스트 화면에 방문자 캐릭터 업데이트 (캐릭터 정보 없음)
                         callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                    });
+                }
+
+                @Override
+                public void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                    Platform.runLater(() -> {
+                        System.out.println(String.format("호스트 - 방문자 업데이트 (캐릭터 정보 포함): %s - X:%.2f Y:%.2f 방향:%s 캐릭터:%s",
+                                visitorName, x, y, direction, characterInfo));
+                        // 호스트 화면에 방문자 캐릭터 업데이트 (캐릭터 정보 포함)
+                        if (callback instanceof NetworkCallbackWithCharacterInfo) {
+                            ((NetworkCallbackWithCharacterInfo) callback).onVisitorCharacterUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
+                        } else {
+                            // 기존 방식으로 폴백
+                            callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                        }
                     });
                 }
 
@@ -206,7 +228,7 @@ public class RoomNetworkManager {
         }
 
         try {
-            client = new MiniRoomClient(playerName, new MiniRoomClient.MiniRoomClientListener() {
+            client = new MiniRoomClient(playerName, new MiniRoomClient.MiniRoomClientListenerWithCharacterInfo() {
                 @Override
                 public void onConnected(String roomOwner) {
                     Platform.runLater(() -> {
@@ -215,10 +237,11 @@ public class RoomNetworkManager {
                         // 방문 모드에서도 자신의 캐릭터는 보이게 유지
                         System.out.println("방 접속 성공: " + roomOwner);
 
-                        // 접속 직후 자신의 초기 위치를 서버에 전송
+                        // 접속 직후 자신의 초기 위치를 서버에 전송 (캐릭터 정보 포함)
                         if (client != null && character != null) {
-                            client.sendMessage(String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s",
-                                    playerName, character.getLayoutX(), character.getLayoutY(), "front"));
+                            String characterInfo = getUserCharacterInfo();
+                            client.sendMessage(String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
+                                    playerName, character.getLayoutX(), character.getLayoutY(), "front", characterInfo));
                         }
                     });
                 }
@@ -263,6 +286,25 @@ public class RoomNetworkManager {
                         callback.onHostCharacterCreate(x, y, direction);
                     });
                 }
+                
+                @Override
+                public void onRoomInfoWithCharacterInfo(String owner, double x, double y, String direction, String characterInfo) {
+                    Platform.runLater(() -> {
+                        System.out.println(String.format("방 정보 (캐릭터 정보 포함): %s - X:%.2f Y:%.2f 방향:%s 캐릭터:%s",
+                                owner, x, y, direction, characterInfo));
+                        // 호스트 이름 저장
+                        hostName = owner;
+                        callback.setHostName(owner);
+                        
+                        // 캐릭터 정보 포함한 호스트 생성 콜백이 있는지 확인
+                        if (callback instanceof NetworkCallbackWithCharacterInfo) {
+                            ((NetworkCallbackWithCharacterInfo) callback).onHostCharacterCreateWithCharacterInfo(x, y, direction, characterInfo);
+                        } else {
+                            // 기존 방식으로 폴백
+                            callback.onHostCharacterCreate(x, y, direction);
+                        }
+                    });
+                }
 
                 @Override
                 public void onVisitorUpdate(String visitorName, double x, double y, String direction) {
@@ -271,6 +313,22 @@ public class RoomNetworkManager {
                         // visitorName, x, y, direction)); // 성능 최적화를 위해 주석 처리
                         // 다른 방문자 캐릭터 업데이트
                         callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                    });
+                }
+
+                @Override
+                public void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                    Platform.runLater(() -> {
+                        System.out.println(String.format("방문자 업데이트 (캐릭터 정보 포함): %s - X:%.2f Y:%.2f 방향:%s 캐릭터:%s",
+                                visitorName, x, y, direction, characterInfo));
+                        
+                        // 캐릭터 정보 포함한 업데이트 콜백이 있는지 확인
+                        if (callback instanceof NetworkCallbackWithCharacterInfo) {
+                            ((NetworkCallbackWithCharacterInfo) callback).onVisitorCharacterUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
+                        } else {
+                            // 기존 방식으로 폴백
+                            callback.onVisitorCharacterUpdate(visitorName, x, y, direction);
+                        }
                     });
                 }
 
@@ -370,15 +428,42 @@ public class RoomNetworkManager {
     }
     
     public void updateCharacterPosition(double x, double y, String direction) {
+        String characterInfo = getUserCharacterInfo();
+        System.out.println("[RoomNetworkManager] updateCharacterPosition - 전송할 캐릭터 정보: " + characterInfo);
+        
         if (isHosting && server != null) {
             // 호스팅 중이면 서버에 업데이트
             server.updateCharacterPosition(x, y, direction);
         } else if (isVisiting && client != null) {
-            // 방문 중이면 클라이언트에서 서버로 전송
-            String visitorMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s",
-                    playerName, x, y, direction);
+            // 방문 중이면 클라이언트에서 서버로 전송 (캐릭터 정보 포함)
+            String visitorMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
+                    playerName, x, y, direction, characterInfo);
+            // System.out.println("[RoomNetworkManager] 방문자 메시지 전송: " + visitorMessage);
             client.sendMessage(visitorMessage);
         }
+    }
+    
+    /**
+     * 현재 사용자의 캐릭터 정보를 가져옵니다 (성별:캐릭터명 형식)
+     */
+    private String getUserCharacterInfo() {
+        try {
+            if (allday.minico.session.AppSession.getLoginMember() != null) {
+                String memberId = allday.minico.session.AppSession.getLoginMember().getMemberId();
+                
+                // SkinUtil을 사용해서 캐릭터 정보 가져오기 (형식: "Male:온유")
+                String result = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(memberId);
+                System.out.println("[RoomNetworkManager] getUserCharacterInfo 반환: " + result + " (memberId: " + memberId + ")");
+                return result;
+            }
+        } catch (Exception e) {
+            System.out.println("[RoomNetworkManager] 캐릭터 정보 조회 실패: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        // 기본값
+        System.out.println("[RoomNetworkManager] 기본값 반환: Male:대호");
+        return "Male:대호";
     }
     
     public void showRoomSelectionDialog() {
