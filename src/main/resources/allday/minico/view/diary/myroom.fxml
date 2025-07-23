@@ -8,6 +8,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../css/diary.css" fx:controller="allday.minico.controller.diary.MyRoomController">
     <children>
         <!-- 전체 배경 -->
@@ -31,18 +34,39 @@
         <!-- 날씨 창문 이미지 -->
         <ImageView fx:id="weatherImageView" fitHeight="200" fitWidth="250" layoutX="800" layoutY="130" />
         <!-- 달력 -->
-        <Pane fx:id="calendarContainer" layoutX="150" layoutY="150" maxHeight="100" maxWidth="80" minHeight="100" minWidth="80" onMousePressed="#goToDiaryPage" prefHeight="100" prefWidth="80" style="
-        -fx-background-color: rgba(255,255,255,0.85);
-        -fx-border-color: #FF69B4;
-        -fx-border-radius: 10;
-        -fx-background-radius: 10;" />
+        <VBox xmlns:fx="http://javafx.com/fxml"
+              layoutX="200.0" layoutY="200.0"
+              prefWidth="160"  prefHeight="160" alignment="TOP_CENTER"
+              onMouseClicked="#goToDiaryPage"
+              styleClass="tear-cal">
+
+            <!-- 뜯는 바 (tear bar) -->
+            <HBox alignment="CENTER" prefHeight="18" spacing="46"
+                  styleClass="tear-bar">
+                <!-- 못 이미지 2개 -->
+                <ImageView fitWidth="10" fitHeight="10">
+                    <image><Image url="@../../images/diary/nail.png"/></image>
+                </ImageView>
+                <ImageView fitWidth="10" fitHeight="10">
+                    <image><Image url="@../../images/diary/nail.png"/></image>
+                </ImageView>
+            </HBox>
+
+            <!-- 월 표시 -->
+            <Label fx:id="monthLabel" text="7월"
+                   styleClass="tear-month"/>
+
+            <!-- 일 표시 -->
+            <Label fx:id="dayLabel" text="20"
+                   styleClass="tear-day"/>
+        </VBox>
 
 
         <Pane fx:id="groundPane" prefHeight="300" prefWidth="1180" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50">
             <!-- 캐릭터 1명 -->
             <ImageView fx:id="minimiImageView"
                        fitHeight="256.0" fitWidth="206.0"
-                       layoutX="465.0" layoutY="-159.0"/>
+                       layoutX="465.0" layoutY="-139.0"/>
 
             <!-- 잡초 7개 (달성률에 따라 visible 토글) -->
             <ImageView fx:id="weed1" fitHeight="91.0" fitWidth="92.0" layoutX="859.0" layoutY="41.0">
