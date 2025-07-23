@@ -12,26 +12,38 @@
     -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
 }
 
-.my-profile-title {
-    -fx-font-size: 28px;
-    -fx-text-fill: #fff;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, #f88da9, 3, 1, 1, 1);
+/* signup-form-container와 동일한 흰 배경 효과 */
+.my-profile-container {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-padding: 38;
+    -fx-max-width: 635px;
+    -fx-max-height: 739px;
 }
 
-.info-label {
+/* "내 정보" 타이틀 텍스트 */
+.my-profile-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 좌측 텍스트 레이블 */
+.my-profile-label {
     -fx-font-size: 20px;
     -fx-text-fill: #333;
     -fx-font-weight: bold;
-    -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
 }
 
-.profile-value {
+/* 실제 사용자 정보 값 */
+.my-profile-value {
     -fx-font-size: 20px;
     -fx-text-fill: black;
     -fx-padding: 2 4;
 }
 
+/* 버튼 스타일 */
 .my-profile-btn {
     -fx-pref-width: 169;
     -fx-pref-height: 53;
