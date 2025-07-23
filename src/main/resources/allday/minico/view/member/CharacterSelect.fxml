@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="allday.minico.controller.member.CharacterSelectController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml" fx:controller="allday.minico.controller.member.CharacterSelectController">
     <children>
         <Button fx:id="backToSignUpButton" layoutX="29.0" layoutY="33.0" mnemonicParsing="false" onAction="#backToSignUp" text="뒤로가기" />
-        <Button fx:id="selectMaleMinimiButton" layoutX="395.0" layoutY="55.0" mnemonicParsing="false" onAction="#selectMaleMinimi" prefHeight="119.0" prefWidth="142.0" text="남자 미니미" />
-        <Button fx:id="selectFemaleMinimiButton" layoutX="392.0" layoutY="200.0" mnemonicParsing="false" onAction="#selectFemaleMinimi" prefHeight="126.0" prefWidth="148.0" text="여자 미니미" />
-        <ImageView fx:id="ViewSelectedCharacter" fitHeight="201.0" fitWidth="268.0" layoutX="61.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
-        <Button fx:id="characterSelectConfirmButton" layoutX="274.0" layoutY="326.0" mnemonicParsing="false" onAction="#characterSelectConfirm" text="확인" />
+        
+        <!-- 성별 선택 버튼 -->
+        <HBox layoutX="50.0" layoutY="80.0" spacing="20.0">
+            <Button fx:id="selectMaleButton" onAction="#showMaleOptions" text="남자 미니미" prefWidth="100.0" />
+            <Button fx:id="selectFemaleButton" onAction="#showFemaleOptions" text="여자 미니미" prefWidth="100.0" />
+        </HBox>
+        
+        <!-- 미니미 선택 영역 -->
+        <VBox fx:id="minimiSelectionArea" layoutX="50.0" layoutY="130.0" spacing="20.0" visible="false">
+            <Label fx:id="selectionLabel" text="미니미를 선택하세요" />
+            
+            <!-- 미니미 옵션들 -->
+            <HBox spacing="30.0">
+                <VBox alignment="CENTER" spacing="10.0">
+                    <ImageView fx:id="minimiOption1Image" fitHeight="120.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                    <Button fx:id="selectOption1Button" onAction="#selectMinimiOption1" text="캐릭터1" prefWidth="80.0" />
+                </VBox>
+                
+                <VBox alignment="CENTER" spacing="10.0">
+                    <ImageView fx:id="minimiOption2Image" fitHeight="120.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                    <Button fx:id="selectOption2Button" onAction="#selectMinimiOption2" text="캐릭터2" prefWidth="80.0" />
+                </VBox>
+                
+                <VBox alignment="CENTER" spacing="10.0">
+                    <ImageView fx:id="minimiOption3Image" fitHeight="120.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                    <Button fx:id="selectOption3Button" onAction="#selectMinimiOption3" text="캐릭터3" prefWidth="80.0" />
+                </VBox>
+            </HBox>
+        </VBox>
+        
+        <!-- 선택된 미니미 미리보기 -->
+        <VBox layoutX="400.0" layoutY="130.0" alignment="CENTER" spacing="10.0">
+            <Label text="선택된 미니미" />
+            <ImageView fx:id="selectedMinimiPreview" fitHeight="200.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="selectedMinimiInfo" text="미니미를 선택해주세요" />
+        </VBox>
+        
+        <!-- 확인 버튼 -->
+        <Button fx:id="characterSelectConfirmButton" layoutX="300.0" layoutY="420.0" mnemonicParsing="false" onAction="#characterSelectConfirm" text="확인" prefWidth="100.0" visible="false" />
     </children>
 </AnchorPane>

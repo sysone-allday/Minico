@@ -54,7 +54,6 @@ public class MemberService implements MemberServiceInterface {
             return null;
         }
     }
-
     public boolean modifyMemberInfo(String modifyInfoMemberId, String nickname, String email, String password, String passwordHint) {
         try {
             boolean isModifyComplete = memberDAO.updateMemberInfo(modifyInfoMemberId, nickname, email,password,passwordHint);
@@ -94,11 +93,6 @@ public class MemberService implements MemberServiceInterface {
         }
     }
     
-    /**
-     * 닉네임으로 회원 정보 조회
-     * @param nickname
-     * @return
-     */
     public Member getMemberByNickname(String nickname) {
         try {
             return memberDAO.getMemberByNickname(nickname);
