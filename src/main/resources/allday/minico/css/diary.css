@@ -5,9 +5,15 @@
 
 /* ---------------- Global Root (diary‑root) ---------------- */
 .diary-root {
-    /* 큰 격자 + 부드러운 그라디언트 */
-    -fx-background-image: url("../images/background.png"); /* pastel grid */   /* 큼직한 칸 */
 
+    -fx-background-image: url("../images/background.png");
+    /* 1) 한 장만 표시 */
+    -fx-background-repeat: no-repeat;
+    /* 2) 비율 유지하면서 창 전체를 채우도록 확대/축소 */
+    -fx-background-size: cover;          /* contain 으로 바꾸면 잘리지 않음 */
+    /* 3) 가운데 정렬 */
+    -fx-background-position: center center;
+    /* ↓ 글꼴 등 기존 설정 유지 */
     -fx-font-family: "NeoDunggeunmo", "Pretendard", sans-serif;
     -fx-font-size: 15px;
     -fx-text-fill: #5A4A4A;

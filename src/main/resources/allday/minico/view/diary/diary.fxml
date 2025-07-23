@@ -6,40 +6,43 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane styleClass="diary-root"  prefWidth="1280" prefHeight="800" stylesheets="@../../css/diary.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
+<AnchorPane styleClass="diary-root" stylesheets="@../../css/diary.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
    <children>
       <!-- 메인 패널 -->
       <AnchorPane
-                  styleClass="board-pane"
-                  prefWidth="1180" prefHeight="700">
+              styleClass="board-pane"
+              AnchorPane.topAnchor="40.0"
+              AnchorPane.leftAnchor="40.0"
+              AnchorPane.rightAnchor="40.0"
+              AnchorPane.bottomAnchor="40.0">
          <!-- ★ 인라인 style 제거 -->
          <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51"
-                 prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="등록"
+                 prefWidth="86" styleClass="action-button" text="등록"
                  visible="false"/>
          <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51"
-                 prefWidth="86" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정"
+                 prefWidth="86" styleClass="action-button" text="수정"
                  visible="false"/>
          <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false" prefHeight="51"
-                 prefWidth="150" styleClass="action-button" stylesheets="@../../css/diary.css" text="수정완료"
+                 prefWidth="150" styleClass="action-button" text="수정완료"
                  visible="false"/>
       </AnchorPane>
       <fx:include fx:id="todolist" source="todolist.fxml" />
       <!-- ★ TextArea에 스타일 클래스 추가 -->
-      <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="245" prefHeight="394" prefWidth="459" styleClass="text-field" stylesheets="@../../css/diary.css" />
+      <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="245" prefHeight="394" prefWidth="459" styleClass="text-field" />
 
       <Text fx:id="diaryContentText" layoutX="719" layoutY="245" visible="false" />
       <Text layoutX="719" layoutY="190" styleClass="text" text="Today's emotion" wrappingWidth="233.33" />
       <Text fx:id="dateText" layoutX="547" layoutY="105" styleClass="text" text="오늘" />
 
-            <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" stylesheets="@../../css/diary.css" text="◁" />
-      <Button fx:id="dateNextButton" layoutX="775" layoutY="69" styleClass="date-nav" stylesheets="@../../css/diary.css" text="▷" />
+            <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" text="◁" />
+      <Button fx:id="dateNextButton" layoutX="775" layoutY="69" styleClass="date-nav" text="▷" />
 
-      <Button layoutX="1122" layoutY="69" onAction="#openCalendarModal" styleClass="action-button" stylesheets="@../../css/diary.css" text="달력" />
+      <Button layoutX="1122" layoutY="69" onAction="#openCalendarModal" styleClass="action-button" text="달력" />
 
       <!-- 달력 모달 -->
       <StackPane fx:id="calendarModalContainer" styleClass="modal-dim" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <!-- ★ 인라인 배경 제거 -->
 
-            <Button fx:id="backButton" layoutX="70" layoutY="66" onAction="#goToMyRoom" prefHeight="40" prefWidth="120" styleClass="back-button" stylesheets="@../../css/diary.css" text="〈 Back" />
+            <Button fx:id="backButton" layoutX="70" layoutY="66" onAction="#goToMyRoom" prefHeight="40" prefWidth="120" styleClass="back-button" text="〈 Back" />
    </children>
 </AnchorPane>

@@ -180,12 +180,17 @@ public class MyRoomController {
                     getClass().getResource("/allday/minico/view/diary/diary.fxml"));
 
             /* 새 Scene 을 만들어 교체 → 루트 교체 시점에 따른 이벤트 충돌 없음 */
-            Scene diaryScene = new Scene(diaryRoot);
+            Scene diaryScene =  new Scene(diaryRoot, 1280, 800);
             diaryScene.getStylesheets().add(
                     getClass().getResource(
                             "/allday/minico/css/diary.css").toExternalForm());
 
+            /* (선택) 최소·최대 또는 고정 크기 */
+            stage.setMinWidth(1280);
+            stage.setMinHeight(800);
             stage.setScene(diaryScene);
+            stage.setResizable(false);
+            stage.sizeToScene();        // ⭐ 새 씬 크기에 맞게 Stage 사이즈 재조정
             stage.show();
 
         } catch (IOException e) {
