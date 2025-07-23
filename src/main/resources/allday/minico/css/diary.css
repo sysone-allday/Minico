@@ -236,6 +236,10 @@
 }
 
 /* 일– 이모지 크기 */
+.text-emoji{
+    -fx-font-size: 40px;
+    -fx-text-fill: pink;
+}
 .emoji {
-    -fx-font-size: 28px;   /* 원하시는 크기로 조정 */
+    -fx-font-size: 50px;   /* 원하시는 크기로 조정 */
 }
