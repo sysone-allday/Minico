@@ -76,7 +76,6 @@ public class OxGameSettingController {
         
         // 폰트 설정
         Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
-        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
 
         // 버튼 그룹 초기화
         lvButtons = List.of(btnLvLow, btnLvMid, btnLvHigh, btnLvRandom);

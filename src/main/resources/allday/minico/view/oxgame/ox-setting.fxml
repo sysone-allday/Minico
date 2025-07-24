@@ -50,9 +50,9 @@
                                         <children>
                                             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="748.0">
                                                 <children>
-                                                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="299.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="주제 선택" textFill="#564145">
+                                                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="299.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="주제 선택" textFill="#564145">
                                                         <font>
-                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                            <Font name="NeoDunggeunmo" size="36.0" />
                                                         </font>
                                                     </Label>
                                                     <ComboBox fx:id="selectProblemType" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="342.0" promptText="    선택하세요" style="-fx-background-color: #FFFFFF; -fx-border-radius: 20; -fx-border-color: #BEA5A9; -fx-border-width: 4;" styleClass="custom-combo" stylesheets="@../../css/ox-game.css">
@@ -64,29 +64,29 @@
                                             </HBox>
                                             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
                                                 <children>
-                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="293.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="난도" textFill="#564145">
+                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="293.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="난도" textFill="#564145">
                                                         <font>
-                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                            <Font name="NeoDunggeunmo" size="36.0" />
                                                         </font>
                                                     </Label>
                                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                                         <children>
-                                                            <Button fx:id="btnLvLow" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="하" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnLvLow" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="하" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
                                                             </Button>
-                                                            <Button fx:id="btnLvMid" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="중" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnLvMid" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="중" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
                                                             </Button>
-                                                            <Button fx:id="btnLvHigh" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="상" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnLvHigh" contentDisplay="CENTER" lineSpacing="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="상" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
                                                             </Button>
-                                                            <Button fx:id="btnLvRandom" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="160.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="무작위" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnLvRandom" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="160.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="무작위" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font name="Tmoney RoundWind ExtraBold" size="36.0" />
                                                                 </font>
@@ -100,14 +100,14 @@
                                             </HBox>
                                             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
                                                 <children>
-                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="294.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="타이머(초)" textFill="#564145">
+                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="294.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="타이머(초)" textFill="#564145">
                                                         <font>
-                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                            <Font name="NeoDunggeunmo" size="36.0" />
                                                         </font>
                                                     </Label>
                                                     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="455.0" spacing="30.0">
                                                         <children>
-                                                            <Button fx:id="btnTM5" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="5" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnTM5" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="5" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
@@ -115,7 +115,7 @@
                                                                     <Insets />
                                                                 </opaqueInsets>
                                                             </Button>
-                                                            <Button fx:id="btnTM10" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnTM10" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
@@ -140,14 +140,14 @@
                                             </HBox>
                                             <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
                                                 <children>
-                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="294.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="문제 횟수" textFill="#564145">
+                                                    <Label alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="294.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="문제 횟수" textFill="#564145">
                                                         <font>
-                                                            <Font name="Tmoney RoundWind Regular" size="36.0" />
+                                                            <Font name="NeoDunggeunmo" size="36.0" />
                                                         </font>
                                                     </Label>
                                                     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="455.0" spacing="30.0">
                                                         <children>
-                                                            <Button fx:id="btnCT5" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="5" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnCT5" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="5" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
@@ -155,7 +155,7 @@
                                                                     <Insets />
                                                                 </opaqueInsets>
                                                             </Button>
-                                                            <Button fx:id="btnCT10" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
+                                                            <Button fx:id="btnCT10" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSettingSelect" prefHeight="80.0" prefWidth="95.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="level-btn" text="10" textAlignment="CENTER" textFill="#bea5a9">
                                                                 <font>
                                                                     <Font size="36.0" />
                                                                 </font>
@@ -197,14 +197,14 @@
                             </AnchorPane>
                         </children>
                     </AnchorPane>
-                    <Pane layoutX="374.0" prefHeight="125.0" prefWidth="749.0">
-                        <children>
-                            <ImageView fitHeight="88.0" fitWidth="299.0" layoutX="225.0" layoutY="19.0" mouseTransparent="true">
-                                <image>
-                                    <Image url="@../../images/oxgame/text_setting.png" />
-                                </image>
-                            </ImageView>
-                        </children>
+                    <Pane layoutX="374.0" prefHeight="118.0" prefWidth="749.0">
+                  <children>
+                     <ImageView fitHeight="78.0" fitWidth="345.0" layoutX="202.0" layoutY="26.0">
+                        <image>
+                           <Image url="@../../../../../../../../../../../Users/KOSA/Desktop/fxml_oxgame/text_setting.png" />
+                        </image>
+                     </ImageView>
+                  </children>
                     </Pane>
                     <Pane layoutX="63.0" layoutY="149.0" mouseTransparent="true" prefHeight="198.0" prefWidth="252.0">
                         <children>

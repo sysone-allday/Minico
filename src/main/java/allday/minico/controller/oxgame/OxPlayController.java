@@ -33,6 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -104,6 +105,8 @@ public class OxPlayController {
                 BackgroundMusicManager.ensureMainMusicPlaying(timerLabel.getScene());
             }
         });
+        // 폰트 설정
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
         
         // back, skip 버튼 hover 처리
         handlerBtnBackHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
