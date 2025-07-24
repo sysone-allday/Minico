@@ -5,6 +5,8 @@ import allday.minico.dto.member.Member;
 import allday.minico.service.member.MemberService;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.member.Validator;
+import allday.minico.utils.audio.BackgroundMusicManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -37,6 +39,12 @@ public class SignUpController {
 
     @FXML
     public void initialize() { // 이 컨트롤러와 연결된 fxml 이 로딩될 때 자동으로 실행되는 메서드
+        // 회원가입 화면 배경음악 재생
+        Platform.runLater(() -> {
+            if (submitButton.getScene() != null) {
+                BackgroundMusicManager.playMainMusic(submitButton.getScene());
+            }
+        });
     }
 
     @FXML

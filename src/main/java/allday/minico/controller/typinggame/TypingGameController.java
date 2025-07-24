@@ -3,6 +3,7 @@ package allday.minico.controller.typinggame;
 import allday.minico.dto.typinggame.Word;
 import allday.minico.service.typinggame.TypingGameService;
 import allday.minico.service.typinggame.TypingGameServiceImpl;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -63,6 +64,12 @@ public class TypingGameController {
 
     @FXML
     public void initialize() {
+        // 타자게임 배경음악 연속 재생 (이미 재생 중이면 유지)
+        javafx.application.Platform.runLater(() -> {
+            if (catImage.getScene() != null) {
+                BackgroundMusicManager.ensureMainMusicPlaying(catImage.getScene());
+            }
+        });
 
         typingGameService = new TypingGameServiceImpl();
 
