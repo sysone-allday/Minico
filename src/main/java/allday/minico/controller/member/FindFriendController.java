@@ -2,17 +2,13 @@ package allday.minico.controller.member;
 
 import allday.minico.dto.member.Friend;
 import allday.minico.service.member.FriendService;
-import allday.minico.service.member.MemberService;
 import allday.minico.session.AppSession;
-import allday.minico.utils.member.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.stage.Stage;
 
 public class FindFriendController {
 
@@ -40,6 +36,7 @@ public class FindFriendController {
                         }
                     }
                 });
+                requestButton.getStyleClass().add("findfriend-button"); // 스타일 클래스 추가
             }
 
             @Override
@@ -71,7 +68,6 @@ public class FindFriendController {
             }
         });
     }
-
 
     @FXML
     void searchFriendButton(ActionEvent event) { // 친구 검색 버튼
