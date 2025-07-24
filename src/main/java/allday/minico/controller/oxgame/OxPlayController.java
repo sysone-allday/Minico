@@ -270,11 +270,18 @@ public class OxPlayController {
         this.currentIndex = 0;
 
         // 🔥 여기에서 문제 리스트 미리 받아둠
-        this.questionList = oxPlayService.getQuestionText(
-                setting.getProblemType().getTypeId(),
-                setting.getDifficulty(),
-                setting.getCount()
-        );
+        if(setting.getDifficulty().equals("무작위")) {
+            this.questionList = oxPlayService.getQuestionByRandomLevel(
+                    setting.getProblemType().getTypeId(),
+                    setting.getCount()
+            );
+        } else {
+            this.questionList = oxPlayService.getQuestionText(
+                    setting.getProblemType().getTypeId(),
+                    setting.getDifficulty(),
+                    setting.getCount()
+            );
+        }
 
         startGameIntro();
     }
