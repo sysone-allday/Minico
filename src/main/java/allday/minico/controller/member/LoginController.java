@@ -7,8 +7,7 @@ import allday.minico.service.member.LoginLogService;
 import allday.minico.service.member.MemberService;
 import allday.minico.session.AppSession;
 import allday.minico.utils.member.SceneManager;
-import allday.minico.utils.audio.AudioManager;
-import allday.minico.utils.audio.ButtonSoundHandler;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,14 +34,6 @@ public class LoginController {
     @FXML private Button loginButton;
     @FXML private PasswordField pwField;
     @FXML private Button signUpButton;
-    /*
-    @FXML private Button logoutButton;
-    @FXML
-    void logout(ActionEvent event) {
-        boolean logoutresult = AppSession.logout();  --------------------------------- 로그아웃 하려면 이렇게
-        System.out.println(logoutresult);
-    }
-    */
 
     private final MemberService memberService;
 
@@ -55,15 +46,8 @@ public class LoginController {
     public void initialize() { // 이 컨트롤러와 연결된 fxml 이 로딩될 때 자동으로 실행되는 메서드
         // 로그인 화면 배경음악 재생
         Platform.runLater(() -> {
-            try {
-                AudioManager.getInstance().playBackgroundMusic("main-music.mp3", true);
-                
-                // 모든 버튼에 클릭 효과음 추가
-                if (loginButton.getScene() != null) {
-                    ButtonSoundHandler.addButtonSounds(loginButton.getScene());
-                }
-            } catch (Exception e) {
-                System.err.println("배경음악 재생 실패: " + e.getMessage());
+            if (loginButton.getScene() != null) {
+                BackgroundMusicManager.playLoginMusic(loginButton.getScene());
             }
         });
     }
@@ -98,8 +82,8 @@ public class LoginController {
                     return;
                 }
 
-                // 로그인 성공 시 배경음악 정지
-                AudioManager.getInstance().stopCurrentMusic();
+                // 로그인 성공 시 배경음악을 main-music으로 변경
+                BackgroundMusicManager.switchToMainMusic();
                 
                 // 화면 전환 효과
                 Parent currentRoot = loginButton.getScene().getRoot();

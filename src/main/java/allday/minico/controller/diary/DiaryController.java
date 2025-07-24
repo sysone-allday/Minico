@@ -3,6 +3,7 @@ package allday.minico.controller.diary;
 import allday.minico.dto.diary.Diary;
 import allday.minico.service.diary.DiaryService;
 import allday.minico.session.AppSession;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +53,13 @@ public class DiaryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // 다이어리 배경음악 연속 재생 (이미 재생 중이면 유지)
+        javafx.application.Platform.runLater(() -> {
+            if (diaryContentText.getScene() != null) {
+                BackgroundMusicManager.ensureMainMusicPlaying(diaryContentText.getScene());
+            }
+        });
+        
         memberId = AppSession.getLoginMember().getMemberId();
         diaryContentText.setFont(Font.font("Neo둥근모", 24));
         updateDateText();

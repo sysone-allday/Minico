@@ -3,6 +3,7 @@ package allday.minico.controller.typinggame;
 import allday.minico.dto.typinggame.Word;
 import allday.minico.service.typinggame.TypingGameService;
 import allday.minico.service.typinggame.TypingGameServiceImpl;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -46,7 +47,7 @@ public class TypingGameController {
     private List<Word> wordBuffer = new ArrayList<>();
     private List<Word> successWordList = new ArrayList<>();
     private final int bufferThreshold = 10;
-    private int timeRemaining = 60;
+    private int timeRemaining = 30;
     private int success = 0;
     private int fail = 0;
 
@@ -63,6 +64,12 @@ public class TypingGameController {
 
     @FXML
     public void initialize() {
+        // 타자게임 배경음악 연속 재생 (이미 재생 중이면 유지)
+        javafx.application.Platform.runLater(() -> {
+            if (catImage.getScene() != null) {
+                BackgroundMusicManager.ensureMainMusicPlaying(catImage.getScene());
+            }
+        });
 
         typingGameService = new TypingGameServiceImpl();
 
@@ -78,7 +85,7 @@ public class TypingGameController {
     @FXML
     private void startGame() {
         startButton.setVisible(false);
-        timeRemaining = 60;
+        timeRemaining = 30;
         success = 0;
         fail = 0;
         successCount.setText("0개");
@@ -95,7 +102,7 @@ public class TypingGameController {
     }
 
     private void startTimer() {
-        timerLabel.setText("60:00");
+        timerLabel.setText("30:00");
         gameTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             timeRemaining--;
             timerLabel.setText(String.format("%02d:00", timeRemaining));
@@ -145,8 +152,7 @@ public class TypingGameController {
         showResult();
     }
 
-    
-    // 랜덤으로 단어 떨어지기 기능
+
     private void dropWord() {
         if (wordBuffer.size() <= bufferThreshold) {
             wordBuffer.addAll(typingGameService.getRandomWord());
@@ -155,49 +161,50 @@ public class TypingGameController {
         if (wordBuffer.isEmpty()) return;
         Word word = wordBuffer.remove(0);
 
-
         // 라벨 생성
-        // 폰트 로드
         Font customFont = Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 24);
         Label label = new Label(word.getText());
         label.setFont(customFont);
         label.setStyle("-fx-text-fill: black;");
+        label.setUserData(word); // Word 객체 붙이기
 
+        // label을 임시로 Pane에 추가해서 실제 너비 계산
+        gamePane.getChildren().add(label);
+        label.applyCss(); // 스타일 적용 강제
+        label.layout();   // 실제 크기 계산
+        double wordWidth = label.prefWidth(-1); // 또는 label.getWidth();
 
-        // Word 객체를 Label에 연결
-        // 성공한 단어 list에서 사용하기 위함
-        label.setUserData(word);
-        
-        // 단어 랜덤으로 위치 생성하는 로직 (겹치지 않게 구현)
+        // 좌우 안전 여백
+        double padding = 30;
+        double maxX = gamePane.getWidth() - wordWidth - padding;
         double x;
         boolean valid;
         int attempts = 0;
 
         do {
-            x = Math.random() * (gamePane.getWidth() - 100);
+            x = padding + Math.random() * (maxX - padding);
             valid = true;
 
             for (Label existing : activeLabels) {
                 double ex = existing.getLayoutX();
-                double ew = existing.getWidth();
+                double ew = existing.prefWidth(-1);
 
-                // 일정 거리 이상 떨어져 있어야 통과
                 if (Math.abs(x - ex) < ew + 20) {
                     valid = false;
                     break;
                 }
             }
             attempts++;
-        } while (!valid && attempts < 30); // 최대 30번 시도
+        } while (!valid && attempts < 30);
 
         label.setLayoutX(x);
         label.setLayoutY(0);
 
-        gamePane.getChildren().add(label);
         activeLabels.add(label);
     }
 
-    
+
+
     // 입력한 답 확인 메서드
     @FXML
     public void checkAnswer() {

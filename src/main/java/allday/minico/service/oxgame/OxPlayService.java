@@ -1,6 +1,5 @@
 package allday.minico.service.oxgame;
 
-import allday.minico.dao.oxgame.OxGameSettingDAO;
 import allday.minico.dao.oxgame.OxPlayDAO;
 import allday.minico.dto.oxgame.OxQuestion;
 
@@ -27,7 +26,13 @@ public class OxPlayService {
         return null;
     }
 
-    public void showNextQuestion(int i) {
-
+    public List<OxQuestion> getQuestionByRandomLevel(int typeId, int selectedCount) {
+        try {
+            return oxPlayDAO.getQuestionTextRandom(typeId, selectedCount);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("문제를 불러올 수 없습니다.");
+        }
+        return null;
     }
 }

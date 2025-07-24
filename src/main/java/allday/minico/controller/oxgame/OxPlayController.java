@@ -1,14 +1,20 @@
 package allday.minico.controller.oxgame;
 
+import allday.minico.dto.note.Note;
 import allday.minico.dto.oxgame.OxGameResult;
 import allday.minico.dto.oxgame.OxQuestion;
 import allday.minico.dto.oxgame.OxUserSetting;
+import allday.minico.service.note.NoteService;
+import allday.minico.service.note.NoteServiceImpl;
 import allday.minico.service.oxgame.OxPlayService;
+import allday.minico.session.AppSession;
 import allday.minico.utils.member.SceneManager;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -22,10 +28,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -37,6 +45,8 @@ import java.util.Optional;
 public class OxPlayController {
 
     private static final OxPlayService oxPlayService = OxPlayService.getInstance();
+    private static final NoteService noteService = NoteServiceImpl.getInstance();
+
     @FXML private ImageView correctEffect;
     @FXML private ImageView wrongBackground;
     @FXML private ImageView wrongEffect;
@@ -73,10 +83,31 @@ public class OxPlayController {
     @FXML private Label timerLabel;
 
 
+    private final List<Note> wrongNoteList = new ArrayList<>();
+    private OxGameResult oxGameResult;
+    private List<OxQuestion> questionList;
+    private OxUserSetting setting;
+    private int currentIndex = 0;       // 문제 회차
+    private Timeline timer;             // 타이머
+    private int correctCount = 0;       // 사용자 정답 맞춘 갯수
+    private boolean answered = false;       // 이미 정답 눌렀는지
+    private boolean canAnswer = false;      // 지금 정답 선택 가능한 상태인지
+    private String selectedAnswer = null;   // 사용자가 선택한 답 ("O"/"X")
+
+
 
 
     @FXML
     private void initialize() {
+        // OX게임 배경음악 연속 재생 (이미 재생 중이면 유지)
+        javafx.application.Platform.runLater(() -> {
+            if (timerLabel.getScene() != null) {
+                BackgroundMusicManager.ensureMainMusicPlaying(timerLabel.getScene());
+            }
+        });
+        // 폰트 설정
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
+        
         // back, skip 버튼 hover 처리
         handlerBtnBackHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
             imageBackNormal.setVisible(!isNowHover);
@@ -107,6 +138,14 @@ public class OxPlayController {
 
         handlerBtnSkipHover.setOnMouseClicked(e -> skipGame());
         handlerBtnSkipHover.setOnMouseClicked(this::handleSkipButtonClick);
+
+        String url = AppSession.getOxCharacterImageUrl();
+        Platform.runLater(() -> {
+            if (url != null && minimi != null) {
+                minimi.setImage(new Image(url));
+            }
+        });
+
 
 
 
@@ -217,6 +256,7 @@ public class OxPlayController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1280, 800);
             SceneManager.getPrimaryStage().setScene(scene);
+
         } catch (Exception e) {
             System.err.println("게임 세팅화면으로 전환 실패 " + e.getMessage());
 
@@ -230,24 +270,21 @@ public class OxPlayController {
         this.currentIndex = 0;
 
         // 🔥 여기에서 문제 리스트 미리 받아둠
-        this.questionList = oxPlayService.getQuestionText(
-                setting.getProblemType().getTypeId(),
-                setting.getDifficulty(),
-                setting.getCount()
-        );
+        if(setting.getDifficulty().equals("무작위")) {
+            this.questionList = oxPlayService.getQuestionByRandomLevel(
+                    setting.getProblemType().getTypeId(),
+                    setting.getCount()
+            );
+        } else {
+            this.questionList = oxPlayService.getQuestionText(
+                    setting.getProblemType().getTypeId(),
+                    setting.getDifficulty(),
+                    setting.getCount()
+            );
+        }
 
         startGameIntro();
     }
-
-    private OxGameResult oxGameResult;
-    private List<OxQuestion> questionList;
-    private OxUserSetting setting;
-    private int currentIndex = 0;       // 문제 회차
-    private Timeline timer;             // 타이머
-    private int correctCount = 0;       // 사용자 정답 맞춘 갯수
-    private boolean answered = false;       // 이미 정답 눌렀는지
-    private boolean canAnswer = false;      // 지금 정답 선택 가능한 상태인지
-    private String selectedAnswer = null;   // 사용자가 선택한 답 ("O"/"X")
 
     private void setAnswerBtnEnabled(boolean enabled) {
         stackPaneO.setDisable(!enabled);
@@ -326,6 +363,7 @@ public class OxPlayController {
             infoText.setText("시간이 종료되었습니다.");
             wrongBackground.setVisible(true);
             wrongEffect.setVisible(true);
+            addWrongQuestion(q);
         } else {
             if(isCorrect) {
                 infoText.setText("정답입니다!");
@@ -334,12 +372,22 @@ public class OxPlayController {
                 infoText.setText("오답입니다.");
                 wrongBackground.setVisible(true);
                 wrongEffect.setVisible(true);
+                addWrongQuestion(q);
             }
         }
 
         showAnswerAndExplanation(q);
     }
 
+    private void addWrongQuestion(OxQuestion question) {
+            Note noteDto = new Note();
+            noteDto.setQuestionText(question.getQuestionText());
+            noteDto.setAnswerText(question.getAnswer());
+            noteDto.setMemo("");
+            noteDto.setMemberId(AppSession.getLoginMember().getMemberId());
+            wrongNoteList.add(noteDto);
+            System.out.println("틀린문제 : " + question.getQuestionText());
+    }
 
 
     private void showAnswerAndExplanation(OxQuestion question) {
@@ -413,6 +461,10 @@ public class OxPlayController {
         oxGameResult.setDifficulty(setting.getDifficulty());
         oxGameResult.setTypeName(setting.getProblemType().getTypeName());
         System.out.println("정답률 : " + oxGameResult.getAccuracy());
+        if (currentIndex != 0 && !wrongNoteList.isEmpty()) {
+            noteService.saveWrongNote(wrongNoteList);
+            System.out.println("ox 게임 틀린 문제 저장 완료");
+        }
     }
 
 

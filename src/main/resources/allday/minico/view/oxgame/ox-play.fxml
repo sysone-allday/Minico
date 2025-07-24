@@ -72,7 +72,7 @@
                               <Font name="NeoDunggeunmo" size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="cntText" fill="#ffe3ed" stroke="#a85c6f" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="5.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="1" textAlignment="CENTER">
+                        <Text fx:id="cntText" fill="#ffe3ed" stroke="#a85c6f" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="5.0" style="-fx-font-family: NeoDunggeunmo;" text="1" textAlignment="CENTER">
                            <font>
                               <Font name="NeoDunggeunmo" size="48.0" />
                            </font>
@@ -108,7 +108,7 @@
                   </ImageView>
                   <StackPane alignment="TOP_CENTER" layoutX="-1.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="287.0" prefWidth="1064.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Text fx:id="questionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="980.0">
+                        <Text fx:id="questionText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: NeoDunggeunmo;" text="Text" visible="false" wrappingWidth="980.0">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -116,7 +116,7 @@
                               <Insets />
                            </StackPane.margin>
                         </Text>
-                        <Text fx:id="explanationText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="1000.0">
+                        <Text fx:id="explanationText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: NeoDunggeunmo;" text="Text" visible="false" wrappingWidth="1000.0">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -124,7 +124,7 @@
                               <Insets />
                            </StackPane.margin>
                         </Text>
-                        <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" visible="false" wrappingWidth="980.0">
+                        <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: NeoDunggeunmo;" text="Text" visible="false" wrappingWidth="980.0">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -140,7 +140,7 @@
                <children>
                   <StackPane fx:id="stackPaneO" onMouseClicked="#handleOButtonClick" prefHeight="318.0" prefWidth="394.0">
                      <children>
-                        <ImageView fx:id="oPopupSign" fitHeight="276.0" fitWidth="354.0" translateX="57.0" translateY="20.0" visible="false">
+                        <ImageView fx:id="oPopupSign" fitHeight="276.0" fitWidth="354.0" translateX="52.0" translateY="13.0" visible="false">
                            <image>
                               <Image url="@../../images/oxgame/ox_sign.png" />
                            </image>
@@ -156,9 +156,9 @@
                      <children>
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="90.0" prefWidth="278.0">
                            <children>
-                              <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="89.0" prefWidth="220.0" style="-fx-background-color: #FEE8E1; -fx-background-radius: 40; -fx-border-radius: 40; -fx-border-width: 3; -fx-border-color: #BEA5A9;" text="00:00" textAlignment="CENTER" textFill="RED">
+                              <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="89.0" prefWidth="220.0" style="-fx-background-color: #FEE8E1; -fx-background-radius: 40; -fx-border-radius: 40; -fx-border-width: 3; -fx-border-color: #BEA5A9; -fx-font-family: &quot;NeoDunggeunmo&quot;;" text="00:00" textAlignment="CENTER" textFill="RED">
                                  <font>
-                                    <Font size="48.0" />
+                                    <Font name="NeoDunggeunmo" size="48.0" />
                                  </font>
                               </Label>
                            </children>
@@ -167,7 +167,7 @@
                            <children>
                               <ImageView fx:id="minimiEffectFeel" fitHeight="90.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true" />
                            </children></VBox>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="278.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="278.0">
                            <children>
                               <ImageView fx:id="minimi" fitHeight="120.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true" />
                            </children></VBox>
@@ -175,7 +175,7 @@
                   </VBox>
                   <StackPane fx:id="stackPaneX" onMouseClicked="#handleXButtonClick" prefHeight="318.0" prefWidth="394.0">
                      <children>
-                        <ImageView fitHeight="276.0" fitWidth="354.0" scaleX="-1.0" translateX="-59.0" translateY="20.0" visible="false" fx:id="xPopupSign">
+                        <ImageView fitHeight="276.0" fitWidth="354.0" scaleX="-1.0" translateX="-55.0" translateY="13.0" visible="false" fx:id="xPopupSign">
                            <image>
                               <Image url="@../../images/oxgame/ox_sign.png" />
                            </image>

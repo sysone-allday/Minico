@@ -1,12 +1,12 @@
 .custom-combo {
-    -fx-font-family: "Tmoney RoundWind Regular";
+    -fx-font-family: "NeoDunggeunmo";
     -fx-font-size: 30px;
 }
 
 .custom-combo .prompt-text {
     -fx-text-fill: #564145;
     -fx-font-size: 30px;
-    -fx-font-family: "Tmoney RoundWind Regular";
+    -fx-font-family: "NeoDunggeunmo";
 }
 
 /*게임 세팅에서 버튼 관련 css*/
@@ -17,7 +17,7 @@
     -fx-background-radius: 100;
     -fx-border-radius: 100;
     -fx-text-fill: #BEA5A9;
-    -fx-font-family: "Tmoney RoundWind ExtraBold";
+    -fx-font-family: "NeoDunggeunmo";
     -fx-font-size: 32px;
     -fx-background-radius: 100;
     -fx-border-radius: 100;
@@ -33,7 +33,7 @@
     -fx-border-color: #DF9299 !important;
     -fx-border-width: 5;
     -fx-border-radius: 100;
-    -fx-font-family: "Tmoney RoundWind ExtraBold";
+    -fx-font-family: "NeoDunggeunmo";
     -fx-font-size: 32;
     -fx-text-fill: #564145;
     -fx-alignment: center;

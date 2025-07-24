@@ -50,17 +50,17 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="정답률 :    " textAlignment="CENTER">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="정답률 :    " textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
                                           </Text>
-                                          <Text fx:id="accuracy" fill="#f06072" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="00" textAlignment="RIGHT">
+                                          <Text fx:id="accuracy" fill="#f06072" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="00" textAlignment="RIGHT">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
                                           </Text>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text=" %" textAlignment="RIGHT">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text=" %" textAlignment="RIGHT">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -73,7 +73,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="70.0" prefWidth="255.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="맞춘 횟수" textAlignment="CENTER">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="맞춘 횟수" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -82,17 +82,17 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="255.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text fx:id="correctCount" fill="#f06072" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" text="00" textAlignment="CENTER">
+                                          <Text fx:id="correctCount" fill="#f06072" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="00" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
                                           </Text>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text=" / " textAlignment="CENTER">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text=" / " textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
                                           </Text>
-                                          <Text fx:id="totalQuestion" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="00" textAlignment="CENTER">
+                                          <Text fx:id="totalQuestion" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="00" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -105,7 +105,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="주제" textAlignment="CENTER">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="주제" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -114,7 +114,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text fx:id="typeName" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="주제" textAlignment="CENTER">
+                                          <Text fx:id="typeName" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="주제" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -127,7 +127,7 @@
                                  <children>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="난도" textAlignment="CENTER">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="난도" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -136,7 +136,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text fx:id="difficulty" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Tmoney RoundWind ExtraBold&quot;;" styleClass="result-view-text" text="난이도" textAlignment="CENTER">
+                                          <Text fx:id="difficulty" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="난이도" textAlignment="CENTER">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -220,7 +220,7 @@
                             </AnchorPane>
                         </children>
                     </Pane>
-                    <ImageView id="minimiGif" fitHeight="297.0" fitWidth="267.0" layoutX="55.0" layoutY="340.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView id="minimiGif" fx:id="minimi" fitHeight="241.0" fitWidth="217.0" layoutX="81.0" layoutY="347.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
                     <StackPane fx:id="hoverContainer" layoutX="1" layoutY="2.0" minHeight="100" minWidth="200" prefHeight="100" prefWidth="200">
                         <children>
                             <ImageView fx:id="imageHover" onMouseClicked="#handleBackToMiniroom" visible="false">

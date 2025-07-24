@@ -14,57 +14,57 @@
 <StackPane alignment="CENTER" prefHeight="800" prefWidth="1280" styleClass="root" stylesheets="@../../css/typinggame.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.typinggame.TypingGameController">
 
     <StackPane prefHeight="700" prefWidth="1200">
-        <HBox alignment="CENTER" maxWidth="1200" prefWidth="1200" spacing="10" style="-fx-padding: 20 0 0 0;">
+        <HBox alignment="CENTER" maxWidth="1200" prefWidth="1200" spacing="30" style="-fx-padding: 20 0 0 0;">
             <!-- 왼쪽 영역 -->
             <StackPane prefHeight="760" prefWidth="200">
                 <VBox alignment="TOP_CENTER" prefWidth="195.0" spacing="30">
-                    <Button fx:id="backButton" onAction="#goToMain" prefHeight="55.0" prefWidth="150" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back">
+                    <Button fx:id="backButton" onAction="#goToMain" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back">
                         <font>
                             <Font size="22.0" />
                         </font>
                     </Button>
 
-                    <VBox alignment="CENTER" style="-fx-border-color: #E7E3DC; -fx-border-width: 3px; -fx-padding: 5;                                  -fx-background-color: white; -fx-border-radius: 18; -fx-background-radius: 20;">
+                    <VBox alignment="CENTER" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px; -fx-padding: 5; -fx-background-color: white; -fx-border-radius: 18; -fx-background-radius: 20;">
                         <!-- 타이머 -->
-                        <Label fx:id="timerLabel" prefHeight="60" prefWidth="77" style="-fx-font-size: 30px;" text="60:00" />
+                        <Label fx:id="timerLabel" prefHeight="60" prefWidth="77" style="-fx-font-size: 30px;" text="30:00" />
 
                         <!-- 성공 -->
-                        <HBox alignment="CENTER" prefHeight="60" prefWidth="170" spacing="5" style="-fx-border-color: #E7E3DC; -fx-border-width: 3px 0 0 0; -fx-padding: 15px;">
+                        <HBox alignment="CENTER" prefHeight="60" prefWidth="170" spacing="5" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px 0 0 0; -fx-padding: 15px;">
                             <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
                                     <Image url="@../../images/typinggame/checkicon.png" />
                                 </image>
                             </ImageView>
-                            <Label prefHeight="25" prefWidth="60" style="-fx-font-size: 22px;" text="성공" textFill="#699b91" />
-                            <Label fx:id="successCount" maxWidth="Infinity" prefWidth="70" style="-fx-font-size: 22px;" text="0개" wrapText="false" textAlignment="RIGHT" />
+                            <Label prefHeight="26.0" prefWidth="66.0" style="-fx-font-size: 22px;" text="성공" textFill="#699b91" />
+                            <Label fx:id="successCount" maxWidth="Infinity" prefWidth="70" style="-fx-font-size: 22px;" text="0개" textAlignment="RIGHT" wrapText="false" />
                         </HBox>
 
                         <!-- 실패 -->
-                        <HBox alignment="CENTER" prefHeight="60" prefWidth="170" spacing="5" style="-fx-border-color: #E7E3DC; -fx-border-width: 3px 0 0 0; -fx-padding: 15px;">
+                        <HBox alignment="CENTER" prefHeight="60" prefWidth="170" spacing="5" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px 0 0 0; -fx-padding: 15px;">
                             <ImageView fitHeight="43.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
                                     <Image url="@../../images/typinggame/xicon.png" />
                                 </image>
                             </ImageView>
-                            <Label prefHeight="25" prefWidth="60" style="-fx-font-size: 22px;" text="실패" textFill="#e89386" />
-                            <Label fx:id="failCount" maxWidth="Infinity" prefWidth="70" style="-fx-font-size: 22px;" text="0개" wrapText="false"  textAlignment="RIGHT"/>
+                            <Label prefHeight="26.0" prefWidth="64.0" style="-fx-font-size: 22px;" text="실패" textFill="#e89386" />
+                            <Label fx:id="failCount" maxWidth="Infinity" prefWidth="70" style="-fx-font-size: 22px;" text="0개" textAlignment="RIGHT" wrapText="false" />
                         </HBox>
                     </VBox>
-                   <VBox style="-fx-pref-height: 150px;" />
-                   <ImageView fx:id="catImage" fitHeight="250.0" fitWidth="187.0" pickOnBounds="true" preserveRatio="true">
-                       <image>
-                           <Image url="@../../images/typinggame/cat-Photoroom1.png" />
-                       </image>
-                   </ImageView>
+                    <VBox style="-fx-pref-height: 150px;" />
+                    <ImageView fx:id="catImage" fitHeight="250.0" fitWidth="187.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../images/typinggame/cat-Photoroom1.png" />
+                        </image>
+                    </ImageView>
                 </VBox>
             </StackPane>
 
             <!-- 오른쪽 영역 -->
-            <StackPane alignment="CENTER" prefHeight="760" prefWidth="1000">
+            <StackPane alignment="CENTER" prefHeight="760" prefWidth="900.0">
                 <VBox alignment="TOP_CENTER" prefHeight="760" prefWidth="900" spacing="30">
                     <!-- 게임 영역 -->
                     <Pane fx:id="gamePane" prefHeight="593.0" prefWidth="851.0" style="-fx-background-insets: 1;" styleClass="word-game-pane">
-                        <Button fx:id="startButton" layoutX="409.0" layoutY="247.0" onAction="#startGame" prefHeight="69" prefWidth="200" style="-fx-background-insets: 1;" styleClass="start-button" text="게임 시작" />
+                        <Button fx:id="startButton" layoutX="360.0" layoutY="250.0" onAction="#startGame" prefHeight="70.0" prefWidth="200" style="-fx-background-insets: 1;" styleClass="start-button" text="게임 시작" />
                     </Pane>
 
                     <!-- 입력창 -->

@@ -5,6 +5,8 @@ import allday.minico.dto.member.Member;
 import allday.minico.service.member.MemberService;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.member.Validator;
+import allday.minico.utils.audio.BackgroundMusicManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -37,6 +39,12 @@ public class SignUpController {
 
     @FXML
     public void initialize() { // 이 컨트롤러와 연결된 fxml 이 로딩될 때 자동으로 실행되는 메서드
+        // 회원가입 화면 배경음악 재생
+        Platform.runLater(() -> {
+            if (submitButton.getScene() != null) {
+                BackgroundMusicManager.playMainMusic(submitButton.getScene());
+            }
+        });
     }
 
     @FXML
@@ -64,13 +72,13 @@ public class SignUpController {
     @FXML
     void submit(ActionEvent event) {
 
-        if(!Validator.isIdChecked(idField.getText(),checkAvailabilityStatus )) {
+        if(!Validator.isIdChecked(idField.getText(),checkAvailabilityStatus )) { // ID 중복확인을 했는지
             signUpResultText.setText("ID 중복확인을 해주세요");
             signUpResultText.setStyle("-fx-text-fill: red;");
-            return;} // ID 중복확인을 했는지
-        if(!Validator.isInfoFill(// 회원가입 완료 버튼 클릭 시 미기입란 여부 확인
+            return;}
+        if(!Validator.isInfoFill(
                 idField.getText(),nicknameField.getText(), emailField.getText(),
-                passwordHint.getText(), pwField.getText(),pwCheckField.getText())){
+                passwordHint.getText(), pwField.getText(),pwCheckField.getText())){ // 회원가입 완료 버튼 클릭 시 미기입란 여부 확인
             signUpResultText.setText("※ 회원정보를 모두 입력해주세요");
             signUpResultText.setStyle("-fx-text-fill: red;");
             return;
@@ -79,7 +87,7 @@ public class SignUpController {
             signUpResultText.setText("이메일 형식이 올바르지 않습니다.");
             signUpResultText.setStyle("-fx-text-fill: red;"); return;} // 이메일 양식이 적합한지
         if(!Validator.isPwFormatMatch(pwField.getText())) {
-            signUpResultText.setText("비밀번호 형식이 올바르지 않습니다.");
+            signUpResultText.setText("비밀번호 형식이 올바르지 않습니다.(소문자,숫자 조합 8~30자)");
             signUpResultText.setStyle("-fx-text-fill: red;"); return;}// 비밀번호 양식이 적합한지
         if(!Validator.isPasswordMatch(pwField.getText(),pwCheckField.getText())) {
             signUpResultText.setText("비밀번호가 일치하지 않습니다.");
@@ -87,6 +95,9 @@ public class SignUpController {
         if(!Validator.isNicknameFormatMatch(nicknameField.getText())) {
             signUpResultText.setText("닉네임 형식이 올바르지 않습니다.");
             signUpResultText.setStyle("-fx-text-fill: red;"); return;}// 닉네임이 대,소문자,숫자,한글 4~10자 이내인지
+        if(!Validator.isPwHintFormatMatch(passwordHint.getText())){
+            signUpResultText.setText("비밀번호 힌트가 너무 깁니다.(20자 이하)");
+            signUpResultText.setStyle("-fx-text-fill: red;"); return;} // 비밀번호 힌트 20 글자 이내인지
 
         // 멤버 정보 DTO 생성
         Member member = new Member();

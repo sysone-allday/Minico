@@ -6,14 +6,13 @@ import javafx.util.Duration;
 
 import java.net.URL;
 
-/**
- * 오디오 재생을 관리하는 유틸리티 클래스
- */
+
 public class AudioManager {
     private static AudioManager instance;
     private MediaPlayer currentPlayer;
     private boolean isMuted = false;
     private double volume = 0.5; // 기본 볼륨 50%
+    private String currentMusicFile = null; 
     
     private AudioManager() {}
     
@@ -23,12 +22,9 @@ public class AudioManager {
         }
         return instance;
     }
-    
-    /**
-     * 배경음악을 재생합니다
-     * @param audioFileName 오디오 파일명 (확장자 포함)
-     * @param loop 반복 재생 여부
-     */
+
+
+
     public void playBackgroundMusic(String audioFileName, boolean loop) {
         try {
             // 기존 재생 중인 음악 정지
@@ -43,6 +39,7 @@ public class AudioManager {
             
             Media media = new Media(audioUrl.toString());
             currentPlayer = new MediaPlayer(media);
+            currentMusicFile = audioFileName; // 현재 재생 중인 파일명 저장
             
             // 볼륨 설정
             currentPlayer.setVolume(isMuted ? 0 : volume);
@@ -89,39 +86,28 @@ public class AudioManager {
             System.err.println("효과음 재생 실패: " + e.getMessage());
         }
     }
-    
-    /**
-     * 현재 재생 중인 음악을 정지합니다
-     */
+
     public void stopCurrentMusic() {
         if (currentPlayer != null) {
             currentPlayer.stop();
             currentPlayer.dispose();
             currentPlayer = null;
+            currentMusicFile = null; // 파일명도 초기화
         }
     }
     
-    /**
-     * 음악을 일시정지합니다
-     */
     public void pauseMusic() {
         if (currentPlayer != null) {
             currentPlayer.pause();
         }
     }
     
-    /**
-     * 일시정지된 음악을 재개합니다
-     */
     public void resumeMusic() {
         if (currentPlayer != null) {
             currentPlayer.play();
         }
     }
     
-    /**
-     * 음소거 토글
-     */
     public void toggleMute() {
         isMuted = !isMuted;
         if (currentPlayer != null) {
@@ -129,41 +115,37 @@ public class AudioManager {
         }
     }
     
-    /**
-     * 볼륨 설정 (0.0 ~ 1.0)
-     */
+
+     //볼륨 설정 
+
     public void setVolume(double volume) {
         this.volume = Math.max(0.0, Math.min(1.0, volume));
         if (currentPlayer != null && !isMuted) {
             currentPlayer.setVolume(this.volume);
         }
     }
-    
-    /**
-     * 현재 볼륨 반환
-     */
+
     public double getVolume() {
         return volume;
     }
     
-    /**
-     * 음소거 상태 반환
-     */
+
     public boolean isMuted() {
         return isMuted;
     }
     
-    /**
-     * 현재 재생 중인지 확인
-     */
+
     public boolean isPlaying() {
         return currentPlayer != null && 
                currentPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
     
-    /**
-     * 애플리케이션 종료 시 리소스 정리
-     */
+
+    public boolean isPlayingMainMusic() {
+        return isPlaying() && "main-music.mp3".equals(currentMusicFile);
+    }
+    
+
     public void cleanup() {
         stopCurrentMusic();
     }
