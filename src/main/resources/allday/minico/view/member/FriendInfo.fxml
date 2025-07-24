@@ -18,7 +18,7 @@
       <ListView fx:id="friendListView" prefHeight="300" styleClass="friendinfo-list" />
 
       <!-- 하단 친구 요청 -->
-      <Label fx:id="receivedFriendRequestsLabel" styleClass="friendinfo-subtitle" text="요청 받은 친구" />
+      <Label fx:id="receivedFriendRequestsLabel" styleClass="friendinfo-subtitle" text="받은 친구 요청" />
       <ListView fx:id="receivedFriendRequestsListView" prefHeight="200" styleClass="friendinfo-list" />
    </VBox>
    <Label fx:id="friendListLabel" layoutX="370.0" styleClass="friendinfo-title" text="친구목록" />

@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 
 public class MyProfileController {
 
-    @FXML private Label coinText;
+    // @FXML private Label coinText; 코인 삭제 0_0
     @FXML private Label emailText;
     @FXML private Label experienceText;
     @FXML private Label idText;
@@ -41,7 +41,7 @@ public class MyProfileController {
         idText.setText(loginmember.getMemberId());
         emailText.setText(loginmember.getEmail());
         levelText.setText("레벨 : " + loginmember.getLevel());
-        coinText.setText("코인 : " + loginmember.getCoin());
+        // coinText.setText("코인 : " + loginmember.getCoin()); 코인 삭제 !
         experienceText.setText("경험치 : " + loginmember.getExperience());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
