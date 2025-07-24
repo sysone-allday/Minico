@@ -57,7 +57,6 @@ public class ModifyProfileController {
             modifyResultText.setStyle("-fx-text-fill: red;"); return;}// 비밀번호, 비밀번호 확인이 일치한지
 
         // 검증이 끝나면 아래 실행
-
         String modifyInfoMemberId = AppSession.getLoginMember().getMemberId(); // 지금 로그인한 멤버 ID
         boolean modifyResult = memberService.modifyMemberInfo(modifyInfoMemberId, nicknameField.getText(),emailField.getText(),
                 passwordField.getText(), passwordHintField.getText()  ); // DB 업데이트

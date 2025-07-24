@@ -35,14 +35,6 @@ public class LoginController {
     @FXML private Button loginButton;
     @FXML private PasswordField pwField;
     @FXML private Button signUpButton;
-    /*
-    @FXML private Button logoutButton;
-    @FXML
-    void logout(ActionEvent event) {
-        boolean logoutresult = AppSession.logout();  --------------------------------- 로그아웃 하려면 이렇게
-        System.out.println(logoutresult);
-    }
-    */
 
     private final MemberService memberService;
 
