@@ -49,8 +49,7 @@ public class OxResultController {
     @FXML
     public void initialize() {
         // 폰트 설정
-        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/TmoneyRoundWindExtraBold.ttf"), 14);
-        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/TmoneyRoundWindRegular.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
 
         // Hover 이미지 전환 처리
         hoverContainer.hoverProperty().addListener((obs, wasHover, isNowHover) -> {

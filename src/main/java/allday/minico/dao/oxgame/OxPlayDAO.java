@@ -27,7 +27,7 @@ public class OxPlayDAO {
 
     public List<OxQuestion> getQuestionText(int typeId, String selectedLevel, int selectedCount) {
         List<OxQuestion> list = new ArrayList<>();
-        String sql = OxGameSQL.PICK_RANDOM_OX_QUESTIONS;
+        String sql = OxGameSQL.PICK_SELECT_LEVEL_OX_QUESTIONS;
         try(Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, typeId);
@@ -47,6 +47,30 @@ public class OxPlayDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("OxPlayDAO getQuestionText 입니다.");
+        }
+        return list;
+    }
+
+    public List<OxQuestion> getQuestionTextRandom(int typeId, int selectedCount) {
+        List<OxQuestion> list = new ArrayList<>();
+        String sql = OxGameSQL.PICK_RANDOM_OX_QUESTIONS;
+        try(Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, typeId);
+            pstmt.setInt(2, selectedCount);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                OxQuestion dto = new OxQuestion();
+                dto.setQuestionText(rs.getString("QUESTION_TEXT"));
+                dto.setAnswer(rs.getString("ANSWER"));
+                dto.setExplanation(rs.getString("EXPLANATION"));
+
+                list.add(dto);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("OxPlayDAO getQuestionByRandomLevel 입니다.");
         }
         return list;
     }

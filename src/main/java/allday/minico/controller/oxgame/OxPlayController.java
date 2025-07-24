@@ -33,6 +33,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -104,6 +105,8 @@ public class OxPlayController {
                 BackgroundMusicManager.ensureMainMusicPlaying(timerLabel.getScene());
             }
         });
+        // 폰트 설정
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
         
         // back, skip 버튼 hover 처리
         handlerBtnBackHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
@@ -267,11 +270,18 @@ public class OxPlayController {
         this.currentIndex = 0;
 
         // 🔥 여기에서 문제 리스트 미리 받아둠
-        this.questionList = oxPlayService.getQuestionText(
-                setting.getProblemType().getTypeId(),
-                setting.getDifficulty(),
-                setting.getCount()
-        );
+        if(setting.getDifficulty().equals("무작위")) {
+            this.questionList = oxPlayService.getQuestionByRandomLevel(
+                    setting.getProblemType().getTypeId(),
+                    setting.getCount()
+            );
+        } else {
+            this.questionList = oxPlayService.getQuestionText(
+                    setting.getProblemType().getTypeId(),
+                    setting.getDifficulty(),
+                    setting.getCount()
+            );
+        }
 
         startGameIntro();
     }

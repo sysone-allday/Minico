@@ -1,406 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../../css/note.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.note.NoteController">
-   <children>
-      <ImageView fitHeight="800.0" fitWidth="1280.0">
-         <image>
-            <Image url="@../../images/note/background_yellow.png" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="52.0" layoutY="28.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="746.0" prefWidth="1176.0">
-         <children>
-            <AnchorPane prefHeight="134.0" prefWidth="1176.0">
-               <children>
-                  <HBox prefHeight="108.0" prefWidth="1176.0">
-                     <children>
-                        <HBox alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="108.0" prefWidth="245.0">
-                           <children>
-                              <ImageView fx:id="btnBack" fitHeight="77.0" fitWidth="186.0" HBox.hgrow="ALWAYS">
-                                 <image>
-                                    <Image url="@../../images/note/back_ver3.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </children>
+<StackPane alignment="CENTER" prefHeight="800" prefWidth="1280" styleClass="root" stylesheets="@../../css/note.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.note.NoteController">
+
+    <!-- 메인 컨테이너 -->
+    <StackPane prefHeight="760" prefWidth="1220">
+        <HBox alignment="CENTER" maxWidth="1200" prefWidth="1200" spacing="20" style="-fx-padding: 10 10 10 10;">
+            
+            <!-- 왼쪽 영역 (버튼들과 상태 정보) -->
+            <StackPane prefHeight="720" prefWidth="200">
+                <VBox alignment="TOP_CENTER" prefWidth="200" spacing="20">
+                    <!-- 뒤로가기 버튼 -->
+                    <Button fx:id="btnBack" styleClass="back-button" text="〈 Back">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Button>
+
+                    <!-- 상태 정보 박스 -->
+                    <VBox alignment="CENTER" prefWidth="190" styleClass="info-box">
+                        <!-- 제목 -->
+                        <Label styleClass="title-label" text="단어장" />
+
+                        <!-- 페이지 정보 -->
+                        <HBox fx:id="boxPagination" alignment="CENTER" spacing="5" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px 0 0 0; -fx-padding: 10px;">
+                            <Label style="-fx-font-size: 16px;" text="페이지" />
+                            <Text fx:id="currentPageText" styleClass="page-info" text="1" />
+                            <Text styleClass="page-info" text=" / " />
+                            <Text fx:id="totalPageText" styleClass="page-info" text="1" />
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="133.0" prefWidth="695.0">
-                           <children>
-                              <VBox alignment="CENTER" maxHeight="-Infinity" prefHeight="101.0" prefWidth="555.0">
-                                 <children>
-                                    <VBox alignment="CENTER" maxHeight="-Infinity" prefHeight="200.0" prefWidth="555.0">
-                                       <children>
-                                          <Text fill="WHITE" stroke="#ffabbd" strokeType="OUTSIDE" strokeWidth="3.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="단어장" textAlignment="CENTER" wrappingWidth="144.0">
-                                             <font>
-                                                <Font name="NeoDunggeunmo" size="48.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                          </Text>
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </VBox>
-                                    <VBox alignment="CENTER" maxHeight="-Infinity" prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <ImageView fitHeight="49.0" fitWidth="555.0">
-                                             <image>
-                                                <Image url="@../../images/note/note_info.png" />
-                                             </image>
-                                          </ImageView>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets top="33.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </HBox>
-                        <HBox alignment="BOTTOM_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="108.0" prefWidth="245.0">
-                           <children>
-                              <ImageView fx:id="btnDelete" fitHeight="77.0" fitWidth="186.0">
-                                 <image>
-                                    <Image url="@../../images/note/btn_delete_wrong.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutY="159.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="480.0" prefWidth="1176.0">
-               <children>
-                  <VBox prefHeight="480.0" prefWidth="1176.0">
-                     <children>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="172.0" prefWidth="1176.0">
-                           <children>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="172.0" prefWidth="1176.0">
-                                 <children>
-                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="188.0" prefWidth="185.0">
-                                       <children>
-                                          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="54.0" prefWidth="148.0">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="168.0">
-                                                   <image>
-                                                      <Image url="@../../images/note/box_side.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label alignment="CENTER" prefHeight="50.0" prefWidth="168.0" styleClass="label-side" text="문제" textAlignment="CENTER" textFill="#5f5b54">
-                                                   <font>
-                                                      <Font name="NeoDunggeunmo" size="24.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="TOP_RIGHT" prefHeight="168.0" prefWidth="992.0">
-                                       <children>
-                                          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="138.0" prefWidth="992.0">
-                                             <children>
-                                                <ImageView fitHeight="149.0" fitWidth="992.0">
-                                                   <image>
-                                                      <Image url="@../../images/note/box_problem.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <VBox maxHeight="-Infinity" prefHeight="145.0" prefWidth="991.0">
-                                                   <children>
-                                                      <Label fx:id="wrongQuestion" alignment="TOP_LEFT" prefHeight="202.0" prefWidth="992.0" textFill="#333333" wrapText="true">
-                                                         <VBox.margin>
-                                                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                                         </VBox.margin>
-                                                         <font>
-                                                            <Font size="32.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
+
+                        <!-- 진행 상황 -->
+                        <VBox alignment="CENTER" spacing="8" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px 0 0 0; -fx-padding: 10px;">
+                            <Text fx:id="progressText" styleClass="progress-info" text="문제를 풀어보세요" />
                         </VBox>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="108.0" prefWidth="1176.0">
-                           <children>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="77.0" prefWidth="1176.0">
-                                 <children>
-                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="188.0" prefWidth="185.0">
-                                       <children>
-                                          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="54.0" prefWidth="148.0">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="168.0">
-                                                   <image>
-                                                      <Image url="@../../images/note/box_side.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label alignment="CENTER" prefHeight="50.0" prefWidth="168.0" styleClass="label-side" text="다시풀기" textAlignment="CENTER" textFill="#5f5b54">
-                                                   <font>
-                                                      <Font name="NeoDunggeunmo" size="24.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
+                    </VBox>
+
+                    <!-- 삭제 버튼 -->
+                    <Button fx:id="btnDelete" styleClass="delete-button" text="삭제">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                </VBox>
+            </StackPane>
+
+            <!-- 오른쪽 영역 (메인 컨텐츠) -->
+            <StackPane alignment="CENTER" prefHeight="720" prefWidth="980">
+                <VBox alignment="TOP_CENTER" prefHeight="720" prefWidth="958.0" spacing="15">
+                    
+                    <!-- 메인 게임 영역 -->
+                    <VBox fx:id="gamePane" prefHeight="650" prefWidth="950" styleClass="word-game-pane">
+                        <padding>
+                            <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+                        </padding>
+                        
+                        <!-- 문제 영역 -->
+                        <VBox prefWidth="917.0" spacing="15" VBox.vgrow="ALWAYS">
+                            <!-- 문제 제목 -->
+                            <Label styleClass="section-title" text="문제" />
+                            
+                            <!-- 문제 내용 -->
+                            <VBox prefHeight="150" styleClass="question-box">
+                                <padding>
+                                    <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+                                </padding>
+                                <Label fx:id="wrongQuestion" alignment="TOP_LEFT" styleClass="question-text" text="여기에 문제가 표시됩니다." wrapText="true">
+                                    <font>
+                                        <Font name="NeoDunggeunmo" size="20.0" />
+                                    </font>
+                                </Label>
+                            </VBox>
+
+                            <!-- 답안 입력 영역 -->
+                            <VBox spacing="10">
+                                <Label styleClass="section-title" text="다시 풀기" />
+                                <HBox alignment="CENTER_LEFT" prefHeight="60" spacing="10" styleClass="input-box">
+                                    <padding>
+                                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                    </padding>
+                                    <TextField fx:id="answerInputField" prefWidth="350.0" promptText="정답을 입력하세요..." styleClass="answer-input" HBox.hgrow="ALWAYS">
+                                        <cursor>
+                                            <Cursor fx:constant="TEXT" />
+                                        </cursor>
+                                    </TextField>
+                                    
+                                    <Text fx:id="feedbackLabel" styleClass="feedback-text" text="" textAlignment="CENTER" wrappingWidth="100.0" />
+                                    
+                                    <Button fx:id="btnSubmitAnswer" prefHeight="43.0" prefWidth="84.0" styleClass="check-button" text="확인">
+                                        <cursor>
+                                            <Cursor fx:constant="HAND" />
+                                        </cursor>
+                                    </Button>
+                                </HBox>
+                            </VBox>
+
+                            <!-- 메모 영역 -->
+                            <VBox prefHeight="180" spacing="20">
+                                <Label styleClass="section-title" text="메모" />
+                                <VBox spacing="10" styleClass="input-box">
+                                    <padding>
+                                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                    </padding>
+                                    <TextArea fx:id="memoTextArea" prefRowCount="4" promptText="메모를 입력하세요..." styleClass="answer-input" wrapText="true" VBox.vgrow="ALWAYS">
+                                        <cursor>
+                                            <Cursor fx:constant="TEXT" />
+                                        </cursor>
+                                    </TextArea>
+                                    
+                                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                                        <Button fx:id="btnSaveMemo" prefHeight="43.0" prefWidth="99.0" styleClass="save-button" text="저장">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                            </cursor>
+                                        </Button>
                                     </HBox>
-                                    <HBox alignment="TOP_RIGHT" prefHeight="78.0" prefWidth="993.0">
-                                       <children>
-                                          <AnchorPane maxHeight="-Infinity" prefHeight="78.0" prefWidth="987.0">
-                                             <children>
-                                                <ImageView fitHeight="86.0" fitWidth="987.0">
-                                                   <image>
-                                                      <Image url="@../../images/note/box_input.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <HBox prefHeight="80.0" prefWidth="987.0">
-                                                   <children>
-                                                      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="601.0">
-                                                         <children>
-                                                            <TextField fx:id="answerInputField" prefHeight="49.0" prefWidth="614.0" promptText="정답을 입력하세요..." styleClass="clean-textfield">
-                                                               <font>
-                                                                  <Font size="24.0" />
-                                                               </font>
-                                                               <HBox.margin>
-                                                                  <Insets left="20.0" />
-                                                               </HBox.margin>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="TEXT" />
-                                                               </cursor>
-                                                            </TextField>
-                                                         </children>
-                                                         <HBox.margin>
-                                                            <Insets />
-                                                         </HBox.margin>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="151.0">
-                                                         <children>
-                                                            <Text fx:id="feedbackLabel" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="RIGHT" wrappingWidth="183.0">
-                                                               <HBox.margin>
-                                                                  <Insets right="20.0" />
-                                                               </HBox.margin>
-                                                               <font>
-                                                                  <Font size="24.0" />
-                                                               </font>
-                                                            </Text>
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="175.0">
-                                                         <children>
-                                                            <ImageView fx:id="btnSubmitAnswer" fitHeight="61.0" fitWidth="165.0">
-                                                               <image>
-                                                                  <Image url="@../../images/note/btn_check_answer.png" />
-                                                               </image>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="HAND" />
-                                                               </cursor>
-                                                            </ImageView>
-                                                         </children>
-                                                      </HBox>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
+                                </VBox>
+                            </VBox>
                         </VBox>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="165.0" prefWidth="1176.0">
-                           <children>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="119.0" prefWidth="1176.0">
-                                 <children>
-                                    <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="188.0" prefWidth="185.0">
-                                       <children>
-                                          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="54.0" prefWidth="148.0">
-                                             <children>
-                                                <ImageView fitHeight="54.0" fitWidth="168.0">
-                                                   <image>
-                                                      <Image url="@../../images/note/box_side.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label alignment="CENTER" prefHeight="50.0" prefWidth="168.0" styleClass="label-side" text="메모" textAlignment="CENTER" textFill="#5f5b54">
-                                                   <font>
-                                                      <Font name="NeoDunggeunmo" size="24.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </HBox>
-                                    <HBox alignment="TOP_RIGHT" prefHeight="188.0" prefWidth="994.0">
-                                       <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                             <children>
-                                                <ImageView fitHeight="228.0" fitWidth="991.0">
-                                                   <image>
-                                                      <Image url="@../../images/note/box_memo.png" />
-                                                   </image>
-                                                </ImageView>
-                                                <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="228.0" prefWidth="993.0" AnchorPane.bottomAnchor="0.0">
-                                                   <children>
-                                                      <VBox maxWidth="-Infinity" prefHeight="145.0" prefWidth="1001.0">
-                                                         <children>
-                                                            <TextArea fx:id="memoTextArea" prefHeight="200.0" prefWidth="200.0" promptText="메모를 입력하세요..." styleClass="clean-textarea" wrapText="true">
-                                                               <font>
-                                                                  <Font size="18.0" />
-                                                               </font>
-                                                               <cursor>
-                                                                  <Cursor fx:constant="TEXT" />
-                                                               </cursor>
-                                                            </TextArea>
-                                                         </children>
-                                                         <VBox.margin>
-                                                            <Insets left="25.0" right="25.0" top="25.0" />
-                                                         </VBox.margin>
-                                                      </VBox>
-                                                      <VBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="52.0" prefWidth="954.0">
-                                                         <children>
-                                                            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="943.0">
-                                                               <children>
-                                                                  <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="100.0" prefWidth="200.0" />
-                                                                  <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="57.0" prefWidth="118.0">
-                                                                     <children>
-                                                                        <Label fx:id="btnSaveMemo" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="106.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100; -fx-border-color: #FEC5C0; -fx-border-radius: 100; -fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="btn-memo" text="저장" textAlignment="CENTER" textFill="#5f5b54">
-                                                                           <font>
-                                                                              <Font size="24.0" />
-                                                                           </font>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                           <opaqueInsets>
-                                                                              <Insets />
-                                                                           </opaqueInsets>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </HBox>
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                         <VBox.margin>
-                                                            <Insets bottom="10.0" left="25.0" right="10.0" top="10.0" />
-                                                         </VBox.margin>
-                                                      </VBox>
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutY="634.0" prefHeight="115.0" prefWidth="1201.0">
-               <children>
-                  <HBox alignment="CENTER" layoutY="31.0" prefHeight="80.0" prefWidth="1176.0">
-                     <children>
-                        <HBox fx:id="boxPagination" alignment="CENTER" prefHeight="80.0" prefWidth="477.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="533.0">
-                                 <children>
-                                    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="29.0" prefWidth="535.0">
-                                       <children>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="533.0">
-                                             <children>
-                                                <Text fx:id="currentPageText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="Text" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font name="NeoDunggeunmo" size="14.0" />
-                                                   </font>
-                                                </Text>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text=" / " textAlignment="CENTER">
-                                                   <font>
-                                                      <Font name="NeoDunggeunmo" size="14.0" />
-                                                   </font>
-                                                </Text>
-                                                <Text fx:id="totalPageText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="Text" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font name="NeoDunggeunmo" size="14.0" />
-                                                   </font>
-                                                </Text>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="56.0" prefWidth="535.0">
-                                       <children>
-                                          <HBox prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
-                                                   <children>
-                                                      <Label fx:id="btnPrev" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="136.0" styleClass="pagination-arrow" text="&lt;" textAlignment="RIGHT">
-                                                         <font>
-                                                            <Font size="36.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </HBox>
-                                                <HBox fx:id="pageDots" alignment="CENTER" prefHeight="54.0" prefWidth="571.0" spacing="10.0">
-                                                   <children>
-                                                      <Label fx:id="dot" prefHeight="27.0" prefWidth="27.0" styleClass="page-dot" />
-                                                   </children>
-                                                </HBox>
-                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0">
-                                                   <children>
-                                                      <Label fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="136.0" styleClass="pagination-arrow" text="&gt;" textAlignment="RIGHT">
-                                                         <font>
-                                                            <Font size="36.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </HBox>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </VBox>
-                           </children>
+                    </VBox>
+
+                    <!-- 페이지네이션 -->
+                    <HBox alignment="CENTER" prefHeight="40" spacing="40">
+                        <Button fx:id="btnPrev" prefWidth="50.0" styleClass="pagination-button" text="◀" />
+                        
+                        <!-- 페이지 점들을 위한 빈 HBox -->
+                        <HBox fx:id="pageDots" alignment="CENTER" spacing="8">
                         </HBox>
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-   </children>
-</AnchorPane>
+                        
+                        <Button fx:id="btnNext" prefWidth="50.0" styleClass="pagination-button" text="▶" />
+                    </HBox>
+                </VBox>
+            </StackPane>
+        </HBox>
+    </StackPane>
+
+</StackPane>

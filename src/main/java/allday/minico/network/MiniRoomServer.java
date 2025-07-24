@@ -95,10 +95,10 @@ public class MiniRoomServer {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     clientSocket.setTcpNoDelay(true); // Nagle 알고리즘 비활성화 (즉시 전송)
-                    clientSocket.setSoTimeout(30000); // 30초 타임아웃
+                    clientSocket.setSoTimeout(100000); // 타임아웃
                     clientSocket.setKeepAlive(true);
-                    clientSocket.setSendBufferSize(65536); // 송신 버퍼 크기 증가 (64KB)
-                    clientSocket.setReceiveBufferSize(65536); // 수신 버퍼 크기 증가 (64KB)
+                    clientSocket.setSendBufferSize(65536); // 송신 버퍼 크기
+                    clientSocket.setReceiveBufferSize(65536); // 수신 버퍼 크기
                     ClientHandler clientHandler = new ClientHandler(clientSocket, this);
                     threadPool.submit(clientHandler);
                 } catch (IOException e) {
