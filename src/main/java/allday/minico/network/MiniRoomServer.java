@@ -17,9 +17,10 @@ public class MiniRoomServer {
     private double characterY;
     private String characterDirection;
     private long lastUpdateTime = 0;
-    private static final long UPDATE_INTERVAL = 16; // 16ms 간격으로 업데이트 (60fps)
+    private static final long UPDATE_INTERVAL = 16; // 16ms 간격으로 업데이트 (60fps로 복원)
     private HostUpdateListener hostUpdateListener;
     private int actualPort; // 실제 사용된 포트 저장
+    private String cachedHostCharacterInfo; // 호스트 캐릭터 정보 캐싱
 
     public interface HostUpdateListener {
         void onVisitorJoined(String visitorName);
@@ -41,6 +42,8 @@ public class MiniRoomServer {
         this.characterX = 0;
         this.characterY = 0;
         this.characterDirection = "front";
+        // 호스트 캐릭터 정보 미리 캐싱
+        this.cachedHostCharacterInfo = initializeHostCharacterInfo();
     }
 
     public void setHostUpdateListener(HostUpdateListener listener) {
@@ -92,6 +95,8 @@ public class MiniRoomServer {
                     clientSocket.setTcpNoDelay(true); // Nagle 알고리즘 비활성화 (즉시 전송)
                     clientSocket.setSoTimeout(30000); // 30초 타임아웃
                     clientSocket.setKeepAlive(true);
+                    clientSocket.setSendBufferSize(65536); // 송신 버퍼 크기 증가 (64KB)
+                    clientSocket.setReceiveBufferSize(65536); // 수신 버퍼 크기 증가 (64KB)
                     ClientHandler clientHandler = new ClientHandler(clientSocket, this);
                     threadPool.submit(clientHandler);
                 } catch (IOException e) {
@@ -131,7 +136,7 @@ public class MiniRoomServer {
         }
 
         // 위치 변화 임계값 체크 (작은 움직임 무시)
-        final double POSITION_THRESHOLD = 1.0; // 1픽셀 이하 움직임 무시
+        final double POSITION_THRESHOLD = 0.5; // 0.5픽셀 이하 움직임 무시 (더 민감하게)
         double deltaX = Math.abs(this.characterX - x);
         double deltaY = Math.abs(this.characterY - y);
 
@@ -145,13 +150,22 @@ public class MiniRoomServer {
         this.characterDirection = direction;
         this.lastUpdateTime = currentTime;
 
-        // 모든 연결된 클라이언트에게 캐릭터 위치 업데이트 전송
-        String updateMessage = String.format("CHARACTER_UPDATE:%s:%.2f:%.2f:%s",
-                roomOwner, x, y, direction);
-        broadcastToClients(updateMessage);
+        // StringBuilder를 사용하여 성능 최적화
+        StringBuilder updateMessage = new StringBuilder("CHARACTER_UPDATE:")
+            .append(roomOwner).append(":")
+            .append(String.format("%.1f", x)).append(":")  // 소수점 1자리로 축약
+            .append(String.format("%.1f", y)).append(":")
+            .append(direction);
+        
+        broadcastToClients(updateMessage.toString());
     }
 
     public void broadcastToClients(String message) {
+        // 연결된 클라이언트가 없다면 즉시 리턴 (성능 최적화)
+        if (connectedClients.isEmpty()) {
+            return;
+        }
+        
         for (ClientHandler client : connectedClients.values()) {
             client.sendMessage(message);
         }
@@ -182,35 +196,35 @@ public class MiniRoomServer {
     }
 
     public String getRoomInfo() {
-        // 호스트의 캐릭터 정보도 함께 전송
-        String hostCharacterInfo = getHostCharacterInfo();
-        return String.format("ROOM_INFO:%s:%.2f:%.2f:%s:%s",
-                roomOwner, characterX, characterY, characterDirection, hostCharacterInfo);
+        // 캐싱된 호스트 캐릭터 정보 사용
+        return String.format("ROOM_INFO:%s:%.1f:%.1f:%s:%s",
+                roomOwner, characterX, characterY, characterDirection, cachedHostCharacterInfo);
     }
 
     /**
-     * 호스트의 캐릭터 정보를 가져옵니다
+     * 호스트의 캐릭터 정보를 초기화합니다 (한 번만 호출)
      */
-    private String getHostCharacterInfo() {
+    private String initializeHostCharacterInfo() {
         try {
             // SkinUtil을 사용하여 현재 로그인된 사용자의 캐릭터 정보 조회
             allday.minico.dto.member.Member loginMember = allday.minico.session.AppSession.getLoginMember();
             if (loginMember != null) {
                 String characterInfo = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(loginMember.getMemberId());
-                // System.out.println("[MiniRoomServer] 호스트 캐릭터 정보: " + characterInfo);
                 return characterInfo;
             }
         } catch (Exception e) {
-            // System.out.println("[MiniRoomServer] 호스트 캐릭터 정보 조회 실패: " + e.getMessage());
+            System.out.println("[MiniRoomServer] 호스트 캐릭터 정보 초기화 실패: " + e.getMessage());
         }
-
         // 기본값 반환
         return "Male:대호";
     }
 
     public void sendChatMessage(String message) {
-        String chatBroadcast = String.format("CHAT:%s:%s", roomOwner, message);
-        broadcastToClients(chatBroadcast);
+        // StringBuilder를 사용하여 성능 최적화
+        StringBuilder chatBroadcast = new StringBuilder("CHAT:")
+            .append(roomOwner).append(":")
+            .append(message);
+        broadcastToClients(chatBroadcast.toString());
 
         // 호스트에게도 채팅 메시지 알림
         if (hostUpdateListener != null) {
@@ -234,8 +248,9 @@ public class MiniRoomServer {
         @Override
         public void run() {
             try {
-                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                writer = new PrintWriter(socket.getOutputStream(), true);
+                // 버퍼 크기 증가 및 성능 최적화
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()), 8192);
+                writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream(), 8192), true);
 
                 // 클라이언트 ID 받기
                 clientId = reader.readLine();
@@ -258,8 +273,6 @@ public class MiniRoomServer {
         }
 
         private void handleClientMessage(String message) {
-            // System.out.println("클라이언트 메시지: " + message); // 성능 최적화를 위해 주석 처리
-
             // 방문자 캐릭터 업데이트 처리
             if (message.startsWith("VISITOR_UPDATE:")) {
                 String[] parts = message.split(":");
@@ -271,13 +284,16 @@ public class MiniRoomServer {
                     // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
                     String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
 
-                    // System.out.println("[MiniRoomServer] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
-
-                    // 캐릭터 정보 포함한 업데이트 메시지
-                    String updateMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
-                            visitorName, x, y, direction, characterInfo);
+                    // StringBuilder를 사용하여 성능 최적화, 소수점 1자리로 축약
+                    StringBuilder updateMessage = new StringBuilder("VISITOR_UPDATE:")
+                        .append(visitorName).append(":")
+                        .append(String.format("%.1f", x)).append(":")
+                        .append(String.format("%.1f", y)).append(":")
+                        .append(direction).append(":")
+                        .append(characterInfo);
+                    
                     // 다른 클라이언트들에게 방문자 움직임 브로드캐스트
-                    server.broadcastToClients(updateMessage);
+                    server.broadcastToClients(updateMessage.toString());
 
                     // 호스트에게도 방문자 업데이트 알림 (캐릭터 정보 포함)
                     if (server.hostUpdateListener != null) {
@@ -302,9 +318,13 @@ public class MiniRoomServer {
                     String senderName = parts[1];
                     String chatMessage = parts[2];
 
-                    String chatBroadcast = String.format("CHAT:%s:%s", senderName, chatMessage);
+                    // StringBuilder를 사용하여 성능 최적화
+                    StringBuilder chatBroadcast = new StringBuilder("CHAT:")
+                        .append(senderName).append(":")
+                        .append(chatMessage);
+                    
                     // 모든 클라이언트에게 채팅 메시지 브로드캐스트
-                    server.broadcastToClients(chatBroadcast);
+                    server.broadcastToClients(chatBroadcast.toString());
 
                     // 호스트에게도 채팅 메시지 알림
                     if (server.hostUpdateListener != null) {
