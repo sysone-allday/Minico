@@ -5,6 +5,7 @@ import allday.minico.dto.oxgame.OxQuestion;
 import allday.minico.dto.oxgame.OxUserSetting;
 import allday.minico.service.oxgame.OxPlayService;
 import allday.minico.utils.member.SceneManager;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -77,6 +78,13 @@ public class OxPlayController {
 
     @FXML
     private void initialize() {
+        // OX게임 배경음악 연속 재생 (이미 재생 중이면 유지)
+        javafx.application.Platform.runLater(() -> {
+            if (timerLabel.getScene() != null) {
+                BackgroundMusicManager.ensureMainMusicPlaying(timerLabel.getScene());
+            }
+        });
+        
         // back, skip 버튼 hover 처리
         handlerBtnBackHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
             imageBackNormal.setVisible(!isNowHover);
