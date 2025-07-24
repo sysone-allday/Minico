@@ -14,5 +14,4 @@ public class Diary {
     private String content;
     private LocalDate writtenAt;
     private String memberId;
-    private Integer emotionId;
 }

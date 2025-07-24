@@ -38,7 +38,7 @@
       </HBox>
       <Text fx:id="dateText" layoutX="547" layoutY="105" styleClass="text" text="오늘" />
 
-            <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" text="◁" />
+      <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" text="◁" />
       <Button fx:id="dateNextButton" layoutX="775" layoutY="69" styleClass="date-nav" text="▷" />
 
       <Button layoutX="1122" layoutY="69" onAction="#openCalendarModal" styleClass="action-button" text="달력" />
@@ -47,6 +47,11 @@
       <StackPane fx:id="calendarModalContainer" styleClass="modal-dim" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <!-- ★ 인라인 배경 제거 -->
 
-            <Button fx:id="backButton" layoutX="70" layoutY="66" onAction="#goToMyRoom" prefHeight="40" prefWidth="120" styleClass="back-button" text="〈 Back" />
+      <Button fx:id="backButton"
+              layoutX="70" layoutY="66"
+              prefWidth="120" prefHeight="40"
+              text="〈 Back"
+              styleClass="back-button"
+              onAction="#goToMyRoom" />
    </children>
 </AnchorPane>

@@ -19,6 +19,7 @@ module allday.minico {
     opens allday.minico.controller.member to javafx.fxml;
     opens allday.minico.controller.miniroom to javafx.fxml;
     opens allday.minico.controller.oxgame to javafx.fxml;
+    opens allday.minico.controller.note to javafx.fxml;
     opens allday.minico to javafx.fxml;
     
     exports allday.minico;

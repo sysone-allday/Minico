@@ -28,4 +28,8 @@ public class TodolistService {
     public void remove(long id) {
         todoDao.delete(id);
     }
+
+    public double getWeedRatio(String id, LocalDate date) {
+        return todoDao.getWeedRatio(id, date);
+    }
 }

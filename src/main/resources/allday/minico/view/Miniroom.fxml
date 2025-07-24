@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane styleClass="root" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.miniroom.MiniroomController">
+<BorderPane styleClass="root" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.miniroom.MiniroomController">
     <center>
         <AnchorPane styleClass="miniroom-container">
 
-            <Pane layoutX="30" layoutY="25" prefHeight="750" prefWidth="1147" style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 20;">
+            <Pane layoutX="30.0" layoutY="25.0" prefHeight="750" prefWidth="1147" style="-fx-background-color: rgba(255,255,255,0.7); -fx-background-radius: 20;">
 
                 <!--            메뉴 버튼-->
                 <VBox fx:id="menuButtons" layoutX="1067" layoutY="80" styleClass="menu-buttons">
@@ -60,6 +54,13 @@
                             </StackPane>
                         </graphic>
                     </Button>
+                    <Button fx:id="myProfileButton" onAction="#myProfileButtonClick" styleClass="menu-btn">
+                        <graphic>
+                            <StackPane>
+                                    <Label styleClass="menu-btn-label" text="내 정보" />
+                            </StackPane>
+                        </graphic>
+                    </Button>
                 </VBox>
 
                 <!-- 미니룸-->
@@ -68,16 +69,27 @@
                     <ImageView fitHeight="684" fitWidth="984" layoutX="8" layoutY="8" pickOnBounds="true" preserveRatio="false">
                         <Image url="@../images/room.png" />
                     </ImageView>
+                    
+                    <!-- OX게임 아이콘 -->
+                    <ImageView fx:id="oxGameIcon" fitHeight="60" fitWidth="60" layoutX="700" layoutY="400" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/asset/ox.png" />
+                    </ImageView>
+                    
+                    <!-- 타자게임 아이콘 -->
+                    <ImageView fx:id="typingGameIcon" fitHeight="60" fitWidth="60" layoutX="247.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../images/asset/word.png" />
+                    </ImageView>
+                    
+                    <!-- SPACE 키-->
+                    <ImageView fx:id="spaceTooltipOx" fitHeight="30" fitWidth="60" pickOnBounds="false" preserveRatio="true" visible="false">
+                        <Image url="@../images/asset/space.png" />
+                    </ImageView>
+                    
+                    <ImageView fx:id="spaceTooltipTyping" fitHeight="30" fitWidth="60" pickOnBounds="false" preserveRatio="true" visible="false">
+                        <Image url="@../images/asset/space.png" />
+                    </ImageView>
                 </Pane>
-            <Button fx:id="myProfileButton" layoutX="1004.0" layoutY="631.0" onAction="#myProfileButtonClick" styleClass="menu-btn">
-               <graphic>
-                  <StackPane>
-                     <children>
-                        <Label styleClass="menu-btn-label" text="내 정보" />
-                     </children>
-                  </StackPane>
-               </graphic>
-            </Button>
+
             </Pane>
         </AnchorPane>
     </center>

@@ -69,7 +69,14 @@ public class MyRoomController {
 
         updateWeatherImage("Seoul"); // 날씨 이미지 도시 설정
 
-        updateWeedDensity(loadTodayProgress());      // 초기값(0% 달성 → 잡초 전체 노출)
+        // 기본값: 잡초 안 보이게
+        for (ImageView weed : weeds) {
+            weed.setVisible(false);
+        }
+
+        double weedRatio = todoService.getWeedRatio(memberId, LocalDate.now());
+        System.out.println("[DEBUG] weedRatio from PL/SQL = " + weedRatio);  // 여기 주목!
+        updateWeedDensity(weedRatio);
 
         /* 미니미 이미지 변경 */
         // skin DB에서 image_path 조회
@@ -97,13 +104,6 @@ public class MyRoomController {
         dayLabel.setText(String.valueOf(today.getDayOfMonth()));
     }
 
-    // 달성률 로드
-    private double loadTodayProgress() {
-        List<Todolist> list = todoService.getTodos(memberId, LocalDate.now());
-        long done = list.stream().filter(Todolist::isDone).count();
-        return list.isEmpty() ? 0 : (double) done / list.size();
-    }
-
     // todo 리스트 불러오기
     private void linkTodoController() {
         try {
@@ -117,13 +117,25 @@ public class MyRoomController {
 
     // 잡초 제거
     public void updateWeedDensity(double progress) {
-        // 달성률이 높을수록 남길 잡초 수가 줄어듦
-        int maxWeed = weeds.size();                    // 10
+        int maxWeed = weeds.size();
+
+        // 투두리스트 자체가 없는 경우 (-1): 잡초 전부 숨김
+        if (progress < 0) {
+            for (ImageView weed : weeds) weed.setVisible(false);
+            return;
+        }
+
+        // 정상적인 progress 값이지만 혹시 0.99999 등으로 인해 round가 0 되지 않게 보정
         int weedToShow = (int) Math.round(maxWeed * (1 - progress));
 
+        // 💡 안전 장치: 1.0일 경우는 반드시 0개만 보이도록
+        if (progress >= 1.0) weedToShow = 0;
+
         for (int i = 0; i < maxWeed; i++) {
-            weeds.get(i).setVisible(i < weedToShow);   // 앞에서부터 숨김 처리
+            weeds.get(i).setVisible(i < weedToShow);
         }
+
+        System.out.println("[잡초] progress=" + progress + ", 보여줄 잡초 수=" + weedToShow);
     }
 
 

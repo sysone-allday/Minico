@@ -5,79 +5,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="460.0" prefWidth="600.0" styleClass="my-profile-root"
-            stylesheets="@../../css/myProfile.css"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="allday.minico.controller.member.MyProfileController">
+<StackPane prefWidth="600.0" prefHeight="460.0"
+           styleClass="my-profile-root"
+           stylesheets="@../../css/myProfile.css"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="allday.minico.controller.member.MyProfileController">
 
-   <VBox alignment="TOP_CENTER" spacing="20"
-         AnchorPane.bottomAnchor="20.0"
-         AnchorPane.leftAnchor="30.0"
-         AnchorPane.rightAnchor="30.0"
-         AnchorPane.topAnchor="20.0">
-
+   <VBox alignment="CENTER" spacing="20" styleClass="my-profile-container">
       <!-- 타이틀 -->
-      <Label alignment="CENTER" prefHeight="47.0" prefWidth="94.0"
-             styleClass="info-label" text="내 정보">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
+      <Label text="내 정보" styleClass="my-profile-title" />
 
-      <!-- 본문: 좌측 텍스트, 우측 이미지 -->
-      <HBox alignment="TOP_LEFT" spacing="30">
+      <!-- 텍스트 정보 -->
+      <GridPane hgap="15" vgap="15">
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" minWidth="100" />
+            <ColumnConstraints halignment="LEFT" minWidth="300" />
+         </columnConstraints>
 
-         <!-- 텍스트 정보 묶음 -->
-         <VBox spacing="12">
-            <GridPane hgap="10" vgap="12">
-               <columnConstraints>
-                  <ColumnConstraints halignment="RIGHT" minWidth="90" />
-                  <ColumnConstraints halignment="LEFT" minWidth="260" />
-               </columnConstraints>
+         <Label text="닉네임 :" styleClass="my-profile-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+         <Label fx:id="nicknameText" styleClass="my-profile-value" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-               <Label styleClass="info-label" text="닉네임 :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-               <Label fx:id="nicknameText" styleClass="profile-value" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+         <Label text="ID :" styleClass="my-profile-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+         <Label fx:id="idText" styleClass="my-profile-value" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-               <Label styleClass="info-label" text="ID :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-               <Label fx:id="idText" styleClass="profile-value" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Label text="이메일 :" styleClass="my-profile-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+         <Label fx:id="emailText" styleClass="my-profile-value" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-               <Label styleClass="info-label" text="이메일 :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-               <Label fx:id="emailText" styleClass="profile-value" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label text="가입일 :" styleClass="my-profile-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+         <Label fx:id="joindateText" styleClass="my-profile-value" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+      </GridPane>
 
-               <Label styleClass="info-label" text="가입일 :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-               <Label fx:id="joindateText" styleClass="profile-value" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-               </rowConstraints>
-            </GridPane>
-
-            <!-- 하단: 레벨, 코인, 경험치 -->
-            <HBox alignment="CENTER_LEFT" spacing="25">
-               <Label fx:id="levelText" prefHeight="27.0" prefWidth="112.0" styleClass="profile-value" text="레벨 : " />
-               <Label fx:id="coinText" styleClass="profile-value" text="코인 : " />
-               <Label fx:id="experienceText" styleClass="profile-value" text="경험치 : " />
-            </HBox>
-         </VBox>
-
-         <!-- 오른쪽 이미지 -->
-         <ImageView fx:id="myMinimiImg" fitHeight="100" fitWidth="100" preserveRatio="true" />
+      <!-- 하단 정보 -->
+      <HBox spacing="30" alignment="CENTER">
+         <Label fx:id="levelText" text="레벨 : " styleClass="my-profile-value" />
+         <Label fx:id="coinText" text="코인 : " styleClass="my-profile-value" />
+         <Label fx:id="experienceText" text="경험치 : " styleClass="my-profile-value" />
       </HBox>
 
-      <Button fx:id="modifyProfileButton" onAction="#modifyProfile"
-              prefWidth="225.0" styleClass="my-profile-btn"
-              text="회원 정보 수정" wrapText="true">
-         <font>
-            <Font size="7.0" />
-         </font>
-      </Button>
-
-      <Button fx:id="deleteAccountButton" onAction="#deleteAccountButtonClick"
-              prefWidth="100" styleClass="my-profile-btn"
-              text="회원 탈퇴" wrapText="true" />
+      <!-- 버튼 -->
+      <HBox spacing="20" alignment="CENTER">
+         <Button fx:id="modifyProfileButton" text="회원 정보 수정" onAction="#modifyProfile" styleClass="my-profile-btn" />
+         <Button fx:id="deleteAccountButton" text="회원 탈퇴" onAction="#deleteAccountButtonClick" styleClass="my-profile-btn" />
+      </HBox>
    </VBox>
-</AnchorPane>
+</StackPane>

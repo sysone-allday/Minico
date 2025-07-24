@@ -17,7 +17,7 @@ public class MiniRoomServer {
     private double characterY;
     private String characterDirection;
     private long lastUpdateTime = 0;
-    private static final long UPDATE_INTERVAL = 50; // 50ms 간격으로 업데이트 (20fps)
+    private static final long UPDATE_INTERVAL = 16; // 16ms 간격으로 업데이트 (60fps)
     private HostUpdateListener hostUpdateListener;
     private int actualPort; // 실제 사용된 포트 저장
 
@@ -27,7 +27,7 @@ public class MiniRoomServer {
         void onVisitorLeft(String visitorName);
 
         void onVisitorUpdate(String visitorName, double x, double y, String direction);
-        
+
         // 캐릭터 정보 포함한 방문자 업데이트 (새로 추가)
         void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
 
@@ -60,7 +60,7 @@ public class MiniRoomServer {
             // 동적 포트 할당: 기본 포트부터 시작해서 사용 가능한 포트 찾기
             int portToTry = DEFAULT_PORT;
             boolean serverStarted = false;
-            
+
             while (!serverStarted && portToTry < DEFAULT_PORT + 100) { // 최대 100개 포트까지 시도
                 try {
                     serverSocket = new ServerSocket(portToTry);
@@ -78,11 +78,11 @@ public class MiniRoomServer {
                     }
                 }
             }
-            
+
             if (!serverStarted) {
                 throw new IOException("사용 가능한 포트를 찾을 수 없습니다. (시도한 범위: " + DEFAULT_PORT + "-" + (DEFAULT_PORT + 99) + ")");
             }
-            
+
             isRunning = true;
 
             // 클라이언트 연결 대기
@@ -117,7 +117,7 @@ public class MiniRoomServer {
             System.out.println("서버 중지 오류: " + e.getMessage());
         }
     }
-    
+
     public int getActualPort() {
         return actualPort;
     }
@@ -128,6 +128,16 @@ public class MiniRoomServer {
         // 업데이트 빈도 제한 (성능 최적화)
         if (currentTime - lastUpdateTime < UPDATE_INTERVAL) {
             return;
+        }
+
+        // 위치 변화 임계값 체크 (작은 움직임 무시)
+        final double POSITION_THRESHOLD = 1.0; // 1픽셀 이하 움직임 무시
+        double deltaX = Math.abs(this.characterX - x);
+        double deltaY = Math.abs(this.characterY - y);
+
+        if (deltaX < POSITION_THRESHOLD && deltaY < POSITION_THRESHOLD &&
+                this.characterDirection.equals(direction)) {
+            return; // 변화가 미미하면 업데이트 생략
         }
 
         this.characterX = x;
@@ -177,7 +187,7 @@ public class MiniRoomServer {
         return String.format("ROOM_INFO:%s:%.2f:%.2f:%s:%s",
                 roomOwner, characterX, characterY, characterDirection, hostCharacterInfo);
     }
-    
+
     /**
      * 호스트의 캐릭터 정보를 가져옵니다
      */
@@ -193,7 +203,7 @@ public class MiniRoomServer {
         } catch (Exception e) {
             // System.out.println("[MiniRoomServer] 호스트 캐릭터 정보 조회 실패: " + e.getMessage());
         }
-        
+
         // 기본값 반환
         return "Male:대호";
     }
@@ -260,7 +270,7 @@ public class MiniRoomServer {
                     String direction = parts[4];
                     // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
                     String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
-                    
+
                     // System.out.println("[MiniRoomServer] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
 
                     // 캐릭터 정보 포함한 업데이트 메시지
@@ -282,7 +292,7 @@ public class MiniRoomServer {
                     String leavingPlayerName = parts[1];
                     // 해당 클라이언트 즉시 제거 (cleanup에서도 처리되지만 명시적으로 처리)
                     server.removeClient(leavingPlayerName);
-                    System.out.println("클라이언트가 명시적으로 방을 나감: " + leavingPlayerName);
+                    System.out.println("클라이언트가 방을 나감: " + leavingPlayerName);
                 }
             }
             // 채팅 메시지 처리 (CHAT: 형식)

@@ -38,3 +38,7 @@
     -fx-text-fill: #564145;
     -fx-alignment: center;
 }
+
+.result-view-text {
+	-fx-fill: #564145;
+}

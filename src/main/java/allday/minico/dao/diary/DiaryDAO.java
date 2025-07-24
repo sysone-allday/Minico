@@ -22,8 +22,7 @@ public class DiaryDAO {
                         rs.getLong("DIARY_ID"),
                         rs.getString("CONTENT"),
                         rs.getDate("WRITTEN_AT").toLocalDate(),
-                        rs.getString("MEMBER_ID"),
-                        rs.getInt("EMOTION_ID")
+                        rs.getString("MEMBER_ID")
                 );
             }
         } catch (SQLException e) {
@@ -39,7 +38,6 @@ public class DiaryDAO {
             ps.setString(1, diary.getContent());
             ps.setDate(2, Date.valueOf(diary.getWrittenAt()));
             ps.setString(3, diary.getMemberId());
-            ps.setInt(4, diary.getEmotionId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,9 +50,8 @@ public class DiaryDAO {
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(DiarySQL.UPDATE)) {
             ps.setString(1, diary.getContent());
-            ps.setInt(2, diary.getEmotionId());
-            ps.setString(3, diary.getWrittenAt().toString());
-            ps.setString(4, diary.getMemberId());
+            ps.setString(2, diary.getWrittenAt().toString());
+            ps.setString(3, diary.getMemberId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
