@@ -17,10 +17,11 @@ public class MiniRoomServer {
     private double characterY;
     private String characterDirection;
     private long lastUpdateTime = 0;
-    private static final long UPDATE_INTERVAL = 16; // 16ms 간격으로 업데이트 (60fps로 복원)
+    private static final long UPDATE_INTERVAL = 16; 
     private HostUpdateListener hostUpdateListener;
-    private int actualPort; // 실제 사용된 포트 저장
-    private String cachedHostCharacterInfo; // 호스트 캐릭터 정보 캐싱
+    private int actualPort; 
+    private String cachedHostCharacterInfo;
+    private ExecutorService messageProcessorPool; 
 
     public interface HostUpdateListener {
         void onVisitorJoined(String visitorName);
@@ -29,7 +30,7 @@ public class MiniRoomServer {
 
         void onVisitorUpdate(String visitorName, double x, double y, String direction);
 
-        // 캐릭터 정보 포함한 방문자 업데이트 (새로 추가)
+        // 캐릭터 정보 포함한 방문자 업데이트
         void onVisitorUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo);
 
         void onChatMessage(String senderName, String message);
@@ -39,6 +40,7 @@ public class MiniRoomServer {
         this.roomOwner = roomOwner;
         this.connectedClients = new ConcurrentHashMap<>();
         this.threadPool = Executors.newCachedThreadPool();
+        this.messageProcessorPool = Executors.newFixedThreadPool(4); // 메시지 처리 전용 스레드 풀
         this.characterX = 0;
         this.characterY = 0;
         this.characterDirection = "front";
@@ -117,6 +119,7 @@ public class MiniRoomServer {
                 serverSocket.close();
             }
             threadPool.shutdown();
+            messageProcessorPool.shutdown(); // 메시지 처리 스레드 풀도 종료
             System.out.println("미니룸 서버 중지됨");
         } catch (IOException e) {
             System.out.println("서버 중지 오류: " + e.getMessage());
@@ -130,9 +133,30 @@ public class MiniRoomServer {
     public void updateCharacterPosition(double x, double y, String direction) {
         long currentTime = System.currentTimeMillis();
 
-        // 업데이트 빈도 제한 (성능 최적화)
+        // 업데이트 빈도 제한
         if (currentTime - lastUpdateTime < UPDATE_INTERVAL) {
             return;
+        }
+
+        // 바닥 영역 제한 검증 (방문자와 동일한 로직)
+        double roomWidth = 800;  // 기본 룸 너비
+        double roomHeight = 600; // 기본 룸 높이
+        double floorTopY = roomHeight * 0.23;  // 전체 높이
+        double charHeight = 100; // 캐릭터 높이
+        double floorBottomY = roomHeight - charHeight; // 하단 경계
+        
+        // Y축 좌표 검증 및 제한
+        if (y < floorTopY) {
+            y = floorTopY;  // 바닥 상단 경계로 제한
+        } else if (y > floorBottomY) {
+            y = floorBottomY;  // 바닥 하단 경계로 제한
+        }
+        
+        // X축 좌표도 기본적인 경계 검증
+        if (x < 0) {
+            x = 0;
+        } else if (x > roomWidth - 100) { // 캐릭터 너비 100 가정
+            x = roomWidth - 100;
         }
 
         // 위치 변화 임계값 체크 (작은 움직임 무시)
@@ -166,9 +190,17 @@ public class MiniRoomServer {
             return;
         }
         
-        for (ClientHandler client : connectedClients.values()) {
-            client.sendMessage(message);
-        }
+        // 브로드캐스트를 비동기로 처리하여 블로킹 방지
+        messageProcessorPool.submit(() -> {
+            for (ClientHandler client : connectedClients.values()) {
+                try {
+                    client.sendMessage(message);
+                } catch (Exception e) {
+                    // 개별 클라이언트 전송 실패 시 로그만 남기고 계속 진행
+                    System.out.println("클라이언트 메시지 전송 실패: " + e.getMessage());
+                }
+            }
+        });
     }
 
     public void addClient(String clientId, ClientHandler handler) {
@@ -262,7 +294,11 @@ public class MiniRoomServer {
                 // 클라이언트 메시지 처리
                 String message;
                 while ((message = reader.readLine()) != null) {
-                    handleClientMessage(message);
+                    // 메시지 처리를 비동기로 실행하여 다음 메시지 수신 차단 방지
+                    final String finalMessage = message;
+                    server.messageProcessorPool.submit(() -> {
+                        handleClientMessage(finalMessage);
+                    });
                 }
 
             } catch (IOException e) {
@@ -273,70 +309,109 @@ public class MiniRoomServer {
         }
 
         private void handleClientMessage(String message) {
-            // 방문자 캐릭터 업데이트 처리
+            // 좌표 업데이트는 높은 우선순위로 즉시 처리
             if (message.startsWith("VISITOR_UPDATE:")) {
-                String[] parts = message.split(":");
-                if (parts.length >= 6) { // Female:민서 형태를 고려하여 최소 6개 필요
-                    String visitorName = parts[1];
-                    double x = Double.parseDouble(parts[2]);
-                    double y = Double.parseDouble(parts[3]);
-                    String direction = parts[4];
-                    // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
-                    String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
-
-                    // StringBuilder를 사용하여 성능 최적화, 소수점 1자리로 축약
-                    StringBuilder updateMessage = new StringBuilder("VISITOR_UPDATE:")
-                        .append(visitorName).append(":")
-                        .append(String.format("%.1f", x)).append(":")
-                        .append(String.format("%.1f", y)).append(":")
-                        .append(direction).append(":")
-                        .append(characterInfo);
-                    
-                    // 다른 클라이언트들에게 방문자 움직임 브로드캐스트
-                    server.broadcastToClients(updateMessage.toString());
-
-                    // 호스트에게도 방문자 업데이트 알림 (캐릭터 정보 포함)
-                    if (server.hostUpdateListener != null) {
-                        server.hostUpdateListener.onVisitorUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
-                    }
-                }
+                handleVisitorUpdate(message);
+            }
+            // 채팅 메시지는 일반 우선순위로 처리
+            else if (message.startsWith("CHAT:")) {
+                handleChatMessage(message);
             }
             // 방 나가기 처리
             else if (message.startsWith("LEAVE_ROOM:")) {
-                String[] parts = message.split(":");
-                if (parts.length >= 2) {
-                    String leavingPlayerName = parts[1];
-                    // 해당 클라이언트 즉시 제거 (cleanup에서도 처리되지만 명시적으로 처리)
-                    server.removeClient(leavingPlayerName);
-                    System.out.println("클라이언트가 방을 나감: " + leavingPlayerName);
+                handleLeaveRoom(message);
+            }
+        }
+
+        private void handleVisitorUpdate(String message) {
+            String[] parts = message.split(":");
+            if (parts.length >= 6) { // Female:민서 형태를 고려하여 최소 6개 필요
+                String visitorName = parts[1];
+                double x = Double.parseDouble(parts[2]);
+                double y = Double.parseDouble(parts[3]);
+                String direction = parts[4];
+                // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
+                String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
+
+                // 바닥 영역 제한 검증 (클라이언트와 동일한 로직)
+                // 일반적인 미니룸 크기를 가정하여 제한 적용
+                double roomWidth = 800;  // 기본 룸 너비
+                double roomHeight = 600; // 기본 룸 높이
+                double floorTopY = roomHeight * 0.23;  // 전체 높이의 40% 지점부터 바닥으로 간주
+                double charHeight = 100; // 캐릭터 높이
+                double floorBottomY = roomHeight - charHeight; // 하단 경계
+                
+                // Y축 좌표 검증 및 제한
+                if (y < floorTopY) {
+                    y = floorTopY;  // 바닥 상단 경계로 제한
+                } else if (y > floorBottomY) {
+                    y = floorBottomY;  // 바닥 하단 경계로 제한
+                }
+                
+                // X축 좌표도 기본적인 경계 검증
+                if (x < 0) {
+                    x = 0;
+                } else if (x > roomWidth - 100) { // 캐릭터 너비 100 가정
+                    x = roomWidth - 100;
+                }
+
+                // StringBuilder를 사용하여 성능 최적화, 소수점 1자리로 축약
+                StringBuilder updateMessage = new StringBuilder("VISITOR_UPDATE:")
+                    .append(visitorName).append(":")
+                    .append(String.format("%.1f", x)).append(":")
+                    .append(String.format("%.1f", y)).append(":")
+                    .append(direction).append(":")
+                    .append(characterInfo);
+                
+                // 다른 클라이언트들에게 방문자 움직임 브로드캐스트
+                server.broadcastToClients(updateMessage.toString());
+
+                // 호스트에게도 방문자 업데이트 알림 (캐릭터 정보 포함)
+                if (server.hostUpdateListener != null) {
+                    server.hostUpdateListener.onVisitorUpdateWithCharacterInfo(visitorName, x, y, direction, characterInfo);
                 }
             }
-            // 채팅 메시지 처리 (CHAT: 형식)
-            else if (message.startsWith("CHAT:")) {
-                String[] parts = message.split(":", 3); // 3개로 제한하여 메시지에 콜론이 있어도 처리
-                if (parts.length >= 3) {
-                    String senderName = parts[1];
-                    String chatMessage = parts[2];
+        }
 
-                    // StringBuilder를 사용하여 성능 최적화
-                    StringBuilder chatBroadcast = new StringBuilder("CHAT:")
-                        .append(senderName).append(":")
-                        .append(chatMessage);
-                    
-                    // 모든 클라이언트에게 채팅 메시지 브로드캐스트
-                    server.broadcastToClients(chatBroadcast.toString());
+        private void handleChatMessage(String message) {
+            String[] parts = message.split(":", 3); // 3개로 제한하여 메시지에 콜론이 있어도 처리
+            if (parts.length >= 3) {
+                String senderName = parts[1];
+                String chatMessage = parts[2];
 
-                    // 호스트에게도 채팅 메시지 알림
-                    if (server.hostUpdateListener != null) {
-                        server.hostUpdateListener.onChatMessage(senderName, chatMessage);
-                    }
+                // StringBuilder를 사용하여 성능 최적화
+                StringBuilder chatBroadcast = new StringBuilder("CHAT:")
+                    .append(senderName).append(":")
+                    .append(chatMessage);
+                
+                // 모든 클라이언트에게 채팅 메시지 브로드캐스트
+                server.broadcastToClients(chatBroadcast.toString());
+
+                // 호스트에게도 채팅 메시지 알림
+                if (server.hostUpdateListener != null) {
+                    server.hostUpdateListener.onChatMessage(senderName, chatMessage);
                 }
+            }
+        }
+
+        private void handleLeaveRoom(String message) {
+            String[] parts = message.split(":");
+            if (parts.length >= 2) {
+                String leavingPlayerName = parts[1];
+                // 해당 클라이언트 즉시 제거 (cleanup에서도 처리되지만 명시적으로 처리)
+                server.removeClient(leavingPlayerName);
+                System.out.println("클라이언트가 방을 나감: " + leavingPlayerName);
             }
         }
 
         public void sendMessage(String message) {
             if (writer != null) {
-                writer.println(message);
+                try {
+                    writer.println(message);
+                    writer.flush(); // 즉시 전송 보장
+                } catch (Exception e) {
+                    System.out.println("메시지 전송 실패: " + e.getMessage());
+                }
             }
         }
 
