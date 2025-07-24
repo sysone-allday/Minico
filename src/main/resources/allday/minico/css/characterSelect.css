@@ -4,12 +4,22 @@
 }
 
 .characterselect-root {
-    -fx-background-color: #ffffff;
-    -fx-background-image: url("../images/background.png");
+    -fx-background-color: #f5f5f5;
+    -fx-background-image: url("../images/login-background.png");
     -fx-background-size: cover;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
     -fx-font-family: "NeoDunggeunmo";
+}
+
+/* 캐릭터 선택 폼 컨테이너 */
+.characterselect-form-container {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-padding: 30 50 30 50;
+    -fx-min-height: 750;
+    -fx-pref-width: 900;
+    -fx-pref-height: 750;
+    -fx-max-width: 900;
+    -fx-max-height: 75;
 }
 
 /* 버튼 */
@@ -38,4 +48,25 @@
 .characterselect-label {
     -fx-font-size: 18px;
     -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 이미지 컨테이너 고정 크기 */
+.character-image-container {
+    -fx-pref-width: 120;
+    -fx-pref-height: 180;
+    -fx-min-width: 120;
+    -fx-min-height: 180;
+    -fx-max-width: 120;
+    -fx-max-height: 180;
+}
+
+/* 미리보기 이미지 컨테이너 */
+.preview-image-container {
+    -fx-pref-width: 120;
+    -fx-pref-height: 200;
+    -fx-min-width: 120;
+    -fx-min-height: 200;
+    -fx-max-width: 120;
+    -fx-max-height: 200;
 }

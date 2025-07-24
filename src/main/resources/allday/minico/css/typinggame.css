@@ -11,6 +11,7 @@
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
     -fx-font-family: "NeoDunggeunmo", "Segoe UI",sans-serif;
+    -fx-padding: 30px 0 0 0;
 }
 
 /* back 버튼 */
@@ -43,8 +44,11 @@
 /* 단어 게임 단어 떨어지는 영역 */
 .word-game-pane {
     -fx-background-color: rgba(255, 255, 255, 0.5);
-    /*-fx-background-color: #aaffaa;*/
-    -fx-background-radius: 8;
+    -fx-background-color: #FFF;
+    -fx-border-color: #E7E3DC ;
+    -fx-border-width: 5px;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
 }
 
 .word-input {
