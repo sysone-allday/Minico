@@ -17,7 +17,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -73,6 +72,7 @@ public class FriendInfoController implements Initializable {
                             friendListView.getItems().remove(friend);
                         }
                     });
+                    deleteBtn.getStyleClass().addAll("friendinfo-action-btn", "delete-btn"); // 스타일 클래스 추가
 
                     nicknameLabel.setMinWidth(100);
                     levelLabel.setMinWidth(60);
@@ -125,6 +125,9 @@ public class FriendInfoController implements Initializable {
                             receivedFriendRequestsListView.getItems().remove(friend); // 버튼 클릭하면 요청목록에서 삭제
                         }
                     });
+
+                    acceptBtn.getStyleClass().addAll("friendinfo-action-btn", "accept-btn"); //  수락 버튼 스타일 추가
+                    rejectBtn.getStyleClass().addAll("friendinfo-action-btn", "reject-btn"); //  거절 버튼 스타일 추가
 
                     nicknameLabel.setMinWidth(100);
                     levelLabel.setMinWidth(60);
