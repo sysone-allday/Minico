@@ -46,7 +46,6 @@ public class CharacterSelectController {
     void showMaleOptions(ActionEvent event) {
         selectedGender = "Male";
         showMinimiOptions("male");
-
     }
 
     @FXML
