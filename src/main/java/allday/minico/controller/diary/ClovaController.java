@@ -17,6 +17,7 @@ public class ClovaController {
     private static final String API_KEY = "Bearer nv-505f67ad61af42ec810a855312887837EP2M";
     private static final String URL = "https://clovastudio.apigw.ntruss.com/testapp/v1/chat-completions/HCX-003";
 
+    // 감정 3가지로 분류
     public enum Emotion {POSITIVE, NEUTRAL, NEGATIVE}
 
     public static Emotion analyzeEmotion(String diaryText) throws Exception {

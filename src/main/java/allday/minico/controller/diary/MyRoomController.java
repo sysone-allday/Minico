@@ -56,14 +56,13 @@ public class MyRoomController {
     @FXML private ImageView weed10; @FXML private ImageView weed11;
 
     private List<ImageView> weeds;   // 편하게 리스트로 묶기
-    private String memberId;
 
     // 날씨 api 키
     private static final String API_KEY = "c1b35f20fb45fd683ea1a60795b70f0d";
 
     @FXML
     public void initialize() {
-        memberId = AppSession.getLoginMember().getMemberId();
+        String memberId = AppSession.getLoginMember().getMemberId();
         weeds = List.of(weed1, weed2, weed3, weed4, weed5, weed6, weed7, weed8, weed9, weed10, weed11);
         linkTodoController();      // Todo 컨트롤러 연결(화면엔 안 붙임)
 
@@ -137,7 +136,6 @@ public class MyRoomController {
 
         System.out.println("[잡초] progress=" + progress + ", 보여줄 잡초 수=" + weedToShow);
     }
-
 
     // 창문 날씨별 삽입
     private void updateWeatherImage(String city) {
