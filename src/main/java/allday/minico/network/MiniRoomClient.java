@@ -13,6 +13,7 @@ public class MiniRoomClient {
     private String clientId;
     private boolean isConnected = false;
     private MiniRoomClientListener listener;
+    private String cachedCharacterInfo; // 캐릭터 정보 캐싱
 
     public interface MiniRoomClientListener {
         void onConnected(String roomOwner);
@@ -33,6 +34,8 @@ public class MiniRoomClient {
     public MiniRoomClient(String clientId, MiniRoomClientListener listener) {
         this.clientId = clientId;
         this.listener = listener;
+        // 캐릭터 정보 미리 캐싱
+        this.cachedCharacterInfo = initializeCharacterInfo();
     }
 
     public boolean connectToRoom(String hostIP, int port) {
@@ -42,9 +45,12 @@ public class MiniRoomClient {
             // TCP 성능 최적화 옵션 설정
             socket.setTcpNoDelay(true); // Nagle 알고리즘 비활성화로 지연 감소
             socket.setKeepAlive(true); // Keep-alive 활성화
+            socket.setSendBufferSize(65536); // 송신 버퍼 크기 증가 (64KB)
+            socket.setReceiveBufferSize(65536); // 수신 버퍼 크기 증가 (64KB)
 
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            writer = new PrintWriter(socket.getOutputStream(), true);
+            // 버퍼 크기 증가 및 성능 최적화
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()), 8192);
+            writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream(), 8192), true);
 
             // 클라이언트 ID 전송
             writer.println(clientId);
@@ -94,20 +100,40 @@ public class MiniRoomClient {
 
     public void sendChatMessage(String message) {
         if (writer != null && isConnected) {
-            String chatMessage = String.format("CHAT:%s:%s", clientId, message);
-            writer.println(chatMessage);
+            // StringBuilder를 사용하여 성능 최적화
+            StringBuilder chatMessage = new StringBuilder("CHAT:")
+                .append(clientId).append(":")
+                .append(message);
+            writer.println(chatMessage.toString());
         }
     }
 
     public void sendPositionUpdate(double x, double y, String direction) {
         if (writer != null && isConnected) {
-            String characterInfo = SkinUtil.getCurrentUserCharacterInfo(AppSession.getLoginMember().getMemberId());
-            String message = String.format("UPDATE_POSITION:%s:%.2f:%.2f:%s:%s",
-                    clientId, x, y, direction, characterInfo);
-            writer.println(message);
-            System.out.println("클라이언트 - 위치 및 캐릭터 정보 전송: " + message);
-            System.out.println("클라이언트 - 전송된 캐릭터 정보 상세: " + characterInfo + " (clientId: " + clientId + ")");
+            // StringBuilder를 사용하여 성능 최적화, 소수점 1자리로 축약
+            StringBuilder message = new StringBuilder("VISITOR_UPDATE:")
+                .append(clientId).append(":")
+                .append(String.format("%.1f", x)).append(":")
+                .append(String.format("%.1f", y)).append(":")
+                .append(direction).append(":")
+                .append(cachedCharacterInfo);
+            
+            writer.println(message.toString());
         }
+    }
+
+    /**
+     * 캐릭터 정보를 초기화합니다 (한 번만 호출)
+     */
+    private String initializeCharacterInfo() {
+        try {
+            if (AppSession.getLoginMember() != null) {
+                return SkinUtil.getCurrentUserCharacterInfo(AppSession.getLoginMember().getMemberId());
+            }
+        } catch (Exception e) {
+            // System.out.println("[MiniRoomClient] 캐릭터 정보 초기화 실패: " + e.getMessage());
+        }
+        return "Male:대호"; // 기본값
     }
 
     private void listenForMessages() {
@@ -118,14 +144,12 @@ public class MiniRoomClient {
             }
         } catch (IOException e) {
             if (isConnected) {
-                System.out.println("서버 메시지 수신 오류: " + e.getMessage());
+                // System.out.println("서버 메시지 수신 오류: " + e.getMessage());
             }
         }
     }
 
     private void handleServerMessage(String message) {
-        // System.out.println("서버 메시지: " + message);
-
         if (listener == null) return;
 
         String[] parts = message.split(":");
@@ -142,8 +166,6 @@ public class MiniRoomClient {
                     String direction = parts[4];
                     // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Male:온유)
                     String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
-
-                    // System.out.println("[MiniRoomClient] 호스트 방 정보 - 이름: " + owner + ", 캐릭터: " + characterInfo);
 
                     // 캐릭터 정보 포함한 콜백 호출
                     if (listener instanceof MiniRoomClientListenerWithCharacterInfo) {
@@ -173,8 +195,6 @@ public class MiniRoomClient {
                     String direction = parts[4];
                     // 캐릭터 정보는 parts[5]:parts[6] 형태로 조합 (Female:민서)
                     String characterInfo = parts.length >= 6 ? parts[5] + ":" + parts[6] : "Male:대호";
-
-                    // System.out.println("[MiniRoomClient] 파싱된 방문자 정보 - 이름: " + visitorName + ", 캐릭터: " + characterInfo);
 
                     // 캐릭터 정보 포함한 업데이트 콜백
                     if (listener instanceof MiniRoomClientListenerWithCharacterInfo) {

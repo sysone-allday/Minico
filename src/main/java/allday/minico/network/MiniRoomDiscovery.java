@@ -89,15 +89,18 @@ public class MiniRoomDiscovery {
 
     public void broadcastRoom(String roomOwner, int port) {
         try {
-            String message = "ROOM_BROADCAST:" + roomOwner + ":" + port;
-            byte[] buffer = message.getBytes();
+            // StringBuilder를 사용하여 성능 최적화
+            StringBuilder message = new StringBuilder("ROOM_BROADCAST:")
+                .append(roomOwner).append(":")
+                .append(port);
+            
+            byte[] buffer = message.toString().getBytes();
 
             DatagramPacket packet = new DatagramPacket(
                     buffer, buffer.length, multicastGroup, DISCOVERY_PORT
             );
 
             multicastSocket.send(packet);
-            // System.out.println("방 정보 브로드캐스트: " + message);
 
         } catch (IOException e) {
             System.out.println("브로드캐스트 오류: " + e.getMessage());
@@ -106,8 +109,11 @@ public class MiniRoomDiscovery {
 
     public void broadcastRoomClosed(String roomOwner) {
         try {
-            String message = "ROOM_CLOSED:" + roomOwner;
-            byte[] buffer = message.getBytes();
+            // StringBuilder를 사용하여 성능 최적화
+            StringBuilder message = new StringBuilder("ROOM_CLOSED:")
+                .append(roomOwner);
+            
+            byte[] buffer = message.toString().getBytes();
 
             DatagramPacket packet = new DatagramPacket(
                     buffer, buffer.length, multicastGroup, DISCOVERY_PORT

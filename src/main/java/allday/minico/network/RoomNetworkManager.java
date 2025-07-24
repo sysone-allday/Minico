@@ -19,6 +19,7 @@ public class RoomNetworkManager {
     private boolean isVisiting = false;
     private String hostName = null;
     private Thread broadcastThread; // 브로드캐스트 스레드 참조 추가
+    private String cachedCharacterInfo; // 캐릭터 정보 캐싱
 
     // 캐릭터 관련 참조
     private ImageView character;
@@ -52,6 +53,9 @@ public class RoomNetworkManager {
         this.playerName = playerName;
         this.character = character;
         this.callback = callback;
+        
+        // 캐릭터 정보 미리 캐싱
+        this.cachedCharacterInfo = initializeCharacterInfo();
 
         setupNetworking();
     }
@@ -157,7 +161,7 @@ public class RoomNetworkManager {
                 while (isHosting) {
                     discovery.broadcastRoom(playerName, server.getActualPort());
                     try {
-                        Thread.sleep(5000); // 5초마다 브로드캐스트
+                        Thread.sleep(3000); // 3초마다 브로드캐스트 (더 빠른 발견)
                     } catch (InterruptedException e) {
                         break; // 스레드 중단 시 루프 종료
                     }
@@ -239,9 +243,14 @@ public class RoomNetworkManager {
 
                         // 접속 직후 자신의 초기 위치를 서버에 전송 (캐릭터 정보 포함)
                         if (client != null && character != null) {
-                            String characterInfo = getUserCharacterInfo();
-                            client.sendMessage(String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
-                                    playerName, character.getLayoutX(), character.getLayoutY(), "front", characterInfo));
+                            StringBuilder initialMessage = new StringBuilder("VISITOR_UPDATE:")
+                                .append(playerName).append(":")
+                                .append(String.format("%.1f", character.getLayoutX())).append(":")
+                                .append(String.format("%.1f", character.getLayoutY())).append(":")
+                                .append("front").append(":")
+                                .append(cachedCharacterInfo);
+                            
+                            client.sendMessage(initialMessage.toString());
                         }
                     });
                 }
@@ -428,42 +437,35 @@ public class RoomNetworkManager {
     }
 
     public void updateCharacterPosition(double x, double y, String direction) {
-        String characterInfo = getUserCharacterInfo();
-        // System.out.println("[RoomNetworkManager] updateCharacterPosition - 전송할 캐릭터 정보: " + characterInfo);
-
         if (isHosting && server != null) {
-            // 호스팅 중이면 서버에 업데이트
+            // 호스팅 중이면 서버에 즉시 업데이트 (지연 최소화)
             server.updateCharacterPosition(x, y, direction);
         } else if (isVisiting && client != null) {
-            // 방문 중이면 클라이언트에서 서버로 전송 (캐릭터 정보 포함)
-            String visitorMessage = String.format("VISITOR_UPDATE:%s:%.2f:%.2f:%s:%s",
-                    playerName, x, y, direction, characterInfo);
-            // System.out.println("[RoomNetworkManager] 방문자 메시지 전송: " + visitorMessage);
-            client.sendMessage(visitorMessage);
+            // 방문 중이면 클라이언트에서 서버로 즉시 전송 (캐릭터 정보 포함)
+            StringBuilder visitorMessage = new StringBuilder("VISITOR_UPDATE:")
+                .append(playerName).append(":")
+                .append(String.format("%.1f", x)).append(":")
+                .append(String.format("%.1f", y)).append(":")
+                .append(direction).append(":")
+                .append(cachedCharacterInfo);
+            
+            client.sendMessage(visitorMessage.toString());
         }
     }
 
     /**
-     * 현재 사용자의 캐릭터 정보를 가져옵니다 (성별:캐릭터명 형식)
+     * 캐릭터 정보를 초기화합니다 (한 번만 호출)
      */
-    private String getUserCharacterInfo() {
+    private String initializeCharacterInfo() {
         try {
             if (allday.minico.session.AppSession.getLoginMember() != null) {
                 String memberId = allday.minico.session.AppSession.getLoginMember().getMemberId();
-
-                // SkinUtil을 사용해서 캐릭터 정보 가져오기 (형식: "Male:온유")
-                String result = allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(memberId);
-                // System.out.println("[RoomNetworkManager] getUserCharacterInfo 반환: " + result + " (memberId: " + memberId + ")");
-                return result;
+                return allday.minico.utils.skin.SkinUtil.getCurrentUserCharacterInfo(memberId);
             }
         } catch (Exception e) {
-            // // System.out.println("[RoomNetworkManager] 캐릭터 정보 조회 실패: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("[RoomNetworkManager] 캐릭터 정보 초기화 실패: " + e.getMessage());
         }
-
-        // 기본값
-        // System.out.println("[RoomNetworkManager] 기본값 반환: Male:대호");
-        return "Male:대호";
+        return "Male:대호"; // 기본값
     }
 
     public void showRoomSelectionDialog() {
