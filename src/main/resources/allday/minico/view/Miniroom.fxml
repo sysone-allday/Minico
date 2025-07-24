@@ -12,13 +12,6 @@
 
                 <!--            메뉴 버튼-->
                 <VBox fx:id="menuButtons" layoutX="1067" layoutY="80" styleClass="menu-buttons">
-                    <Button fx:id="guestbookBtn" onAction="#onGuestbookClick" styleClass="menu-btn">
-                        <graphic>
-                            <StackPane>
-                                <Label styleClass="menu-btn-label" text="단어장" />
-                            </StackPane>
-                        </graphic>
-                    </Button>
                     <Button fx:id="visitBtn" onAction="#onVisitClick" styleClass="menu-btn">
                         <graphic>
                             <StackPane>
@@ -44,6 +37,13 @@
                         <graphic>
                             <StackPane>
                                 <Label styleClass="menu-btn-label" text="OX게임" />
+                            </StackPane>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="guestbookBtn" onAction="#onGuestbookClick" styleClass="menu-btn">
+                        <graphic>
+                            <StackPane>
+                                <Label styleClass="menu-btn-label" text="단어장" />
                             </StackPane>
                         </graphic>
                     </Button>
