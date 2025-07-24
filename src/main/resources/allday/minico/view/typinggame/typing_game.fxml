@@ -26,7 +26,7 @@
 
                     <VBox alignment="CENTER" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px; -fx-padding: 5; -fx-background-color: white; -fx-border-radius: 18; -fx-background-radius: 20;">
                         <!-- 타이머 -->
-                        <Label fx:id="timerLabel" prefHeight="30" prefWidth="77" style="-fx-font-size: 30px;" text="60:00" />
+                        <Label fx:id="timerLabel" prefHeight="60" prefWidth="77" style="-fx-font-size: 30px;" text="30:00" />
 
                         <!-- 성공 -->
                         <HBox alignment="CENTER" prefHeight="60" prefWidth="170" spacing="5" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px 0 0 0; -fx-padding: 15px;">
