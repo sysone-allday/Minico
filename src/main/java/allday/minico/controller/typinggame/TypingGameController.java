@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -25,6 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TypingGameController {
 
+
     private TypingGameService typingGameService;
 
     @FXML private TextField inputField;
@@ -37,6 +40,7 @@ public class TypingGameController {
     @FXML private StackPane resultPane;
     @FXML private Label resultSuccessLabel;
     @FXML private Label resultFailLabel;
+    @FXML public ImageView catImage;
 
 
     private List<Word> wordBuffer = new ArrayList<>();
@@ -50,11 +54,25 @@ public class TypingGameController {
     private Timeline wordFallTimer;
     private Timeline wordDropTimer;
 
+    private Image neutralCat;
+    private Image smileCat;
+    private Image sadCat;
+    private String currentCatStatus = "neutral";  // "smile", "sad", "neutral"
+
     private final List<Label> activeLabels = new CopyOnWriteArrayList<>();
 
     @FXML
     public void initialize() {
+
         typingGameService = new TypingGameServiceImpl();
+
+        // 이미지 한 번만 로딩
+        neutralCat = new Image(getClass().getResource("/allday/minico/images/typinggame/cat-Photoroom1.png").toExternalForm());
+        smileCat = new Image(getClass().getResource("/allday/minico/images/typinggame/happy-cat1.png").toExternalForm());
+        sadCat = new Image(getClass().getResource("/allday/minico/images/typinggame/cry-cat1.png").toExternalForm());
+
+        // 초기 이미지 설정
+        catImage.setImage(neutralCat);
     }
 
     @FXML
@@ -110,6 +128,7 @@ public class TypingGameController {
                     activeLabels.remove(label);
                     fail++;
                     failCount.setText(fail + "개");
+                    updateCatFace();
                 }
             }
         }));
@@ -189,6 +208,7 @@ public class TypingGameController {
             if (label.getText().equalsIgnoreCase(input)) {
                 success++;
                 successCount.setText(success + "개");
+                updateCatFace();
                 gamePane.getChildren().remove(label);
                 activeLabels.remove(label);
                 inputField.clear();
@@ -205,7 +225,32 @@ public class TypingGameController {
         inputField.clear();
     }
 
-    
+
+    // cat 이미지 변경
+    private void updateCatFace() {
+        String newStatus;
+
+        if (success > fail) newStatus = "smile";
+        else if (fail > success) newStatus = "sad";
+        else newStatus = "neutral";
+
+        if (!newStatus.equals(currentCatStatus)) {
+            switch (newStatus) {
+                case "smile" -> catImage.setImage(smileCat);
+                case "sad" -> catImage.setImage(sadCat);
+                case "neutral" -> catImage.setImage(neutralCat);
+            }
+            currentCatStatus = newStatus;
+        }
+    }
+
+    // 게임 종료 후 결과창 띄우기
+    private void showResult() {
+        resultSuccessLabel.setText(successCount.getText()); // 기존 성공 label 값을 그대로 복사
+        resultFailLabel.setText(failCount.getText());
+        resultPane.setVisible(true); // 결과창 보여줌
+    }
+
     // 메인 화면으로 이동
     @FXML
     private void goToMain() {
@@ -223,13 +268,6 @@ public class TypingGameController {
             System.err.println("경로 확인: /allday/minico/view/Miniroom.fxml");
             e.printStackTrace();
         }
-    }
-
-    // 게임 종료 후 결과창 띄우기
-    private void showResult() {
-        resultSuccessLabel.setText(successCount.getText()); // 기존 성공 label 값을 그대로 복사
-        resultFailLabel.setText(failCount.getText());
-        resultPane.setVisible(true); // 결과창 보여줌
     }
     
     // 빈칸 게임으로

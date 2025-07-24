@@ -1,0 +1,61 @@
+.clean-textarea {
+    -fx-text-fill: #333333;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-effect: none;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.clean-textarea .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}
+
+.clean-textarea .viewport {
+    -fx-background-color: transparent;
+}
+
+.clean-textarea .content {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-effect: none;
+}
+
+.clean-textarea .scroll-bar {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+    -fx-effect: none;
+}
+
+.clean-textarea .prompt-text {
+    -fx-prompt-text-fill: #999999;
+}
+
+.clean-textfield {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-effect: none;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-highlight-fill: transparent;
+    -fx-highlight-text-fill: inherit;
+}
+
+.feedback-correct {
+    -fx-fill: green;
+    -fx-font-weight: bold;
+}
+
+.feedback-wrong {
+    -fx-fill: red;
+    -fx-font-weight: bold;
+}

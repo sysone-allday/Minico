@@ -1,9 +1,13 @@
 package allday.minico.controller.typinggame;
 
+import allday.minico.dto.note.Note;
 import allday.minico.dto.typinggame.BlankGame;
 import allday.minico.dto.typinggame.Word;
+import allday.minico.service.note.NoteService;
+import allday.minico.service.note.NoteServiceImpl;
 import allday.minico.service.typinggame.BlankGameService;
 import allday.minico.service.typinggame.BlankGameServiceImpl;
+import allday.minico.session.AppSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -38,15 +42,19 @@ public class BlankGameController {
     @FXML private Label resultFailLabel;
 
     private BlankGameService blankGameService;
+    private NoteService noteService;
     private List<Word> successWords;
     private List<BlankGame> problemList;
+    private final List<Note> wrongList = new ArrayList<>();
     private int currentProblemIndex = 0;
     private int success = 0;
     private int fail = 0;
 
     @FXML
     public void initialize() {
+
         blankGameService = new BlankGameServiceImpl();
+        noteService = new NoteServiceImpl();
     }
 
     public void setSuccessWords(List<Word> words) {
@@ -112,11 +120,12 @@ public class BlankGameController {
         wordListPane.getChildren().add(flowPane);
     }
 
+    // 문제 5개 가져오기
     private void getBlankProblems() {
         List<BlankGame> blankGameList = new ArrayList<>();
         for (Word word : successWords) {
             BlankGame blankGame = new BlankGame();
-            blankGame.setWord_id(word.getWord_id());
+            blankGame.setWordId(word.getWord_id());
             blankGameList.add(blankGame);
         }
 
@@ -131,10 +140,11 @@ public class BlankGameController {
         showCurrentProblem();
     }
 
+    // 현재 문제 표시
     private void showCurrentProblem() {
         if (currentProblemIndex < problemList.size()) {
             BlankGame currentProblem = problemList.get(currentProblemIndex);
-            questionLabel.setText(currentProblem.getQuestion_text());
+            questionLabel.setText(currentProblem.getQuestionText());
         } else {
             questionLabel.setText("문제를 모두 풀었습니다!");
             inputField.setDisable(true);
@@ -142,6 +152,7 @@ public class BlankGameController {
         }
     }
 
+    // 입력한 단어 정답 확인
     @FXML
     public void checkAnswer() {
         String input = inputField.getText().trim();
@@ -158,6 +169,22 @@ public class BlankGameController {
         } else {
             fail++;
             failCount.setText(fail + "개");
+
+            // 틀린문제 저장 -> 단어장에서 보여주기 위해
+            for (Word word : successWords) {
+                if (word.getWord_id() == currentProblem.getWordId()) {
+                    Note wrongNote = new Note();
+                    wrongNote.setQuestionText(currentProblem.getQuestionText());        // 문제 내용 저장
+                    wrongNote.setAnswerText(word.getText());                            // 정답 단어 저장
+                    wrongNote.setMemberId(AppSession.getLoginMember().getMemberId());   // 로그인 유저 저장
+                    wrongNote.setMemo(""); // 초기 메모는 빈값으로
+
+                    wrongList.add(wrongNote);
+                    break;
+                }
+            }
+            // 단어장에 저장
+            noteService.saveWrongNote(wrongList);
         }
 
         currentProblemIndex++;
@@ -165,10 +192,11 @@ public class BlankGameController {
         showCurrentProblem();
     }
 
+    // 정답 확인 로직
     private String getAnswerFromProblem(BlankGame problem) {
         // 현재는 정답을 추정할 수 있는 구조가 없으므로 word_id 기준으로 Word에서 찾아야 함
         for (Word word : successWords) {
-            if (word.getWord_id() == problem.getWord_id()) {
+            if (word.getWord_id() == problem.getWordId()) {
                 return word.getText(); // 정답
             }
         }

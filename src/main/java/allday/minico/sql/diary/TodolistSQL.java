@@ -19,4 +19,10 @@ public class TodolistSQL {
     public static final String DELETE = """
         DELETE FROM TODO WHERE TODO_ID=?
     """;
+
+    // 잡초 비율 계산 함수 호출 (progress: 0.0 ~ 1.0 반환)
+    public static final String CALL_GET_WEED_RATIO = """
+             { ? = call GET_WEED_RATIO(?, ?) }
+            """;
+
 }

@@ -166,7 +166,8 @@ public class TodolistController implements Initializable {
 
         // MyRoom 쪽에도 전달
         if (myRoomController != null) {
-            myRoomController.updateWeedDensity(prog);
+            // todos가 없으면 -1 전달 → 잡초 전부 숨김 처리
+            myRoomController.updateWeedDensity(todos.isEmpty() ? -1 : prog);
         }
     }
 
@@ -182,5 +183,6 @@ public class TodolistController implements Initializable {
         this.myRoomController = mc;
         refreshProgress();          // ★ 연결된 순간 바로 sync
     }
+
 
 }
