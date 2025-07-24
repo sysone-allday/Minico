@@ -3,7 +3,7 @@ package allday.minico;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.AudioManager;
 import javafx.application.Application;
-// import javafx.fxml.FXMLLoader;d
+// import javafx.fxml.FXMLLoader;
 // import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -25,6 +25,26 @@ public class Main extends Application {
         AudioManager.getInstance().cleanup();
         super.stop();
     }
+
+
+    // 수정한 것
+    // module-info 에 opens allday.minico.controller.member to javafx.fxml; 추가함
+
+
+    /*
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/Miniroom.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
+        stage.setTitle("Minico");
+        stage.setScene(scene);
+        stage.setMinWidth(1280);
+        stage.setMinHeight(800);
+        stage.show();
+    }
+    */
+
+
 
     public static void main(String[] args) {
         launch();
