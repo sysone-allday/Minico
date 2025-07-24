@@ -1,3 +1,7 @@
+.label-side{
+    -fx-font-family: "NeoDunggeunmo";
+}
+
 .clean-textarea {
     -fx-text-fill: #333333;
     -fx-background-color: transparent;
@@ -58,4 +62,40 @@
 .feedback-wrong {
     -fx-fill: red;
     -fx-font-weight: bold;
+}
+
+.pagination-arrow {
+    -fx-font-size: 20px;
+    -fx-text-fill: #8B5E5E;
+    -fx-cursor: hand;
+}
+
+.page-dot {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 100; /* 동그랗게 */
+    -fx-text-fill: white;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-alignment: center;
+    -fx-font-size: 12px;
+    -fx-padding: 0;
+}
+.page-dot.selected {
+    -fx-background-color: #EA8A94;
+}
+
+.page-dot-current {
+    -fx-text-fill: #000000;
+    -fx-font-size: 18px;
+}
+
+.page-dot-inactive {
+    -fx-text-fill: #aaaaaa;
+    -fx-font-size: 18px;
+}
+
+.page-dot-current:hover,
+.page-dot-inactive:hover {
+    -fx-cursor: hand;
+    -fx-font-size: 20px;
 }
