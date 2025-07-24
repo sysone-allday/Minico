@@ -14,6 +14,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -27,6 +28,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -80,6 +82,18 @@ public class OxPlayController {
     @FXML private Label timerLabel;
 
 
+    private final List<Note> wrongNoteList = new ArrayList<>();
+    private OxGameResult oxGameResult;
+    private List<OxQuestion> questionList;
+    private OxUserSetting setting;
+    private int currentIndex = 0;       // 문제 회차
+    private Timeline timer;             // 타이머
+    private int correctCount = 0;       // 사용자 정답 맞춘 갯수
+    private boolean answered = false;       // 이미 정답 눌렀는지
+    private boolean canAnswer = false;      // 지금 정답 선택 가능한 상태인지
+    private String selectedAnswer = null;   // 사용자가 선택한 답 ("O"/"X")
+
+
 
 
     @FXML
@@ -121,6 +135,14 @@ public class OxPlayController {
 
         handlerBtnSkipHover.setOnMouseClicked(e -> skipGame());
         handlerBtnSkipHover.setOnMouseClicked(this::handleSkipButtonClick);
+
+        String url = AppSession.getOxCharacterImageUrl();
+        Platform.runLater(() -> {
+            if (url != null && minimi != null) {
+                minimi.setImage(new Image(url));
+            }
+        });
+
 
 
 
@@ -231,6 +253,7 @@ public class OxPlayController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1280, 800);
             SceneManager.getPrimaryStage().setScene(scene);
+
         } catch (Exception e) {
             System.err.println("게임 세팅화면으로 전환 실패 " + e.getMessage());
 
@@ -252,17 +275,6 @@ public class OxPlayController {
 
         startGameIntro();
     }
-
-    private final List<Note> wrongNoteList = new ArrayList<>();
-    private OxGameResult oxGameResult;
-    private List<OxQuestion> questionList;
-    private OxUserSetting setting;
-    private int currentIndex = 0;       // 문제 회차
-    private Timeline timer;             // 타이머
-    private int correctCount = 0;       // 사용자 정답 맞춘 갯수
-    private boolean answered = false;       // 이미 정답 눌렀는지
-    private boolean canAnswer = false;      // 지금 정답 선택 가능한 상태인지
-    private String selectedAnswer = null;   // 사용자가 선택한 답 ("O"/"X")
 
     private void setAnswerBtnEnabled(boolean enabled) {
         stackPaneO.setDisable(!enabled);
@@ -358,13 +370,13 @@ public class OxPlayController {
     }
 
     private void addWrongQuestion(OxQuestion question) {
-        Note noteDto = new Note();
-        noteDto.setQuestionText(question.getQuestionText());
-        noteDto.setAnswerText(question.getAnswer());
-        noteDto.setMemo("");
-        noteDto.setMemberId(AppSession.getLoginMember().getMemberId());
-        wrongNoteList.add(noteDto);
-        System.out.println("틀린문제 : " + question.getQuestionText());
+            Note noteDto = new Note();
+            noteDto.setQuestionText(question.getQuestionText());
+            noteDto.setAnswerText(question.getAnswer());
+            noteDto.setMemo("");
+            noteDto.setMemberId(AppSession.getLoginMember().getMemberId());
+            wrongNoteList.add(noteDto);
+            System.out.println("틀린문제 : " + question.getQuestionText());
     }
 
 
@@ -439,8 +451,10 @@ public class OxPlayController {
         oxGameResult.setDifficulty(setting.getDifficulty());
         oxGameResult.setTypeName(setting.getProblemType().getTypeName());
         System.out.println("정답률 : " + oxGameResult.getAccuracy());
-        noteService.saveWrongNote(wrongNoteList);
-        System.out.println("ox 게임 틀린 문제 저장 완료");
+        if (currentIndex != 0 && !wrongNoteList.isEmpty()) {
+            noteService.saveWrongNote(wrongNoteList);
+            System.out.println("ox 게임 틀린 문제 저장 완료");
+        }
     }
 
 

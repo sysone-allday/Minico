@@ -220,7 +220,7 @@
                             </AnchorPane>
                         </children>
                     </Pane>
-                    <ImageView id="minimiGif" fitHeight="297.0" fitWidth="267.0" layoutX="55.0" layoutY="340.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView id="minimiGif" fx:id="minimi" fitHeight="241.0" fitWidth="217.0" layoutX="81.0" layoutY="347.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
                     <StackPane fx:id="hoverContainer" layoutX="1" layoutY="2.0" minHeight="100" minWidth="200" prefHeight="100" prefWidth="200">
                         <children>
                             <ImageView fx:id="imageHover" onMouseClicked="#handleBackToMiniroom" visible="false">

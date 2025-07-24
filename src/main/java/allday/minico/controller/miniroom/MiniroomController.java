@@ -1,5 +1,6 @@
 package allday.minico.controller.miniroom;
 
+import allday.minico.ui.miniroom.CharacterManager;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
@@ -613,26 +614,44 @@ public class MiniroomController implements Initializable {
     @FXML
     public void onOxClick(ActionEvent event) {
         System.out.println("OX게임 버튼 클릭");
-        try {
-            FXMLLoader oxGameRoot = new FXMLLoader(
-                    getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
-            Parent root = oxGameRoot.load();
 
-            Scene oxScene = new Scene(root);
+        try {
+            // 1. FXML 로드
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
+            Parent root = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof allday.minico.controller.oxgame.OxGameSettingController oxController) {
+
+                // ✅ 현재 minimi 이미지에서 직접 경로 추출
+                String imageUrl = character.getImage().getUrl(); // character는 내 ImageView
+                if (imageUrl != null) {
+                    oxController.setCharacterImageUrl(imageUrl);
+                    System.out.println("OX 컨트롤러에 현재 캐릭터 이미지 URL 전달: " + imageUrl);
+                } else {
+                    System.out.println("현재 캐릭터 이미지가 설정되어 있지 않음.");
+                }
+            }
+
+            // 3. Scene 전환
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene oxScene = new Scene(root);
             stage.setScene(oxScene);
 
-            // layout 강제 적용 (전체화면 안 가도 정상 동작하게)
+            // 4. CSS 및 레이아웃 적용
             Platform.runLater(() -> {
                 root.applyCss();
                 root.layout();
             });
 
             stage.show();
+
         } catch (IOException e) {
+            System.err.println("OX 게임 화면 로딩 실패: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     private void updateSpaceTooltips(double charX, double charY) {
         // 근처 체크
