@@ -4,6 +4,8 @@ import allday.minico.dto.oxgame.OxUserSetting;
 import allday.minico.dto.oxgame.ProblemTypeDTO;
 import allday.minico.service.oxgame.OxGameSettingService;
 import allday.minico.utils.member.SceneManager;
+import allday.minico.utils.audio.BackgroundMusicManager;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -58,6 +60,13 @@ public class OxGameSettingController {
 
     @FXML
     public void initialize() {
+        // 배경음악 연속 재생 (이미 재생 중이면 유지)
+        Platform.runLater(() -> {
+            if (rootPane.getScene() != null) {
+                BackgroundMusicManager.ensureMainMusicPlaying(rootPane.getScene());
+            }
+        });
+        
         // 폰트 설정
         Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/TmoneyRoundWindExtraBold.ttf"), 14);
         Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/TmoneyRoundWindRegular.ttf"), 14);

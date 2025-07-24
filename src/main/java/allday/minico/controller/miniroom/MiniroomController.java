@@ -1,6 +1,7 @@
 package allday.minico.controller.miniroom;
 
 import allday.minico.utils.member.SceneManager;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -140,9 +141,9 @@ public class MiniroomController implements Initializable {
         javafx.application.Platform.runLater(() -> {
             this.setupPlayerName();
 
-            // 미니룸의 모든 버튼에 클릭 효과음 추가
+            // 미니룸 배경음악 연속 재생 (이미 재생 중이면 유지)
             if (roomPane.getScene() != null) {
-                ButtonSoundHandler.addButtonSounds(roomPane.getScene());
+                BackgroundMusicManager.ensureMainMusicPlaying(roomPane.getScene());
             }
         });
     }
@@ -601,7 +602,7 @@ public class MiniroomController implements Initializable {
             scene.setRoot(gameRoot);
 
             // ✅ 타자게임 CSS 적용
-            scene.getStylesheets().clear(); // 기존 main.css 제거
+            scene.getStylesheets().clear(); 
             scene.getStylesheets().add(getClass().getResource("/allday/minico/css/typinggame.css").toExternalForm());
 
         } catch (Exception e) {

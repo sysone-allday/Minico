@@ -1,155 +1,276 @@
 package allday.minico.controller.note;
 
+import allday.minico.dto.note.Note;
+import allday.minico.service.note.NoteService;
+import allday.minico.service.note.NoteServiceImpl;
+import allday.minico.session.AppSession;
 import allday.minico.utils.member.SceneManager;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NoteController {
 
+    /* ------------------------------
+     * FXML 바인딩
+     * ------------------------------ */
+    @FXML private HBox boxPagination;
+    @FXML private Text currentPageText;
+    @FXML private Text totalPageText;
+    @FXML private Label btnPrev;
+    @FXML private HBox pageDots;
+    @FXML private Label btnNext;
+
     @FXML private ImageView btnBack;
     @FXML private ImageView btnDelete;
-    
     @FXML private Label wrongQuestion;
     @FXML private TextField answerInputField;
     @FXML private Text feedbackLabel;
     @FXML private ImageView btnSubmitAnswer;
-
     @FXML private TextArea memoTextArea;
-    @FXML private Label btnEditMemo;
-    @FXML private Label btndDeleteMemo;
+    @FXML private Label btnSaveMemo;
 
+    /* ------------------------------
+     * 상수
+     * ------------------------------ */
+    private static final String PLACEHOLDER_ANSWER = "정답을 입력하세요...";
+    private static final String PLACEHOLDER_MEMO   = "메모를 입력하세요...";
+    private static final int    PAGE_SIZE          = 1;   // 문제 1개씩
+    private static final int    CHUNK_SIZE         = 10;  // 10페이지(문제) 단위로 버퍼링
+
+    /* ------------------------------
+     * 필드
+     * ------------------------------ */
+    private final NoteService noteService = NoteServiceImpl.getInstance();
+    private final String memberId         = AppSession.getLoginMember().getMemberId();
+
+    private List<Note> noteList           = new ArrayList<>(); // 현재 chunk 내 문제 리스트
+    private int chunkStartPage            = 1;                 // 현재 버퍼의 시작 페이지 번호 (1, 11, 21 …)
+    private int currentPage               = 1;                 // 실제 화면에 표시 중인 페이지 번호
+    private int totalPage                 = 1;                 // 전체 페이지 수
+
+    /* ------------------------------
+     * 초기화
+     * ------------------------------ */
     @FXML
     private void initialize() {
-        // 미니룸 이동
-        btnBack.setOnMouseClicked(this::handleBackToMiniroom);
-        // 다시풀기 칸 클릭 시 내용 비워짐
-        answerInputField.setOnMouseClicked(event -> {
-            if (answerInputField.getText().equals("정답을 입력하세요...")) {
-                answerInputField.clear();
-            }
-        });
-        // 메모 칸 클릭 시 내용 비워짐
-        memoTextArea.setOnMouseClicked(event -> {
-            if (answerInputField.getText().equals("메모를 입력하세요...")) {
-                answerInputField.clear();
-            }
-        });
-        // 문제 삭제 버튼 클릭 시
-        btnDelete.setOnMouseClicked(this::onDeleteQuestionClicked);
-        // 정답 확인 버튼 클릭 시
-        btnSubmitAnswer.setOnMouseClicked(this::onSubmitAnswerClicked);
-        // 메모 수정 버튼 클릭 시
-        btnEditMemo.setOnMouseClicked(this::onEditMemoClicked);
-        // 메모 삭제 버튼 클릭 시
-        btndDeleteMemo.setOnMouseClicked(this::onDeleteMemoClicked);
+        boxPagination.setVisible(false);
+        boxPagination.setManaged(false);
+        initListeners();
+        loadChunkAndPage(currentPage);    // 첫 페이지 로딩
     }
 
-    private void onSubmitAnswerClicked(MouseEvent event) {
-        String userAnswer = answerInputField.getText().trim();
+    private void initListeners() {
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
 
-        // 이전 스타일 제거
-        feedbackLabel.getStyleClass().removeAll("feedback-correct", "feedback-wrong");
-        // @@@@@@@@@@@@@@@@@@@@@ 데이터 연결 전 임시 @@@@@@@@@@@@@@@
-        String correctAnswer = "O";
+        btnBack.setOnMouseClicked(this::handleBackToMiniroom);
+        btnDelete.setOnMouseClicked(this::onDeleteQuestionClicked);
+        btnSubmitAnswer.setOnMouseClicked(this::onSubmitAnswerClicked);
+        btnSaveMemo.setOnMouseClicked(this::onSaveMemoClicked);
 
-        if (userAnswer.equalsIgnoreCase(correctAnswer)) {
-            feedbackLabel.setText("정답입니다!");
-            feedbackLabel.getStyleClass().add("feedback-correct");
+        Platform.runLater(() -> wrongQuestion.requestFocus());
+        answerInputField.setOnMouseClicked(e -> clearPlaceholder(answerInputField, PLACEHOLDER_ANSWER));
+        memoTextArea.setOnMouseClicked(e   -> clearPlaceholder(memoTextArea,   PLACEHOLDER_MEMO));
+
+        btnPrev.setOnMouseClicked(e -> changePage(currentPage - 1));
+        btnNext.setOnMouseClicked(e -> changePage(currentPage + 1));
+    }
+
+    /* ------------------------------
+     * 페이지/버퍼 로딩 핵심 로직
+     * ------------------------------ */
+
+    /**
+     * 페이지 버튼 클릭 시 호출되는 메서드.
+     * - 1) 유효 범위를 벗어나면 무시
+     * - 2) 동일 chunk 안이면 UI만 갱신
+     * - 3) 벗어나면 새 chunk를 읽어온 뒤 UI 갱신
+     */
+    private void changePage(int targetPage) {
+        if (targetPage < 1 || targetPage > totalPage) return;
+
+        if (isInCurrentChunk(targetPage)) {
+            currentPage = targetPage;
+            updateUI();
         } else {
-            feedbackLabel.setText("오답입니다.");
-            feedbackLabel.getStyleClass().add("feedback-wrong");
+            loadChunkAndPage(targetPage);
+        }
+    }
+
+    /**
+     * targetPage 가 현재 버퍼(chunk) 안에 있는지 확인
+     */
+    private boolean isInCurrentChunk(int page) {
+        return page >= chunkStartPage && page < chunkStartPage + CHUNK_SIZE;
+    }
+
+    /**
+     * targetPage가 속한 chunk(10개 묶음)를 DB에서 읽어온 뒤 화면 갱신
+     */
+    private void loadChunkAndPage(int targetPage) {
+        int chunkIndex  = (targetPage - 1) / CHUNK_SIZE; // 0,1,2…
+        int offset      = chunkIndex * CHUNK_SIZE;       // 0,10,20…
+        int startPage   = chunkIndex * CHUNK_SIZE + 1;   // 1,11,21…
+
+        Task<List<Note>> loadTask = new Task<>() {
+            @Override
+            protected List<Note> call() {
+                int totalCount = noteService.getTotalWrongQuestionCount(memberId);
+                totalPage      = Math.max(1,
+                        (int) Math.ceil(totalCount / (double) PAGE_SIZE));
+                return noteService.getWrongQuestionsPaged(memberId,
+                        offset,      // ← offset
+                        CHUNK_SIZE); // ← limit
+            }
+        };
+
+        loadTask.setOnSucceeded(e -> {
+            noteList       = loadTask.getValue();
+            chunkStartPage = startPage;              // 여전히 UI에서 필요
+            currentPage    = Math.min(targetPage, totalPage);
+
+            if (noteList.isEmpty()) showEmptyView();
+            else                    updateUI();
+        });
+
+        new Thread(loadTask).start();
+    }
+
+
+    /* ------------------------------
+     * UI 업데이트
+     * ------------------------------ */
+    private void updateUI() {
+        if (noteList.isEmpty()) {
+            showEmptyView();
+            return;
         }
 
-        // 🔔 2초 후 메시지 초기화
+        int offset = currentPage - chunkStartPage;
+        if (offset < 0 || offset >= noteList.size()) {
+            changePage(chunkStartPage);
+            return;
+        }
+
+        Note note = noteList.get(offset);
+        wrongQuestion.setText(note.getQuestionText());
+        memoTextArea.setText(note.getMemo());
+
+        currentPageText.setText(String.valueOf(currentPage));
+        totalPageText.setText(String.valueOf(totalPage));
+
+        boxPagination.setVisible(true);
+        boxPagination.setManaged(true);
+        btnPrev.setVisible(currentPage > 1);
+        btnNext.setVisible(currentPage < totalPage);
+
+        updatePageDots();
+    }
+
+    private void updatePageDots() {
+        pageDots.getChildren().clear();
+        int startDot = ((currentPage - 1) / CHUNK_SIZE) * CHUNK_SIZE + 1;
+        int endDot   = Math.min(startDot + CHUNK_SIZE - 1, totalPage);
+
+        for (int i = startDot; i <= endDot; i++) {
+            Label dot = new Label("●");
+            dot.getStyleClass().add(i == currentPage ? "page-dot-current" : "page-dot-inactive");
+            dot.setPrefSize(20, 20);
+            dot.setAlignment(Pos.CENTER);
+            int target = i;
+            dot.setOnMouseClicked(e -> changePage(target));
+            pageDots.getChildren().add(dot);
+        }
+    }
+
+    /* ------------------------------
+     * Empty View 처리
+     * ------------------------------ */
+    private void showEmptyView() {
+        wrongQuestion.setText("틀린 문제가 없습니다.");
+        memoTextArea.clear();
+        boxPagination.setVisible(false);
+        boxPagination.setManaged(false);
+        btnPrev.setVisible(false);
+        btnNext.setVisible(false);
+        currentPageText.setText("0");
+        totalPageText.setText("0");
+    }
+
+    /* ------------------------------
+     * 유틸
+     * ------------------------------ */
+    private static void clearPlaceholder(TextInputControl field, String placeholder) {
+        if (placeholder.equals(field.getText())) field.clear();
+    }
+
+    private boolean confirm(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.OK, ButtonType.CANCEL);
+        return alert.showAndWait().filter(bt -> bt == ButtonType.OK).isPresent();
+    }
+
+    /* ------------------------------
+     * 이벤트 핸들러
+     * ------------------------------ */
+    private void onSubmitAnswerClicked(MouseEvent e) {
+        int offset = currentPage - chunkStartPage;
+        if (offset < 0 || offset >= noteList.size()) return;
+
+        String userAnswer    = answerInputField.getText().trim();
+        String correctAnswer = noteList.get(offset).getAnswerText();
+
+        boolean isCorrect = userAnswer.equalsIgnoreCase(correctAnswer);
+        feedbackLabel.setText(isCorrect ? "정답입니다!" : "오답입니다!");
+        feedbackLabel.getStyleClass().setAll(isCorrect ? "feedback-correct" : "feedback-wrong");
+
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(e -> {
-            feedbackLabel.setText("");
-            feedbackLabel.getStyleClass().removeAll("feedback-correct", "feedback-wrong");
-        });
+        pause.setOnFinished(evt -> feedbackLabel.setText(""));
         pause.play();
     }
 
-    private void onDeleteQuestionClicked(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("확인");
-        alert.setHeaderText(null);
-        alert.setContentText("문제를 삭제하시겠습니까?");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // 삭제 로직 실행
-            System.out.println("문제가 삭제되었습니다.");
-            // 예: DB에서 삭제, 목록에서 제거 등
-        } else {
-            System.out.println("삭제가 취소되었습니다.");
-        }
+    private void onSaveMemoClicked(MouseEvent e) {
+        if (!confirm("메모를 저장하시겠습니까?")) return;
+        int offset = currentPage - chunkStartPage;
+        if (offset < 0 || offset >= noteList.size()) return;
+        noteService.saveMemo(noteList.get(offset).getWrongId(), memoTextArea.getText());
     }
 
-    private void onDeleteMemoClicked(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("확인");
-        alert.setHeaderText(null);
-        alert.setContentText("저장된 메모를 삭제하시겠습니까?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            memoTextArea.clear(); // 내용 비우기
-            memoTextArea.setPromptText("메모를 입력하세요"); // 다시 안내 문구 표시
-            System.out.println("메모가 삭제되었습니다.");
-        } else {
-            System.out.println("삭제 취소됨");
-        }
-    }
-
-    private void onEditMemoClicked(MouseEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("확인");
-        alert.setHeaderText(null);
-        alert.setContentText("저장하시겠습니까?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            String memo = memoTextArea.getText();
-            // 저장 로직 실행 (예: DB나 변수에 저장)
-            System.out.println("저장됨: " + memo);
-        } else {
-            // 저장하지 않음
-            System.out.println("저장 취소됨");
-        }
+    private void onDeleteQuestionClicked(MouseEvent e) {
+        if (!confirm("문제를 삭제하시겠습니까?")) return;
+        int offset = currentPage - chunkStartPage;
+        if (offset < 0 || offset >= noteList.size()) return;
+        noteService.deleteWrongQuestion(noteList.get(offset).getWrongId());
+        // 삭제 후 페이지 수가 변할 수 있으므로 현재 페이지를 다시 반영
+        loadChunkAndPage(Math.min(currentPage, totalPage));
     }
 
     private void handleBackToMiniroom(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/miniroom.fxml")); // 실제 경로로 수정
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/miniroom.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 1280, 800);
             SceneManager.getPrimaryStage().setScene(scene);
         } catch (Exception e) {
-            System.err.println("미니룸 이동 화면 전환 실패 " + e.getMessage());
+            System.err.println("미니룸 이동 실패: " + e.getMessage());
         }
     }
-
-
-//    public void loadWrongQuestion() {
-//        String question = noteService.getLatestWrongQuestion(currentUserId);
-//
-//        if (question != null && !question.isEmpty()) {
-//            wrongQuestion.setText(question);
-//        } else {
-//            wrongQuestion.setText("틀린 문제가 없습니다.");
-//        }
-//    }
 }
