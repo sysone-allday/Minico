@@ -139,8 +139,8 @@ public class MiniRoomServer {
         }
 
         // 바닥 영역 제한 검증 (방문자와 동일한 로직)
-        double roomWidth = 800;  // 기본 룸 너비
-        double roomHeight = 600; // 기본 룸 높이
+        double roomWidth = 1000;  // 기본 룸 너비
+        double roomHeight = 700; // 기본 룸 높이
         double floorTopY = roomHeight * 0.23;  // 전체 높이
         double charHeight = 100; // 캐릭터 높이
         double floorBottomY = roomHeight - charHeight; // 하단 경계
@@ -155,8 +155,8 @@ public class MiniRoomServer {
         // X축 좌표도 기본적인 경계 검증
         if (x < 0) {
             x = 0;
-        } else if (x > roomWidth - 100) { // 캐릭터 너비 100 가정
-            x = roomWidth - 100;
+        } else if (x > roomWidth - charHeight) { // 캐릭터 너비 100 가정
+            x = roomWidth - charHeight;
         }
 
         // 위치 변화 임계값 체크 (작은 움직임 무시)
@@ -335,9 +335,9 @@ public class MiniRoomServer {
 
                 // 바닥 영역 제한 검증 (클라이언트와 동일한 로직)
                 // 일반적인 미니룸 크기를 가정하여 제한 적용
-                double roomWidth = 800;  // 기본 룸 너비
-                double roomHeight = 600; // 기본 룸 높이
-                double floorTopY = roomHeight * 0.23;  // 전체 높이의 40% 지점부터 바닥으로 간주
+                double roomWidth = 1000;  // 기본 룸 너비
+                double roomHeight = 700; // 기본 룸 높이
+                double floorTopY = roomHeight * 0.23;  //제한
                 double charHeight = 100; // 캐릭터 높이
                 double floorBottomY = roomHeight - charHeight; // 하단 경계
                 
@@ -351,8 +351,8 @@ public class MiniRoomServer {
                 // X축 좌표도 기본적인 경계 검증
                 if (x < 0) {
                     x = 0;
-                } else if (x > roomWidth - 100) { // 캐릭터 너비 100 가정
-                    x = roomWidth - 100;
+                } else if (x > roomWidth - charHeight) { // 캐릭터 너비 100 가정
+                    x = roomWidth - charHeight;
                 }
 
                 // StringBuilder를 사용하여 성능 최적화, 소수점 1자리로 축약
