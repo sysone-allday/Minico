@@ -95,6 +95,11 @@ public class CharacterMovementController {
                 double paneHeight = roomPane.getHeight();
                 String currentDirection = "";
 
+                // 바닥 영역 제한 설정 (room 이미지의 바닥 부분만 접근 가능)
+                // 실제 룸 크기에 맞춰 동적으로 계산
+                double floorTopY = paneHeight * 0.23;  // 바닥 높이
+                double floorBottomY = paneHeight - charHeight; // 하단 경계
+
                 // 왼쪽 이동 (A, LEFT)
                 if (pressedKeys.contains("A") || pressedKeys.contains("LEFT")) {
                     double nextX = x - moveDistance;
@@ -117,22 +122,22 @@ public class CharacterMovementController {
                         updateCharacterImage("RIGHT");
                     }
                 }
-                // 위쪽 이동 (W, UP)
+                // 위쪽 이동 (W, UP) - 바닥 영역으로 제한
                 if (pressedKeys.contains("W") || pressedKeys.contains("UP")) {
                     double nextY = y - moveDistance;
-                    if (nextY < 0)
-                        nextY = 0;
+                    if (nextY < floorTopY)  // 바닥 위쪽 경계 제한
+                        nextY = floorTopY;
                     character.setLayoutY(nextY);
                     currentDirection = "UP";
                     if (!lastDirection.equals("UP")) {
                         updateCharacterImage("UP");
                     }
                 }
-                // 아래쪽 이동 (S, DOWN)
+                // 아래쪽 이동 (S, DOWN) - 바닥 영역으로 제한
                 if (pressedKeys.contains("S") || pressedKeys.contains("DOWN")) {
                     double nextY = y + moveDistance;
-                    if (nextY > paneHeight - charHeight)
-                        nextY = paneHeight - charHeight;
+                    if (nextY > floorBottomY)  // 바닥 하단 경계 제한
+                        nextY = floorBottomY;
                     character.setLayoutY(nextY);
                     currentDirection = "DOWN";
                     if (!lastDirection.equals("DOWN")) {
