@@ -167,7 +167,7 @@
                            <children>
                               <ImageView fx:id="minimiEffectFeel" fitHeight="90.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true" />
                            </children></VBox>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="278.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="278.0">
                            <children>
                               <ImageView fx:id="minimi" fitHeight="120.0" fitWidth="278.0" pickOnBounds="true" preserveRatio="true" />
                            </children></VBox>

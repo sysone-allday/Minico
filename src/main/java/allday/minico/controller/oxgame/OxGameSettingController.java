@@ -3,6 +3,7 @@ package allday.minico.controller.oxgame;
 import allday.minico.dto.oxgame.OxUserSetting;
 import allday.minico.dto.oxgame.ProblemTypeDTO;
 import allday.minico.service.oxgame.OxGameSettingService;
+import allday.minico.session.AppSession;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.BackgroundMusicManager;
 import allday.minico.utils.audio.BackgroundMusicManager;
@@ -16,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
@@ -29,6 +31,10 @@ import java.util.List;
 public class OxGameSettingController {
     private static final OxGameSettingService settingService = OxGameSettingService.getInstance();
     private final OxUserSetting oxUserSetting = new OxUserSetting();
+
+    // === minimi ===
+    @FXML private ImageView minimi;
+    private String characterInfo;
 
     // === 버튼 그룹 - 난도, 타이머, 문제 횟수 설정 ===
     @FXML private Button btnLvLow, btnLvMid, btnLvHigh, btnLvRandom;
@@ -56,6 +62,7 @@ public class OxGameSettingController {
 
     // === start 이미지 크기 변화 ===
     @FXML private ImageView btnStartImage;
+    private String characterImageUrl;
 
 
     @FXML
@@ -68,8 +75,8 @@ public class OxGameSettingController {
         });
         
         // 폰트 설정
-        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/TmoneyRoundWindExtraBold.ttf"), 14);
-        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/TmoneyRoundWindRegular.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
 
         // 버튼 그룹 초기화
         lvButtons = List.of(btnLvLow, btnLvMid, btnLvHigh, btnLvRandom);
@@ -96,8 +103,28 @@ public class OxGameSettingController {
             btnStartImage.setScaleY(1.0);
             btnStartImage.setCursor(Cursor.DEFAULT);
         });
+        String url = AppSession.getOxCharacterImageUrl();
+        Platform.runLater(() -> {
+            if (characterImageUrl != null && minimi != null) {
+                minimi.setImage(new Image(characterImageUrl));
+            } else if (characterImageUrl == null) {
+                minimi.setImage(new Image(url));
+            }
+        });
 
         setupComboBox();
+    }
+
+
+    public void setCharacterImageUrl(String url) {
+        this.characterImageUrl = url;
+
+        // 이미 minimi가 초기화되었다면 바로 설정
+        if (minimi != null) {
+            minimi.setImage(new Image(characterImageUrl));
+            AppSession.setOxCharacterImageUrl(characterImageUrl);
+            System.out.println("setCharacterImageUrl에서 직접 설정 완료");
+        }
     }
 
     // 콤보박스(주제 선택) 내용 불러오기
@@ -192,5 +219,6 @@ public class OxGameSettingController {
             System.err.println("게임 시작 화면 전환 실패 " + e.getMessage());
         }
     }
+
 
 }

@@ -2,6 +2,8 @@ package allday.minico.session;
 
 import allday.minico.dto.member.Member;
 import allday.minico.service.member.LoginLogService;
+import lombok.Getter;
+import lombok.Setter;
 
 public class AppSession {
     private static Member loginMember;
@@ -72,5 +74,14 @@ public class AppSession {
 
     public static long getLoginLog() {
         return loginlogId;
+    }
+
+    // OX 게임 전용 캐릭터 이미지 (로그인 사용자 전용)
+    @Getter
+    @Setter
+    private static String oxCharacterImageUrl;
+
+    public static void clearOxCharacterImageUrl() {
+        oxCharacterImageUrl = null;
     }
 }
