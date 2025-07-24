@@ -74,4 +74,23 @@ public class TodolistDAO {
             ps.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
+
+    public double getWeedRatio(String memberId, LocalDate date) {
+        double ratio = 0;
+        try (Connection conn = getConnection();
+             CallableStatement cs = conn.prepareCall(TodolistSQL.CALL_GET_WEED_RATIO)) {
+
+            cs.registerOutParameter(1, Types.DOUBLE);
+            cs.setString(2, memberId);
+            cs.setDate(3, java.sql.Date.valueOf(date));
+            cs.execute();
+
+            ratio = cs.getDouble(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ratio;
+    }
+
+
 }
