@@ -185,7 +185,7 @@ public class MemberDAO {
                 }
             }
         }
-        System.out.println("없는 멤버거나 로그아웃기록이 없는 ID");
+        System.out.println("없는 멤버거나 회원가입 후 로그인 기록 없는 ID");
         return null; // 조회된 행이 아예 없으면 없는 MEMBER_ID
     }
 }
