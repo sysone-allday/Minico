@@ -111,7 +111,7 @@
                                                 </ImageView>
                                                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="168.0" styleClass="label-side" text="문제" textAlignment="CENTER" textFill="#5f5b54">
                                                    <font>
-                                                      <Font size="24.0" />
+                                                      <Font name="NeoDunggeunmo" size="24.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -129,7 +129,7 @@
                                                 </ImageView>
                                                 <VBox maxHeight="-Infinity" prefHeight="145.0" prefWidth="991.0">
                                                    <children>
-                                                      <Label fx:id="wrongQuestion" alignment="TOP_LEFT" prefHeight="202.0" prefWidth="992.0" text="Label" textFill="#333333">
+                                                      <Label fx:id="wrongQuestion" alignment="TOP_LEFT" prefHeight="202.0" prefWidth="992.0" textFill="#333333" wrapText="true">
                                                          <VBox.margin>
                                                             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                          </VBox.margin>
@@ -162,7 +162,7 @@
                                                 </ImageView>
                                                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="168.0" styleClass="label-side" text="다시풀기" textAlignment="CENTER" textFill="#5f5b54">
                                                    <font>
-                                                      <Font size="24.0" />
+                                                      <Font name="NeoDunggeunmo" size="24.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -192,6 +192,9 @@
                                                                <HBox.margin>
                                                                   <Insets left="20.0" />
                                                                </HBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="TEXT" />
+                                                               </cursor>
                                                             </TextField>
                                                          </children>
                                                          <HBox.margin>
@@ -216,6 +219,9 @@
                                                                <image>
                                                                   <Image url="@../../images/note/btn_check_answer.png" />
                                                                </image>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </ImageView>
                                                          </children>
                                                       </HBox>
@@ -247,7 +253,7 @@
                                                 </ImageView>
                                                 <Label alignment="CENTER" prefHeight="50.0" prefWidth="168.0" styleClass="label-side" text="메모" textAlignment="CENTER" textFill="#5f5b54">
                                                    <font>
-                                                      <Font size="24.0" />
+                                                      <Font name="NeoDunggeunmo" size="24.0" />
                                                    </font>
                                                 </Label>
                                              </children>
@@ -270,7 +276,7 @@
                                                    <children>
                                                       <VBox maxWidth="-Infinity" prefHeight="145.0" prefWidth="1001.0">
                                                          <children>
-                                                            <TextArea fx:id="memoTextArea" prefHeight="200.0" prefWidth="200.0" promptText="메모를 입력하세요..." styleClass="clean-textarea">
+                                                            <TextArea fx:id="memoTextArea" prefHeight="200.0" prefWidth="200.0" promptText="메모를 입력하세요..." styleClass="clean-textarea" wrapText="true">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -287,24 +293,10 @@
                                                          <children>
                                                             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="47.0" prefWidth="943.0">
                                                                <children>
-                                                                  <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="100.0" prefWidth="200.0">
-                                                                     <children>
-                                                                        <Label fx:id="btnEditMemo" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="106.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100; -fx-border-color: #FEC5C0; -fx-border-radius: 100; -fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="btn-edit-memo" text="수정" textAlignment="CENTER" textFill="#5f5b54">
-                                                                           <font>
-                                                                              <Font size="24.0" />
-                                                                           </font>
-                                                                           <cursor>
-                                                                              <Cursor fx:constant="HAND" />
-                                                                           </cursor>
-                                                                           <opaqueInsets>
-                                                                              <Insets />
-                                                                           </opaqueInsets>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </HBox>
+                                                                  <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="100.0" prefWidth="200.0" />
                                                                   <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefHeight="57.0" prefWidth="118.0">
                                                                      <children>
-                                                                        <Label fx:id="btndDeleteMemo" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="106.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100; -fx-border-color: #FEC5C0; -fx-border-radius: 100; -fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="btn-edit-memo" text="삭제" textAlignment="CENTER" textFill="#5f5b54">
+                                                                        <Label fx:id="btnSaveMemo" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="106.0" style="-fx-background-color: #ffffff; -fx-background-radius: 100; -fx-border-color: #FEC5C0; -fx-border-radius: 100; -fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="btn-memo" text="저장" textAlignment="CENTER" textFill="#5f5b54">
                                                                            <font>
                                                                               <Font size="24.0" />
                                                                            </font>
@@ -336,6 +328,76 @@
                         </VBox>
                      </children>
                   </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="634.0" prefHeight="115.0" prefWidth="1201.0">
+               <children>
+                  <HBox alignment="CENTER" layoutY="31.0" prefHeight="80.0" prefWidth="1176.0">
+                     <children>
+                        <HBox fx:id="boxPagination" alignment="CENTER" prefHeight="80.0" prefWidth="477.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="80.0" prefWidth="533.0">
+                                 <children>
+                                    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="29.0" prefWidth="535.0">
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="533.0">
+                                             <children>
+                                                <Text fx:id="currentPageText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="Text" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="NeoDunggeunmo" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text=" / " textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="NeoDunggeunmo" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="totalPageText" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="Text" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="NeoDunggeunmo" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="56.0" prefWidth="535.0">
+                                       <children>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label fx:id="btnPrev" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="136.0" styleClass="pagination-arrow" text="&lt;" textAlignment="RIGHT">
+                                                         <font>
+                                                            <Font size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="pageDots" alignment="CENTER" prefHeight="54.0" prefWidth="571.0" spacing="10.0">
+                                                   <children>
+                                                      <Label fx:id="dot" prefHeight="27.0" prefWidth="27.0" styleClass="page-dot" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="182.0">
+                                                   <children>
+                                                      <Label fx:id="btnNext" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="136.0" styleClass="pagination-arrow" text="&gt;" textAlignment="RIGHT">
+                                                         <font>
+                                                            <Font size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>
