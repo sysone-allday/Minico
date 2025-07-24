@@ -17,14 +17,14 @@
               AnchorPane.rightAnchor="40.0"
               AnchorPane.bottomAnchor="40.0">
          <!-- ★ 인라인 style 제거 -->
-         <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51"
-                 prefWidth="86" styleClass="action-button" text="등록"
+         <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false"
+                 styleClass="action-button" text="등록"
                  visible="false"/>
-         <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false" prefHeight="51"
-                 prefWidth="86" styleClass="action-button" text="수정"
+         <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false"
+                 styleClass="action-button" text="수정"
                  visible="false"/>
-         <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false" prefHeight="51"
-                 prefWidth="150" styleClass="action-button" text="수정완료"
+         <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false"
+                 styleClass="action-button" text="수정완료"
                  visible="false"/>
       </AnchorPane>
       <fx:include fx:id="todolist" source="todolist.fxml" />
@@ -49,7 +49,6 @@
 
       <Button fx:id="backButton"
               layoutX="70" layoutY="66"
-              prefWidth="120" prefHeight="40"
               text="〈 Back"
               styleClass="back-button"
               onAction="#goToMyRoom" />
