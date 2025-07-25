@@ -4,6 +4,7 @@ import allday.minico.dto.note.Note;
 import allday.minico.dto.oxgame.OxGameResult;
 import allday.minico.dto.oxgame.OxQuestion;
 import allday.minico.dto.oxgame.OxUserSetting;
+import allday.minico.enums.SkipReason;
 import allday.minico.service.note.NoteService;
 import allday.minico.service.note.NoteServiceImpl;
 import allday.minico.service.oxgame.OxPlayService;
@@ -18,7 +19,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -42,15 +43,15 @@ public class OxPlayController {
 
     private static final OxPlayService oxPlayService = OxPlayService.getInstance();
     private static final NoteService noteService = NoteServiceImpl.getInstance();
-    public AnchorPane rootPane;
+
+    @FXML private AnchorPane rootPane;
 
     @FXML private ImageView correctEffect;
     @FXML private ImageView wrongBackground;
     @FXML private ImageView wrongEffect;
 
     // === hover 버튼들(back, skip) ===
-    @FXML private StackPane handlerBtnBackHover;
-//    @FXML private ImageView imageBackHover;
+    @FXML private Button handlerBtnBackHover;
 //    @FXML private ImageView imageBackNormal;
     @FXML private Button handlerBtnSkipHover;
 //    @FXML private ImageView imageSkipHover;
@@ -133,8 +134,9 @@ public class OxPlayController {
         clip2.setArcHeight(50);
         wrongEffect.setClip(clip2);
 
-        handlerBtnSkipHover.setOnMouseClicked(e -> skipGame());
-        handlerBtnSkipHover.setOnMouseClicked(this::handleSkipButtonClick);
+        handlerBtnSkipHover.setOnMouseClicked(e -> skipGame(SkipReason.USER_SKIP));
+        handlerBtnSkipHover.setOnMouseClicked(e -> handleSkipButtonClick(e, SkipReason.USER_SKIP));
+        handlerBtnBackHover.setOnMouseClicked(e -> skipGame(SkipReason.GO_TO_SETTING));
 
         String url = AppSession.getOxCharacterImageUrl();
         Platform.runLater(() -> {
@@ -148,7 +150,7 @@ public class OxPlayController {
 
     }
     @FXML
-    private void handleSkipButtonClick(MouseEvent e) {
+    private void handleSkipButtonClick(MouseEvent e, SkipReason USER_SKIP) {
         // 1) 확인용 Alert
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("게임 중단");
@@ -165,12 +167,12 @@ public class OxPlayController {
 
         // 3) 사용자 선택에 따른 분기
         if (result.isPresent() && result.get() == yes) {
-            skipGame();       // → 실제 스킵 로직
+            skipGame(SkipReason.USER_SKIP);       // → 실제 스킵 로직
         }
     }
 
     // 스킵 버튼(또는 긴급 종료)에 공통 사용 가능
-    private void skipGame() {
+    private void skipGame(SkipReason reason) {
 
         // 1) 진행 중인 타이머 정지
         if (countdown != null) {
@@ -190,13 +192,16 @@ public class OxPlayController {
         // 3) 문제 인덱스를 끝으로 이동
         currentIndex = questionList.size();
 
-        // 4) 즉시 결과 화면
+        // 4) 게임 결과 저장
         saveGameResult();
-        moveToResultView();
+        // 5) 클릭 버튼에 따른 결과 화면
+        switch (reason) {
+            case USER_SKIP -> moveToResultView();
+            case GO_TO_SETTING -> handleBackToSetting();
+        }
     }
 
     private void moveToResultView() {
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-result.fxml"));
             Parent root = loader.load();
@@ -248,13 +253,16 @@ public class OxPlayController {
 
 
     @FXML
-    private void handleBackToSetting(MouseEvent event) {
+    private void handleBackToSetting() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml")); // 실제 경로로 수정
             Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // 화면 전환
             Scene scene = new Scene(root, 1280, 800);
-            SceneManager.getPrimaryStage().setScene(scene);
+            Stage stage = SceneManager.getPrimaryStage();
+            stage.setScene(scene);
+            stage.show();
 
         } catch (Exception e) {
             System.err.println("게임 세팅화면으로 전환 실패 " + e.getMessage());
@@ -302,6 +310,7 @@ public class OxPlayController {
         infoText.setText("OX 게임에 오신 것을 환영합니다!");
 
         PauseTransition pause1 = new PauseTransition(Duration.seconds(3));
+        activeTransitions.add(pause1);
         pause1.setOnFinished(e -> {
             infoText.setText(String.format("선택한 주제는 %s / 문제 수: %d / 난도: %s / 제한 시간: %d초 입니다. ",
                     setting.getProblemType().getTypeName(),
@@ -309,10 +318,12 @@ public class OxPlayController {
                     setting.getDifficulty(),
                     setting.getTimer()));
             PauseTransition pause2 = new PauseTransition(Duration.seconds(3));
+            activeTransitions.add(pause2);
             pause2.setOnFinished(e2 -> {
                 infoText.setText("문제 나갑니다!");
 
                 PauseTransition pause3 = new PauseTransition(Duration.seconds(1));
+                activeTransitions.add(pause3);
                 pause3.setOnFinished(e3 -> runGameLoop());
                 pause3.play();
             });
@@ -401,6 +412,7 @@ public class OxPlayController {
 
             // 2초 후 → 해설 공개
             PauseTransition pause2 = new PauseTransition(Duration.seconds(2));
+            activeTransitions.add(pause2);
             pause2.setOnFinished(e2 -> {
                 clearAllTexts();
                 explanationText.setVisible(true);
@@ -408,6 +420,7 @@ public class OxPlayController {
 
                 // 3초 후 → 다음 문제로 이동
                 PauseTransition pause3 = new PauseTransition(Duration.seconds(3));
+                activeTransitions.add(pause3);
                 pause3.setOnFinished(e3 -> {
                     currentIndex++;
                     clearAllTexts();
@@ -419,6 +432,7 @@ public class OxPlayController {
                         infoText.setText("다음 문제입니다.");
 
                         PauseTransition pause4 = new PauseTransition(Duration.seconds(1));
+                        activeTransitions.add(pause4);
                         pause4.setOnFinished(e4 -> runGameLoop());
                         pause4.play();
                     } else {
@@ -461,7 +475,7 @@ public class OxPlayController {
         // === 3초 후 skipGame 실행 ===
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(event -> {
-            skipGame();
+            skipGame(SkipReason.USER_SKIP);
             rootPane.getChildren().remove(whiteOverlay); // 정리
         });
         delay.play();

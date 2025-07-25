@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -26,9 +27,9 @@ public class OxResultController {
     @FXML private Button btnStopGame;
 
     // === back 버튼 ===
-    @FXML private StackPane hoverContainer;
-    @FXML private ImageView imageHover;
-    @FXML private ImageView imageNormal;
+//    @FXML private StackPane hoverContainer;
+//    @FXML private ImageView imageHover;
+//    @FXML private ImageView imageNormal;
 
     // === 결과 text 제어 fx:id ===
     @FXML private Text difficulty;
@@ -43,12 +44,12 @@ public class OxResultController {
         Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
 
         // Hover 이미지 전환 처리
-        hoverContainer.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
-            imageNormal.setVisible(!isNowHover);
-            imageNormal.setCursor(Cursor.HAND); // 손 모양 커서
-            imageHover.setVisible(isNowHover);
-            imageHover.setCursor(Cursor.HAND); // 손 모양 커서
-        });
+//        hoverContainer.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
+//            imageNormal.setVisible(!isNowHover);
+//            imageNormal.setCursor(Cursor.HAND); // 손 모양 커서
+//            imageHover.setVisible(isNowHover);
+//            imageHover.setCursor(Cursor.HAND); // 손 모양 커서
+//        });
 
         // stop 및 retry 버튼 이미지 크기 변화
         btnStopGame.setOnMouseEntered(e -> {
@@ -98,11 +99,15 @@ public class OxResultController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/miniroom.fxml")); // 실제 경로로 수정
             Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            // 화면 전환
             Scene scene = new Scene(root, 1280, 800);
-            SceneManager.getPrimaryStage().setScene(scene);
+            Stage stage = SceneManager.getPrimaryStage();
+            stage.setScene(scene);
+            stage.show();
+
         } catch (Exception e) {
             System.err.println("미니룸 이동 화면 전환 실패 " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
