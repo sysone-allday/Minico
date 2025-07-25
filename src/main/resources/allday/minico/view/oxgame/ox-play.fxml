@@ -12,13 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxPlayController">
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../../css/ox-game.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxPlayController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../../css/ox-game.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxPlayController">
    <children>
-      <ImageView fitHeight="815.0" fitWidth="1304.0">
+      <ImageView fitHeight="800.0" fitWidth="1280.0">
          <image>
             <Image url="@../../images/background1.png" />
          </image>
@@ -28,7 +24,7 @@
 <!--            <Image url="@../../images/oxgame/background1-2.png" />-->
 <!--         </image>-->
 <!--      </ImageView>-->
-      <AnchorPane layoutX="58.0" layoutY="43.0" prefHeight="713.0" prefWidth="1163.0">
+      <AnchorPane layoutX="58.0" layoutY="43.0" prefHeight="713.0" prefWidth="1141.0">
          <children>
 <!--            <ImageView fitHeight="713.0" fitWidth="1163.0">-->
 <!--               <image>-->
@@ -50,11 +46,10 @@
                   <Image url="@../../images/oxgame/rain4.gif" />
                </image>
             </ImageView>
-            <HBox fx:id="topBar" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="1163.0">
+            <HBox fx:id="topBar" alignment="TOP_CENTER" layoutX="23.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="1121.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="244.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <StackPane fx:id="handlerBtnBackHover" prefHeight="150.0" prefWidth="200.0">
 <!--                           <children>-->
 <!--                              <ImageView fx:id="imageBackHover" onMouseClicked="#handleBackToSetting" visible="false">-->
 <!--                                 <image>-->
@@ -67,11 +62,10 @@
 <!--                                 </image>-->
 <!--                              </ImageView>-->
 <!--                           </children>-->
-                           <Button onMouseClicked="#handleBackToSetting" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
-                        </StackPane>
+                        <Button onMouseClicked="#handleBackToSetting" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="655.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Text fill="#ffe3ed" stroke="#a85c6f" strokeMiterLimit="0.0" strokeType="OUTSIDE" strokeWidth="5.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="문제 " textAlignment="CENTER">
                            <font>
@@ -85,7 +79,7 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
 <!--                        <StackPane fx:id="handlerBtnSkipHover" prefHeight="150.0" prefWidth="200.0">-->
 <!--                           <children>-->
