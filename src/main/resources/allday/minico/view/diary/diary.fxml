@@ -49,6 +49,7 @@
 
       <Button fx:id="backButton"
               layoutX="70" layoutY="66"
+              prefHeight="55.0" prefWidth="150"
               text="〈 Back"
               styleClass="back-button"
               onAction="#goToMyRoom" />

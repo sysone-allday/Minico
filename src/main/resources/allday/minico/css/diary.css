@@ -143,16 +143,18 @@
 /* 버튼 공통 ---------------- */
 .action-button, .back-button {
     -fx-font-family: "NeoDunggeunmo";
-    -fx-prefHeight: 55;
-    -fx-prefWidth: 150;
     -fx-font-size: 25px;
     -fx-background-color: #FFC9D8;
+    -fx-alignment: CENTER_LEFT;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-color: #E48AA3;
     -fx-border-width: 3;
     -fx-text-fill: #ffffff;
     /*-fx-padding: 6 24 6 24;*/
+}
+.action-button {
+    -fx-alignment: CENTER;
 }
 .action-button:hover, .back-button:hover {
     -fx-background-color: #FFB1C8;

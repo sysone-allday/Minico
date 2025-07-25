@@ -90,7 +90,7 @@
             </ImageView>
         </Pane>
 
-        <Button fx:id="backButton" layoutX="70" layoutY="66" onAction="#goToMain" styleClass="back-button" text="〈 Back" />
+        <Button fx:id="backButton" layoutX="70" layoutY="66" prefHeight="55.0" prefWidth="150" onAction="#goToMain" styleClass="back-button" text="〈 Back" />
          <ImageView fx:id="weed4" fitHeight="80" fitWidth="80" layoutX="545.0" layoutY="158.0">
              <image>
             <Image url="@../../images/diary/dust2.png" />
