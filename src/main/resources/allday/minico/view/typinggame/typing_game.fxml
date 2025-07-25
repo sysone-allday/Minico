@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <StackPane alignment="CENTER" prefHeight="800" prefWidth="1280" styleClass="root" stylesheets="@../../css/typinggame.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.typinggame.TypingGameController">
 
@@ -18,11 +17,7 @@
             <!-- 왼쪽 영역 -->
             <StackPane prefHeight="760" prefWidth="200">
                 <VBox alignment="TOP_CENTER" prefWidth="195.0" spacing="30">
-                    <Button fx:id="backButton" onAction="#goToMain" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back">
-                        <font>
-                            <Font size="22.0" />
-                        </font>
-                    </Button>
+                    <Button fx:id="backButton" onAction="#goToMain" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
 
                     <VBox alignment="CENTER" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px; -fx-padding: 5; -fx-background-color: white; -fx-border-radius: 18; -fx-background-radius: 20;">
                         <!-- 타이머 -->
