@@ -215,6 +215,7 @@ public class OxGameSettingController {
             SceneManager.getPrimaryStage().setScene(new Scene(root, 1280, 800));
         } catch (Exception e) {
             System.err.println("게임 시작 화면 전환 실패 " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

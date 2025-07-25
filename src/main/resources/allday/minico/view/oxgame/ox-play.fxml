@@ -62,7 +62,7 @@
 <!--                                 </image>-->
 <!--                              </ImageView>-->
 <!--                           </children>-->
-                        <Button onMouseClicked="#handleBackToSetting" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
+                        <Button fx:id="handlerBtnBackHover"  prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="655.0" HBox.hgrow="ALWAYS">
