@@ -1,7 +1,6 @@
 package allday.minico.service.typinggame;
 
 import allday.minico.dao.typinggame.TypingGameDAO;
-import allday.minico.dao.typinggame.TypingGameDAOImpl;
 import allday.minico.dto.typinggame.Word;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class TypingGameServiceImpl implements TypingGameService {
 
     // 객체 생성 (초기화) 해야함
     public TypingGameServiceImpl() {
-        typingGameDAO = new TypingGameDAOImpl();
+        typingGameDAO = new TypingGameDAO();
     }
 
     @Override

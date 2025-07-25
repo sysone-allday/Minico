@@ -5,6 +5,6 @@ public class TypingGameSQL {
     public static final String SELECT_RANDOM_WORD = """
         SELECT * FROM word
         ORDER BY DBMS_RANDOM.VALUE
-        FETCH FIRST 20 ROWS ONLY
+        FETCH FIRST 50 ROWS ONLY
         """;
 }
