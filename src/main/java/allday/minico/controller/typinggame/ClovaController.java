@@ -9,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class ClovaController {
 
@@ -50,7 +51,8 @@ public class ClovaController {
         String parsedResult = parseClovaResponse(response.body());
 
         // 정답 -> ____빈칸으로 변경하기
-        String quizText = parsedResult.replace(keyword, "_____");
+        String regex = "(?i)\\b" + Pattern.quote(keyword) + "\\b";
+        String quizText = parsedResult.replaceAll(regex, "_____");
 
 
         System.out.println("🧪 [Clova 문제 생성 결과]");
