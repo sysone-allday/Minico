@@ -10,10 +10,7 @@ import allday.minico.service.oxgame.OxPlayService;
 import allday.minico.session.AppSession;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.BackgroundMusicManager;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -31,7 +28,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -46,6 +45,7 @@ public class OxPlayController {
 
     private static final OxPlayService oxPlayService = OxPlayService.getInstance();
     private static final NoteService noteService = NoteServiceImpl.getInstance();
+    public AnchorPane rootPane;
 
     @FXML private ImageView correctEffect;
     @FXML private ImageView wrongBackground;
@@ -195,6 +195,10 @@ public class OxPlayController {
 
         // 4) 즉시 결과 화면
         saveGameResult();
+        moveToResultView();
+    }
+
+    private void moveToResultView() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-result.fxml"));
@@ -211,8 +215,6 @@ public class OxPlayController {
         } catch (Exception e) {
             System.err.println("OX 결과 화면으로 전환 실패: " + e.getMessage());
         }
-
-
     }
 
     // 예시: Transition을 등록/해제해 두는 전역 리스트
@@ -442,14 +444,30 @@ public class OxPlayController {
 
     private void handleGameEnd() {
         infoText.setVisible(true);
-        infoText.setText("게임 종료! 🎉");
+        infoText.setText("게임 종료!");
         questionText.setText("");
         explanationText.setText("");
         cntText.setText("");
         timerLabel.setText("00:00");
 
-        // 게임 결과 저장
-        saveGameResult();
+        // === 흰색 오버레이 생성 ===
+        Rectangle whiteOverlay = new Rectangle(rootPane.getWidth(), rootPane.getHeight(), Color.WHITE);
+        whiteOverlay.setOpacity(0);
+        rootPane.getChildren().add(whiteOverlay);  // rootPane은 최상위 Pane (예: StackPane, AnchorPane 등)
+
+        // === 페이드 인 효과 적용 (밝아짐) ===
+        FadeTransition fade = new FadeTransition(Duration.seconds(1.5), whiteOverlay);
+        fade.setFromValue(0);
+        fade.setToValue(1); // 완전 흰색으로 덮음
+        fade.play();
+
+        // === 3초 후 skipGame 실행 ===
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(event -> {
+            skipGame();
+            rootPane.getChildren().remove(whiteOverlay); // 정리
+        });
+        delay.play();
     }
 
     private void saveGameResult() {
