@@ -1,101 +1,304 @@
-.label-side{
-    -fx-font-family: "NeoDunggeunmo";
+/* ==================== common ======================== */
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
 }
 
-.clean-textarea {
+.root {
+    -fx-background-color: #ffffffff;
+    -fx-background-image: url("../images/background1.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
+    -fx-padding: 30px 0 0 0;
+}
+
+/* ==================== Buttons ======================== */
+
+/* 뒤로가기 버튼 */
+.back-button {
+    -fx-prefHeight: 55;
+    -fx-prefWidth: 150;
+    -fx-font-size: 25px;
+    -fx-text-fill: #FFF;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 15;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #E48AA3;    
+    -fx-border-width: 3;           
+    -fx-border-style: solid;       
+    -fx-border-radius: 15;         
+}
+.back-button:hover {
+    -fx-background-color: #FFB1C8;
+}
+
+/* 삭제 버튼 */
+.delete-button {
+    -fx-prefHeight: 45;
+    -fx-prefWidth: 90;
+    -fx-font-size: 25px;
+    -fx-text-fill: #FFF;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 15;
+    -fx-border-color: #E48AA3;    
+    -fx-border-width: 3;           
+    -fx-border-style: solid;       
+    -fx-border-radius: 15;  
+}
+.delete-button:hover {
+    -fx-background-color: #ff5690;
+}
+
+/* 확인 버튼 */
+.check-button {
+    -fx-font-size: 20px;
+    -fx-text-fill: #FFF;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 10;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #E48AA3;    
+    -fx-border-width: 3;           
+    -fx-border-style: solid;       
+    -fx-border-radius: 10;
+}
+.check-button:hover {
+    -fx-background-color: #FFB1C8;
+}
+
+/* 페이지네이션 버튼 */
+.pagination-button {
+    -fx-font-size: 20px;
+    -fx-text-fill: #FFF;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 10;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 10;
+}
+.pagination-button:hover {
+    -fx-background-color: #FFB1C8;
+}
+
+
+.info-box {
+    -fx-border-color: #B3B3B3;
+    -fx-border-width: 3px;
+    -fx-padding: 5;
+    -fx-background-color: white;
+    -fx-border-radius: 18;
+    -fx-background-radius: 20;
+}
+
+.title-label {
+    -fx-font-size: 24px;
     -fx-text-fill: #333333;
-    -fx-background-color: transparent;
-    -fx-control-inner-background: transparent;
-    -fx-border-color: transparent;
-    -fx-background-insets: 0;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-    -fx-effect: none;
-    -fx-text-alignment: center;
-    -fx-alignment: center;
+    -fx-padding: 8px;
 }
 
-.clean-textarea .scroll-pane {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-effect: none;
+.page-info, .progress-info {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666666;
 }
 
-.clean-textarea .viewport {
-    -fx-background-color: transparent;
+
+.word-game-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 4;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 2);
 }
 
-.clean-textarea .content {
-    -fx-padding: 0;
-    -fx-background-color: transparent;
-    -fx-effect: none;
+.section-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
 }
 
-.clean-textarea .scroll-bar {
-    -fx-opacity: 0;
-    -fx-pref-width: 0;
-    -fx-pref-height: 0;
-    -fx-effect: none;
+.question-box {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 15;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-border-radius: 15;
+    -fx-min-height: 150;
 }
 
-.clean-textarea .prompt-text {
-    -fx-prompt-text-fill: #999999;
+.question-text {
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
 }
 
-.clean-textfield {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-effect: none;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-    -fx-highlight-fill: transparent;
-    -fx-highlight-text-fill: inherit;
+.input-box {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 2);
+}
+
+/* ==================== 입력 필드 ======================== */
+
+.answer-input {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #ddd;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-padding: 8px;
+}
+
+.answer-input:focused {
+    -fx-border-color: #FFC9D8;
+    -fx-border-width: 3;
+}
+
+/* ==================== 피드백 텍스트 ======================== */
+
+.feedback-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666666;
 }
 
 .feedback-correct {
-    -fx-fill: green;
+    -fx-fill: #28a745;
     -fx-font-weight: bold;
 }
 
-.feedback-wrong {
-    -fx-fill: red;
+.feedback-incorrect {
+    -fx-fill: #dc3545;
     -fx-font-weight: bold;
 }
+/* ==================== 메인 컨텐츠 영역 ======================== */
+.main-content-pane {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-border-color: #B3B3B3;
+    -fx-border-width: 5px;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+}
 
-.pagination-arrow {
+/* ==================== 제목 영역 ======================== */
+.title-text {
+    -fx-font-family: "NeoDunggeunmo";
+    -fx-font-size: 48px;
+    -fx-fill: #FFFFFF;
+    -fx-stroke: #E48AA3;
+    -fx-stroke-width: 3;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 2, 2);
+}
+
+/* ==================== 섹션 박스 ======================== */
+.section-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.section-label {
+    -fx-font-family: "NeoDunggeunmo";
+    -fx-font-size: 24px;
+    -fx-text-fill: #5F5F5F;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 10;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-padding: 8 16 8 16;
+}
+
+/* ==================== 입력 필드 ======================== */
+.clean-textfield {
     -fx-font-size: 20px;
-    -fx-text-fill: #8B5E5E;
+    -fx-text-fill: #333333;
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+}
+
+.clean-textfield:focused {
+    -fx-border-color: #FF6B9D;
+    -fx-border-width: 3;
+}
+
+.clean-textarea {
+    -fx-font-size: 18px;
+    -fx-text-fill: #333333;
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+}
+
+.clean-textarea:focused {
+    -fx-border-color: #FF6B9D;
+    -fx-border-width: 3;
+}
+
+/* ==================== 버튼 스타일 ======================== */
+.save-button {
+    -fx-font-size: 20px;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 10;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
+    -fx-border-radius: 10;
+    -fx-padding: 8 16 8 16;
+}
+
+.save-button:hover {
+    -fx-background-color: #FFB1C8;
+}
+
+/* ==================== 페이지네이션 ======================== */
+.pagination-arrow {
+    -fx-font-family: "NeoDunggeunmo";
+    -fx-font-size: 30px;
+    -fx-text-fill: #E48AA3;
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 50;
+    -fx-border-color: #E48AA3;
+    -fx-border-width: 2;
+    -fx-border-radius: 50;
     -fx-cursor: hand;
+}
+
+.pagination-arrow:hover {
+    -fx-background-color: #FFC9D8;
 }
 
 .page-dot {
-    -fx-background-color: #ffffff;
-    -fx-background-radius: 100; /* 동그랗게 */
-    -fx-text-fill: white;
-    -fx-min-width: 20px;
-    -fx-min-height: 20px;
-    -fx-alignment: center;
-    -fx-font-size: 12px;
-    -fx-padding: 0;
-}
-.page-dot.selected {
-    -fx-background-color: #EA8A94;
+    -fx-background-color: #E48AA3;
+    -fx-background-radius: 50;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 2;
+    -fx-border-radius: 50;
 }
 
-.page-dot-current {
-    -fx-text-fill: #000000;
-    -fx-font-size: 18px;
-}
-
-.page-dot-inactive {
-    -fx-text-fill: #aaaaaa;
-    -fx-font-size: 18px;
-}
-
-.page-dot-current:hover,
-.page-dot-inactive:hover {
-    -fx-cursor: hand;
-    -fx-font-size: 20px;
+.page-dot-active {
+    -fx-background-color: #FF6B9D;
+    -fx-background-radius: 50;
+    -fx-border-color: #FFFFFF;
+    -fx-border-width: 2;
+    -fx-border-radius: 50;
 }

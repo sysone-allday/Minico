@@ -15,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -34,18 +33,18 @@ public class NoteController {
     @FXML private HBox boxPagination;
     @FXML private Text currentPageText;
     @FXML private Text totalPageText;
-    @FXML private Label btnPrev;
+    @FXML private Button btnPrev;
     @FXML private HBox pageDots;
-    @FXML private Label btnNext;
+    @FXML private Button btnNext;
 
-    @FXML private ImageView btnBack;
-    @FXML private ImageView btnDelete;
+    @FXML private Button btnBack;
+    @FXML private Button btnDelete;
     @FXML private Label wrongQuestion;
     @FXML private TextField answerInputField;
     @FXML private Text feedbackLabel;
-    @FXML private ImageView btnSubmitAnswer;
+    @FXML private Button btnSubmitAnswer;
     @FXML private TextArea memoTextArea;
-    @FXML private Label btnSaveMemo;
+    @FXML private Button btnSaveMemo;
 
     /* ------------------------------
      * 상수

@@ -21,6 +21,9 @@ public class RoomNetworkManager {
     private Thread broadcastThread; // 브로드캐스트 스레드 참조 추가
     private String cachedCharacterInfo; // 캐릭터 정보 캐싱
 
+    // 스레드 풀 최적화 매니저
+    private MovementOptimizer optimizer;
+
     // 캐릭터 관련 참조
     private ImageView character;
     private ImageView hostCharacter;
@@ -56,6 +59,9 @@ public class RoomNetworkManager {
         
         // 캐릭터 정보 미리 캐싱
         this.cachedCharacterInfo = initializeCharacterInfo();
+
+        // 스레드 풀 최적화 매니저 초기화
+        this.optimizer = MovementOptimizer.getInstance();
 
         setupNetworking();
     }
@@ -426,31 +432,37 @@ public class RoomNetworkManager {
     }
 
     public void sendChatMessage(String message) {
-        if (isHosting && server != null) {
-            // 호스트는 sendChatMessage를 사용하여 모든 클라이언트에게 메시지 전송
-            // 호스트 자신에게는 onChatMessage 콜백을 통해 말풍선이 표시됨
-            server.sendChatMessage(message);
-        } else if (isVisiting && client != null) {
-            // 방문자는 서버에게 메시지 전송
-            client.sendMessage("CHAT:" + playerName + ":" + message);
-        }
+        // 채팅 메시지 전송을 네트워크 스레드 풀에서 처리
+        optimizer.processNetworkTask(() -> {
+            if (isHosting && server != null) {
+                // 호스트는 sendChatMessage를 사용하여 모든 클라이언트에게 메시지 전송
+                // 호스트 자신에게는 onChatMessage 콜백을 통해 말풍선이 표시됨
+                server.sendChatMessage(message);
+            } else if (isVisiting && client != null) {
+                // 방문자는 서버에게 메시지 전송
+                client.sendMessage("CHAT:" + playerName + ":" + message);
+            }
+        });
     }
 
     public void updateCharacterPosition(double x, double y, String direction) {
-        if (isHosting && server != null) {
-            // 호스팅 중이면 서버에 즉시 업데이트 (지연 최소화)
-            server.updateCharacterPosition(x, y, direction);
-        } else if (isVisiting && client != null) {
-            // 방문 중이면 클라이언트에서 서버로 즉시 전송 (캐릭터 정보 포함)
-            StringBuilder visitorMessage = new StringBuilder("VISITOR_UPDATE:")
-                .append(playerName).append(":")
-                .append(String.format("%.1f", x)).append(":")
-                .append(String.format("%.1f", y)).append(":")
-                .append(direction).append(":")
-                .append(cachedCharacterInfo);
-            
-            client.sendMessage(visitorMessage.toString());
-        }
+        // 네트워크 작업을 전용 스레드 풀에서 처리
+        optimizer.processNetworkTask(() -> {
+            if (isHosting && server != null) {
+                // 호스팅 중이면 서버에 즉시 업데이트 (지연 최소화)
+                server.updateCharacterPosition(x, y, direction);
+            } else if (isVisiting && client != null) {
+                // 방문 중이면 클라이언트에서 서버로 즉시 전송 (캐릭터 정보 포함)
+                StringBuilder visitorMessage = new StringBuilder("VISITOR_UPDATE:")
+                    .append(playerName).append(":")
+                    .append(String.format("%.1f", x)).append(":")
+                    .append(String.format("%.1f", y)).append(":")
+                    .append(direction).append(":")
+                    .append(cachedCharacterInfo);
+                
+                client.sendMessage(visitorMessage.toString());
+            }
+        });
     }
 
     /**
@@ -532,6 +544,9 @@ public class RoomNetworkManager {
                 // discovery cleanup if needed
             }
 
+            // 스레드 풀 최적화 매니저 정리 (싱글톤이므로 주의깊게 처리)
+            // 애플리케이션 종료 시에만 호출하도록 주의
+            
             // 상태 초기화
             isHosting = false;
             isVisiting = false;
