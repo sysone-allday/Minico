@@ -19,7 +19,7 @@
             <StackPane prefHeight="760" prefWidth="200">
                 <VBox alignment="TOP_CENTER" prefWidth="195.0" spacing="30">
                     <!-- 상단 Back 버튼 -->
-                    <Button fx:id="backButton" onAction="#goToTypingGame" prefHeight="55.0" prefWidth="150" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
+                    <Button fx:id="backButton" onAction="#goToTypingGame" prefHeight="55.0" prefWidth="140" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
 
                     <VBox alignment="CENTER" style="-fx-border-color: #B3B3B3; -fx-border-width: 3px; -fx-padding: 5; -fx-background-color: white; -fx-border-radius: 18; -fx-background-radius: 20;">
                         <!-- 현재 문제 표시 -->

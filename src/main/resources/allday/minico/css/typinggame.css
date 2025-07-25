@@ -16,10 +16,9 @@
 
 /* back 버튼 */
 .back-button {
-    -fx-prefHeight: 55;
-    -fx-prefWidth: 150;
     -fx-font-size: 25px;
     -fx-text-fill: #FFF;
+    -fx-alignment: CENTER_LEFT;
     -fx-background-color: #FFC9D8;
     -fx-background-radius: 15;
     /* ✅ 테두리 스타일 */

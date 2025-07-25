@@ -21,10 +21,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,11 +50,11 @@ public class OxPlayController {
 
     // === hover 버튼들(back, skip) ===
     @FXML private StackPane handlerBtnBackHover;
-    @FXML private ImageView imageBackHover;
-    @FXML private ImageView imageBackNormal;
-    @FXML private StackPane handlerBtnSkipHover;
-    @FXML private ImageView imageSkipHover;
-    @FXML private ImageView imageSkipNomal;
+//    @FXML private ImageView imageBackHover;
+//    @FXML private ImageView imageBackNormal;
+    @FXML private Button handlerBtnSkipHover;
+//    @FXML private ImageView imageSkipHover;
+//    @FXML private ImageView imageSkipNomal;
 
     // === 문제 횟수 카운트 ===
     @FXML private Text cntText;
@@ -109,18 +106,18 @@ public class OxPlayController {
         Font.loadFont(getClass().getResourceAsStream("/allday/minico/fonts/NEODGM.ttf"), 14);
         
         // back, skip 버튼 hover 처리
-        handlerBtnBackHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
-            imageBackNormal.setVisible(!isNowHover);
-            imageBackNormal.setCursor(Cursor.HAND); // 손 모양 커서
-            imageBackHover.setVisible(isNowHover);
-            imageBackHover.setCursor(Cursor.HAND); // 손 모양 커서
-        });
-        handlerBtnSkipHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
-            imageSkipNomal.setVisible(!isNowHover);
-            imageSkipNomal.setCursor(Cursor.HAND); // 손 모양 커서
-            imageSkipHover.setVisible(isNowHover);
-            imageSkipHover.setCursor(Cursor.HAND); // 손 모양 커서
-        });
+//        handlerBtnBackHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
+//            imageBackNormal.setVisible(!isNowHover);
+//            imageBackNormal.setCursor(Cursor.HAND); // 손 모양 커서
+//            imageBackHover.setVisible(isNowHover);
+//            imageBackHover.setCursor(Cursor.HAND); // 손 모양 커서
+//        });
+//        handlerBtnSkipHover.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
+//            imageSkipNomal.setVisible(!isNowHover);
+//            imageSkipNomal.setCursor(Cursor.HAND); // 손 모양 커서
+//            imageSkipHover.setVisible(isNowHover);
+//            imageSkipHover.setCursor(Cursor.HAND); // 손 모양 커서
+//        });
 
         // o, x 버튼 처리
         imgBtnO.setCursor(Cursor.HAND);

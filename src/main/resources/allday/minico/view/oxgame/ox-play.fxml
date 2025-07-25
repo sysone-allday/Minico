@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,24 +13,28 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxPlayController">
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../../css/ox-game.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxPlayController">
    <children>
       <ImageView fitHeight="815.0" fitWidth="1304.0">
          <image>
-            <Image url="@../../images/oxgame/background1.png" />
+            <Image url="@../../images/background1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="800.0" fitWidth="1280.0">
-         <image>
-            <Image url="@../../images/oxgame/background1-2.png" />
-         </image>
-      </ImageView>
+<!--      <ImageView fitHeight="800.0" fitWidth="1280.0">-->
+<!--         <image>-->
+<!--            <Image url="@../../images/oxgame/background1-2.png" />-->
+<!--         </image>-->
+<!--      </ImageView>-->
       <AnchorPane layoutX="58.0" layoutY="43.0" prefHeight="713.0" prefWidth="1163.0">
          <children>
-            <ImageView fitHeight="713.0" fitWidth="1163.0">
-               <image>
-                  <Image url="@../../images/oxgame/background2.png" />
-               </image>
-            </ImageView>
+<!--            <ImageView fitHeight="713.0" fitWidth="1163.0">-->
+<!--               <image>-->
+<!--                  <Image url="@../../images/oxgame/background2.png" />-->
+<!--               </image>-->
+<!--            </ImageView>-->
             <ImageView fx:id="correctEffect" fitHeight="713.0" fitWidth="1163.0" visible="false">
                <image>
                   <Image url="@../../images/oxgame/firecracker.gif" />
@@ -50,18 +55,19 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
                         <StackPane fx:id="handlerBtnBackHover" prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fx:id="imageBackHover" onMouseClicked="#handleBackToSetting" visible="false">
-                                 <image>
-                                    <Image url="@../../images/oxgame/back_ver2.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="imageBackNormal" onMouseClicked="#handleBackToSetting">
-                                 <image>
-                                    <Image url="@../../images/oxgame/back_ver1.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
+<!--                           <children>-->
+<!--                              <ImageView fx:id="imageBackHover" onMouseClicked="#handleBackToSetting" visible="false">-->
+<!--                                 <image>-->
+<!--                                    <Image url="@../../images/oxgame/back_ver2.png" />-->
+<!--                                 </image>-->
+<!--                              </ImageView>-->
+<!--                              <ImageView fx:id="imageBackNormal" onMouseClicked="#handleBackToSetting">-->
+<!--                                 <image>-->
+<!--                                    <Image url="@../../images/oxgame/back_ver1.png" />-->
+<!--                                 </image>-->
+<!--                              </ImageView>-->
+<!--                           </children>-->
+                           <Button onMouseClicked="#handleBackToSetting" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
                         </StackPane>
                      </children>
                   </HBox>
@@ -81,20 +87,21 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <StackPane fx:id="handlerBtnSkipHover" prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ImageView fx:id="imageSkipHover" visible="false">
-                                 <image>
-                                    <Image url="@../../images/oxgame/skip_ver2.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="imageSkipNomal">
-                                 <image>
-                                    <Image url="@../../images/oxgame/skip_ver1.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
+<!--                        <StackPane fx:id="handlerBtnSkipHover" prefHeight="150.0" prefWidth="200.0">-->
+<!--                           <children>-->
+<!--                              <ImageView fx:id="imageSkipHover" visible="false">-->
+<!--                                 <image>-->
+<!--                                    <Image url="@../../images/oxgame/skip_ver2.png" />-->
+<!--                                 </image>-->
+<!--                              </ImageView>-->
+<!--                              <ImageView fx:id="imageSkipNomal">-->
+<!--                                 <image>-->
+<!--                                    <Image url="@../../images/oxgame/skip_ver1.png" />-->
+<!--                                 </image>-->
+<!--                              </ImageView>-->
+<!--                           </children>-->
+<!--                        </StackPane>-->
+                           <Button fx:id="handlerBtnSkipHover" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="skip-button" text="Skip" />
                      </children>
                   </HBox>
                </children>
