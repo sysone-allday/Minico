@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
 .custom-combo {
     -fx-font-family: "NeoDunggeunmo";
     -fx-font-size: 30px;
@@ -41,4 +45,40 @@
 
 .result-view-text {
 	-fx-fill: #564145;
+}
+
+/* back 버튼 */
+.back-button {
+    -fx-font-family: "NeoDunggeunmo";
+    -fx-font-size: 25px;
+    -fx-text-fill: #FFF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 15;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #E48AA3;     /* 테두리 색상 */
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+.back-button:hover {
+    -fx-background-color : #FFB1C8;
+}
+
+/* skip 버튼 */
+.skip-button {
+    -fx-font-family: "NeoDunggeunmo";
+    -fx-font-size: 25px;
+    -fx-text-fill: #FFF;
+    -fx-alignment: CENTER;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 15;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #E48AA3;     /* 테두리 색상 */
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+.skip-button:hover {
+    -fx-background-color : #FFB1C8;
 }

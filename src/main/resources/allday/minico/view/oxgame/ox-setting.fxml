@@ -19,21 +19,21 @@
         <children>
             <ImageView fitHeight="816.0" fitWidth="1280.0" layoutY="-2.0" mouseTransparent="true" pickOnBounds="false">
                 <image>
-                    <Image url="@../../images/oxgame/background1.png" />
+                    <Image url="@../../images/background1.png" />
                 </image>
             </ImageView>
-         <ImageView fitHeight="800.0" fitWidth="1280.0" mouseTransparent="true">
-            <image>
-               <Image url="@../../images/oxgame/background1-2.png" />
-            </image>
-         </ImageView>
+<!--         <ImageView fitHeight="800.0" fitWidth="1280.0" mouseTransparent="true">-->
+<!--            <image>-->
+<!--               <Image url="@../../images/oxgame/background1-2.png" />-->
+<!--            </image>-->
+<!--         </ImageView>-->
             <AnchorPane layoutX="52.0" layoutY="46.0" maxHeight="708.0" maxWidth="1175.0" minHeight="708.0" minWidth="1175.0" prefHeight="708.0" prefWidth="1175.0">
                 <children>
-                    <ImageView fitHeight="708.0" fitWidth="1175.0" layoutY="-2.0" mouseTransparent="true">
-                        <image>
-                            <Image url="@../../images/oxgame/background2.png" />
-                        </image>
-                    </ImageView>
+<!--                    <ImageView fitHeight="708.0" fitWidth="1175.0" layoutY="-2.0" mouseTransparent="true">-->
+<!--                        <image>-->
+<!--                            <Image url="@../../images/oxgame/background2.png" />-->
+<!--                        </image>-->
+<!--                    </ImageView>-->
                     <AnchorPane layoutX="374.0" layoutY="125.0" prefHeight="530.0" prefWidth="748.0">
                         <children>
                             <ImageView fitHeight="543.0" fitWidth="755.0" layoutY="-7.0" mouseTransparent="true" AnchorPane.leftAnchor="0.0">
@@ -181,13 +181,12 @@
                                             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                                 <children>
                                                     <VBox alignment="CENTER" layoutY="-12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="749.0">
-                                                        <children>
-                                                            <ImageView fx:id="btnStartImage" fitHeight="102.0" fitWidth="238.0" onMouseClicked="#startGame" pickOnBounds="true">
-                                                                <image>
-                                                                    <Image url="@../../images/oxgame/start_button.png" />
-                                                                </image>
-                                                            </ImageView>
-                                                        </children>
+<!--                                                            <ImageView fx:id="btnStartImage" fitHeight="102.0" fitWidth="238.0" onMouseClicked="#startGame" pickOnBounds="true">-->
+<!--                                                                <image>-->
+<!--                                                                    <Image url="@../../images/oxgame/start_button.png" />-->
+<!--                                                                </image>-->
+<!--                                                            </ImageView>-->
+                                                        <Button fx:id="btnStartImage" onMouseClicked="#startGame" prefHeight="75.0" prefWidth="165.0" style="-fx-background-insets: 1;" styleClass="skip-button" text="게임시작" />
                                                     </VBox>
                                                 </children>
                                             </AnchorPane>
@@ -198,13 +197,13 @@
                         </children>
                     </AnchorPane>
                     <Pane layoutX="374.0" prefHeight="118.0" prefWidth="749.0">
-                  <children>
-                     <ImageView fitHeight="78.0" fitWidth="345.0" layoutX="202.0" layoutY="26.0">
-                        <image>
-                           <Image url="@../../../../../../../../../../../Users/KOSA/Desktop/fxml_oxgame/text_setting.png" />
-                        </image>
-                     </ImageView>
-                  </children>
+<!--                  <children>-->
+<!--                     <ImageView fitHeight="78.0" fitWidth="345.0" layoutX="202.0" layoutY="26.0">-->
+<!--                        <image>-->
+<!--                           <Image url="@../../../../../../../../../../../Users/KOSA/Desktop/fxml_oxgame/text_setting.png" />-->
+<!--                        </image>-->
+<!--                     </ImageView>-->
+<!--                  </children>-->
                     </Pane>
                     <Pane layoutX="63.0" layoutY="149.0" mouseTransparent="true" prefHeight="198.0" prefWidth="252.0">
                         <children>
@@ -221,20 +220,21 @@
                         </children>
                     </Pane>
                     <ImageView id="minimiGif" fx:id="minimi" fitHeight="241.0" fitWidth="217.0" layoutX="81.0" layoutY="347.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
-                    <StackPane fx:id="hoverContainer" layoutX="1" layoutY="2.0" minHeight="100" minWidth="200" prefHeight="100" prefWidth="200">
-                        <children>
-                            <ImageView fx:id="imageHover" onMouseClicked="#handleBackToMiniroom" visible="false">
-                                <image>
-                                    <Image url="@../../images/oxgame/back_ver2.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fx:id="imageNormal" onMouseClicked="#handleBackToMiniroom">
-                                <image>
-                                    <Image url="@../../images/oxgame/back_ver1.png" />
-                                </image>
-                            </ImageView>
-                        </children>
-                    </StackPane>
+<!--                    <StackPane fx:id="hoverContainer" layoutX="1" layoutY="2.0" minHeight="100" minWidth="200" prefHeight="100" prefWidth="200">-->
+<!--                        <children>-->
+<!--                            <ImageView fx:id="imageHover" onMouseClicked="#handleBackToMiniroom" visible="false">-->
+<!--                                <image>-->
+<!--                                    <Image url="@../../images/oxgame/back_ver2.png" />-->
+<!--                                </image>-->
+<!--                            </ImageView>-->
+<!--                            <ImageView fx:id="imageNormal" onMouseClicked="#handleBackToMiniroom">-->
+<!--                                <image>-->
+<!--                                    <Image url="@../../images/oxgame/back_ver1.png" />-->
+<!--                                </image>-->
+<!--                            </ImageView>-->
+<!--                        </children>-->
+<!--                    </StackPane>-->
+                        <Button onMouseClicked="#handleBackToMiniroom" prefHeight="55.0" prefWidth="140.0" style="-fx-background-insets: 1;" styleClass="back-button" text="〈 Back" />
                 </children>
             </AnchorPane>
         </children>

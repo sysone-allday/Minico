@@ -4,12 +4,12 @@ import allday.minico.dto.oxgame.OxUserSetting;
 import allday.minico.dto.oxgame.ProblemTypeDTO;
 import allday.minico.service.oxgame.OxGameSettingService;
 import allday.minico.session.AppSession;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import allday.minico.utils.member.SceneManager;
-import allday.minico.utils.audio.BackgroundMusicManager;
-import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -20,7 +20,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -47,8 +46,8 @@ public class OxGameSettingController {
     private List<Button> ctButtons;
 
     // === Hover 버튼 ===
-    @FXML private ImageView imageNormal;
-    @FXML private ImageView imageHover;
+//    @FXML private ImageView imageNormal;
+//    @FXML private ImageView imageHover;
     @FXML private StackPane hoverContainer;
 
     // == rootPane 설정 ===
@@ -61,7 +60,7 @@ public class OxGameSettingController {
     @FXML private ComboBox<ProblemTypeDTO> selectProblemType;
 
     // === start 이미지 크기 변화 ===
-    @FXML private ImageView btnStartImage;
+    @FXML private Button btnStartImage;
     private String characterImageUrl;
 
 
@@ -83,12 +82,12 @@ public class OxGameSettingController {
         ctButtons = List.of(btnCT5, btnCT10, btnCT15);
 
         // Hover 이미지 전환 처리
-        hoverContainer.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
-            imageNormal.setVisible(!isNowHover);
-            imageNormal.setCursor(Cursor.HAND); // 손 모양 커서
-            imageHover.setVisible(isNowHover);
-            imageHover.setCursor(Cursor.HAND); // 손 모양 커서
-        });
+//        hoverContainer.hoverProperty().addListener((obs, wasHover, isNowHover) -> {
+//            imageNormal.setVisible(!isNowHover);
+//            imageNormal.setCursor(Cursor.HAND); // 손 모양 커서
+//            imageHover.setVisible(isNowHover);
+//            imageHover.setCursor(Cursor.HAND); // 손 모양 커서
+//        });
         
         // start 이미지 크기 변화
         btnStartImage.setOnMouseEntered(e -> {
