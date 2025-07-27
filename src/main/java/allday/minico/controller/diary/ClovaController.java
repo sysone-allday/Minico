@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import static allday.minico.controller.typinggame.ClovaController.parseClovaResponse;
 
+// 김민서 파트
 public class ClovaController {
 
     private static final String API_KEY = "Bearer nv-505f67ad61af42ec810a855312887837EP2M";

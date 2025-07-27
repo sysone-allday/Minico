@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+// 김민서 파트
 public class TodolistController implements Initializable {
 
     @FXML private TextField inputField;

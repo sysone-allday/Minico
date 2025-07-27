@@ -1,5 +1,6 @@
 package allday.minico.sql.diary;
 
+// 김민서 파트
 public class TodolistSQL {
     public static final String SELECT_BY_MEMBER_AND_DATE = """
         SELECT TODO_ID, CONTENT, IS_DONE

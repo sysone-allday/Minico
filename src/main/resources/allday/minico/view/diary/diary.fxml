@@ -7,6 +7,8 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.layout.HBox?>
+
+<!-- 김민서 파트 -->
 <AnchorPane styleClass="diary-root" stylesheets="@../../css/diary.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
    <children>
       <!-- 메인 패널 -->

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
+<!-- 김민서 파트 -->
 <AnchorPane stylesheets="@../../css/diary.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.MyRoomController">
     <children>
         <!-- 전체 배경 -->

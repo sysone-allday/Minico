@@ -6,6 +6,7 @@ import allday.minico.dto.diary.Todolist;
 import java.time.LocalDate;
 import java.util.List;
 
+// 김민서 파트
 public class TodolistService {
     private final TodolistDAO todoDao = new TodolistDAO();
 

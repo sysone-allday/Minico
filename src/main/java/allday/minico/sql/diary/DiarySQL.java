@@ -1,5 +1,6 @@
 package allday.minico.sql.diary;
 
+// 김민서 파트
 public class DiarySQL {
     // 일기 조회 (날짜+멤버)
     public static final String SELECT_BY_DATE = """

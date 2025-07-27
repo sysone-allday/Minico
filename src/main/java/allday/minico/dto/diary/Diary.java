@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+// 김민서 파트
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

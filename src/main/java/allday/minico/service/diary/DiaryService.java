@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
+// 김민서 파트
 @RequiredArgsConstructor
 public class DiaryService {
     private final DiaryDAO diaryDao = new DiaryDAO();

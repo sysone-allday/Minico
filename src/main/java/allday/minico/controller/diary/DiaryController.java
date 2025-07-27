@@ -27,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
+// 김민서 파트
 public class DiaryController implements Initializable {
     @FXML private Button dateBackButton;
     @FXML private Button dateNextButton;

@@ -2,8 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<!-- 부모 Diary.fxml 에서 이미 diary.css 를 불러오므로
-     이 파일엔 stylesheets 속성을 둘 필요가 없습니다 -->
+<!-- 김민서 파트 -->
 <VBox fx:id="todolist"
       layoutX="100" layoutY="170"
       prefWidth="450" prefHeight="500"

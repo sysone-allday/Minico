@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+// 김민서 파트
 public class MyRoomController {
 
     @FXML private Button backButton;

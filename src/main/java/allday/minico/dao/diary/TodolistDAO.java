@@ -10,6 +10,7 @@ import java.util.List;
 
 import static allday.minico.utils.DBUtil.getConnection;
 
+// 김민서 파트
 public class TodolistDAO {
     // 날짜별 투두 조회
     public List<Todolist> getTodosByDate(String memberId, LocalDate date) {
