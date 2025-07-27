@@ -1,3 +1,9 @@
+/*
+MyProfileController 클래스는 로그인한 사용자의 프로필 정보를 화면에 표시하고,
+회원정보 수정 창 열기, 회원 탈퇴 처리, 로그인 화면 전환 기능을 제공합니다.
+가입일, 레벨, 경험치 등의 정보를 불러와 UI에 반영하며,
+회원정보 수정 시 해당 Stage를 주입하여 수정 완료 후 창을 닫을 수 있도록 합니다.
+ */
 package allday.minico.controller.member;
 
 import allday.minico.dto.member.Member;

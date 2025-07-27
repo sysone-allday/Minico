@@ -1,3 +1,10 @@
+/*
+FindPasswordController 클래스는 사용자가 ID를 입력하면
+해당 ID의 비밀번호 힌트를 조회하여 결과를 출력하고,
+존재하지 않는 ID일 경우 에러 메시지를 안내합니다.
+로그인 화면으로 돌아가는 기능도 포함되어 있습니다.
+ */
+
 package allday.minico.controller.member;
 
 import allday.minico.service.member.MemberService;

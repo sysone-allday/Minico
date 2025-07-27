@@ -1,3 +1,11 @@
+/*
+SceneManager 클래스는 JavaFX에서 화면 전환과 모달 창 호출을
+중앙에서 관리하는 유틸리티 클래스입니다.
+초기 스테이지 설정, 씬 전체 교체 또는 루트만 교체,
+FXML과 컨트롤러 로딩, 모달창 표시 기능을 제공하며,
+경로 유효성 검사 및 AppSession 종료 처리도 포함됩니다.
+ */
+
 package allday.minico.utils.member;
 
 import allday.minico.Main;
@@ -11,9 +19,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/// ////////////////////////////////
-/// 화면 전환 용 클래스
-/// //////////////////////////////
 
 public class SceneManager {
     private static Stage primaryStage; // 최초 실행 시 사용되는 기본 스테이지

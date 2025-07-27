@@ -1,3 +1,11 @@
+/*
+LoginLogDAO 클래스는 로그인, 로그아웃, 회원가입 시 로그 정보를
+DB에 기록하는 기능을 담당하는 DAO 클래스입니다.
+로그인 시에는 로그 ID를 반환하고, 로그아웃 시에는 로그 시간 갱신,
+회원가입 시에는 초기 로그 삽입을 수행합니다.
+CallableStatement와 PreparedStatement를 사용하여 DB와 안전하게 통신합니다.
+ */
+
 package allday.minico.dao.member;
 
 import allday.minico.sql.member.LoginLogSQL;

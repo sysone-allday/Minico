@@ -1,3 +1,7 @@
+/*
+MultipleLoginErrorController 클래스는 중복 로그인 감지 시 표시되는 모달창에서
+확인 버튼을 누르면 현재 창을 닫는 기능을 제공합니다.
+ */
 package allday.minico.controller.member;
 
 import allday.minico.utils.member.SceneManager;

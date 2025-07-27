@@ -1,3 +1,11 @@
+/*
+FriendService 클래스는 친구 검색, 요청 전송 및 수락/거절,
+받은 요청 및 친구 목록 조회, 친구 삭제 등
+친구 관련 비즈니스 로직을 처리하는 서비스 클래스입니다.
+FriendDAO를 통해 DB와 통신하며, 예외 발생 시 로그를 출력하고
+기능의 성공 여부를 반환합니다.
+ */
+
 package allday.minico.service.member;
 
 import allday.minico.dao.member.FriendDAO;

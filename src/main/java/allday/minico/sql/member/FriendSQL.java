@@ -1,3 +1,10 @@
+/*
+FriendSQL 클래스는 친구 관련 기능에서 사용되는 SQL 쿼리문을
+정적 문자열로 정의한 유틸리티 클래스입니다.
+친구 검색, 친구 요청 삽입/수락/거절, 요청 목록 조회,
+친구 목록 조회 및 삭제 등에 필요한 쿼리를 제공합니다.
+ */
+
 package allday.minico.sql.member;
 
 public class FriendSQL {
