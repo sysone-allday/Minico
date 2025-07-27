@@ -13,6 +13,25 @@ import java.util.List;
 
 import static allday.minico.utils.DBUtil.getConnection;
 
+/**
+ * NoteDAO
+ *
+ * 오답노트 데이터를 DB에 저장하고 조회, 수정, 삭제하는 역할을 담당하는 DAO 클래스입니다.
+ * 빈칸 퀴즈, OX 퀴즈 등에서 틀린 문제를 기록해 학습에 활용할 수 있도록 지원합니다.
+ *
+ * 주요 기능:
+ * - 오답노트 삽입 (insertWrongNote)
+ * - 사용자 ID 기준 페이징 조회 (findWrongQuestionsByMemberIdPaged)
+ * - 사용자 오답 개수 조회 (countByMemberId)
+ * - 특정 오답 삭제 (deleteByWrongId)
+ * - 메모 수정 (updateMemo)
+ *
+ * DB 연결은 DBUtil.getConnection()을 통해 수행되며, SQL은 NoteSQL 클래스를 통해 관리됩니다.
+ *
+ * @author 김슬기
+ * @version 1.0
+ */
+
 public class NoteDAO {
 
 

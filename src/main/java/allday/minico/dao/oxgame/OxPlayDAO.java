@@ -13,6 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static allday.minico.utils.DBUtil.getConnection;
+/**
+ * OxPlayDAO
+ *
+ * OX 퀴즈 문제 데이터를 데이터베이스에서 조회하는 DAO 클래스입니다.
+ * 사용자의 설정(문제 유형, 난이도, 개수)에 따라 적절한 문제 리스트를 가져오는 기능을 수행합니다.
+ *
+ * 주요 기능:
+ * - 문제 유형 및 난이도 기반 문제 조회 (getQuestionText)
+ * - 난이도 무작위 문제 조회 (getQuestionTextRandom)
+ * - DB 연결은 DBUtil을 통해 수행되며, SQL문은 OxGameSQL 클래스에서 관리됩니다.
+ *
+ * Singleton 패턴을 적용하여 하나의 DAO 인스턴스만 사용하도록 구성되어 있습니다.
+ *
+ * @author 김슬기
+ * @version 1.0
+ */
 
 public class OxPlayDAO {
 	private static OxPlayDAO instance;

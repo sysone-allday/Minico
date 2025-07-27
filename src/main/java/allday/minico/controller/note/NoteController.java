@@ -24,7 +24,24 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * NoteController
+ *
+ * 사용자의 오답노트를 UI로 관리하는 JavaFX 컨트롤러 클래스입니다.
+ * 틀린 문제를 페이징 방식으로 표시하고, 메모 저장, 삭제, 정답 제출 기능을 제공합니다.
+ *
+ * 주요 기능:
+ * - 문제 페이지 이동 및 버퍼(chunk) 단위 로딩
+ * - 오답에 대한 메모 작성 및 저장 처리
+ * - 사용자가 입력한 정답과 실제 정답 비교 및 피드백 출력
+ * - 오답 삭제 및 미니룸 씬 전환 기능
+ *
+ * JavaFX의 FXML을 활용해 UI 요소와 바인딩되며,
+ * NoteService를 통해 데이터베이스와 연동합니다.
+ *
+ * @author 김슬기
+ * @version 1.0
+ */
 public class NoteController {
 
     /* ------------------------------

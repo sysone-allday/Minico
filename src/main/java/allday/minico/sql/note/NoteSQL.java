@@ -1,5 +1,6 @@
 package allday.minico.sql.note;
 
+// 정소영, 김슬기
 public class NoteSQL {
     public static final String INSERT_WRONG_NOTE = """
             INSERT INTO WRONG_NOTE (

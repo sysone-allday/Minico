@@ -19,7 +19,24 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * OxResultController
+ *
+ * OX 퀴즈 게임의 결과 화면을 관리하는 JavaFX 컨트롤러 클래스입니다.
+ * 사용자의 퀴즈 결과를 화면에 표시하고, 다시하기 또는 종료 기능을 제공합니다.
+ *
+ * 주요 기능:
+ * - 게임 결과 데이터 표시 (정답 수, 정확도, 난이도 등)
+ * - 다시하기 버튼 클릭 시 게임 세팅 화면으로 이동
+ * - 그만하기 버튼 클릭 시 미니룸 화면으로 이동
+ * - 마우스 hover 시 버튼 크기 조절로 UI 피드백 제공
+ * - Platform.runLater()로 미니미 캐릭터 이미지 갱신
+ *
+ * JavaFX FXML과 바인딩되어 Scene 전환 및 이벤트 처리를 담당합니다.
+ *
+ * @author 김슬기
+ * @version 1.0
+ */
 public class OxResultController {
     public ImageView minimi;
     // === 다시하기, 그만하기 버튼 ===

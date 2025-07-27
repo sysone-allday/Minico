@@ -27,6 +27,25 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
+/**
+ * OxGameSettingController
+ *
+ * OX 퀴즈 시작 전, 난이도·타이머·문제 수·문제 유형 등을 선택할 수 있는 JavaFX 컨트롤러 클래스입니다.
+ * 사용자가 설정한 값을 바탕으로 게임을 시작하며, UI 선택 동작과 데이터 초기화도 담당합니다.
+ *
+ * 주요 기능:
+ * - 게임 설정: 난이도, 시간, 문제 수, 주제 선택 (버튼 및 콤보박스)
+ * - 선택한 버튼에 스타일 적용 (선택된 버튼 강조)
+ * - 게임 시작 시 검증 및 ox-play.fxml 화면 전환
+ * - 배경음악 설정, 캐릭터 이미지 렌더링
+ * - 디버깅용 마우스 이벤트 경계 확인 기능 포함
+ *
+ * JavaFX의 FXML과 바인딩되어 사용되며, 설정 데이터는 OxUserSetting 객체로 관리됩니다.
+ *
+ * @author 김슬기
+ * @version 1.0
+ */
+
 public class OxGameSettingController {
     private static final OxGameSettingService settingService = OxGameSettingService.getInstance();
     private final OxUserSetting oxUserSetting = new OxUserSetting();

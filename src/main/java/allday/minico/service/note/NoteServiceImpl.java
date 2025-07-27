@@ -5,6 +5,26 @@ import allday.minico.dto.note.Note;
 import allday.minico.service.oxgame.OxPlayService;
 
 import java.util.List;
+/**
+ * NoteServiceImpl
+ *
+ * 오답노트 관련 로직을 처리하는 서비스 구현 클래스입니다.
+ * DAO를 호출하여 실제 DB 작업을 수행하고, 예외 처리를 통해 안정성을 제공합니다.
+ *
+ * 주요 기능:
+ * - 오답노트 저장
+ * - 사용자 오답 전체 개수 조회
+ * - 페이징 기반 오답 리스트 조회
+ * - 오답 삭제 (존재하지 않을 경우 예외 발생)
+ * - 메모 저장/수정 (실패 시 예외 발생)
+ *
+ * 싱글톤 패턴을 적용하여 getInstance()로 단일 인스턴스를 제공합니다.
+ * NoteDAO와 연결되어 데이터 처리를 위임합니다.
+ *
+ * @author 정소영, 김슬기
+ * @version 1.0
+ */
+
 
 public class NoteServiceImpl implements NoteService{
     private static final int SUCCESS = 1;

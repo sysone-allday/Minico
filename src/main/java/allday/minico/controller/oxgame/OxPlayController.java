@@ -39,6 +39,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * OxPlayController
+ *
+ * OX 퀴즈 게임의 실제 플레이 화면을 담당하는 JavaFX 컨트롤러 클래스입니다.
+ * 문제를 순차적으로 출제하고, 사용자의 선택에 따라 정답 여부를 판정하며, 정답률 계산 및 결과를 처리합니다.
+ *
+ * 주요 기능:
+ * - OX 문제 출제 및 화면 표시 (runGameLoop, showAnswerAndExplanation)
+ * - 사용자 입력 처리 (O 버튼, X 버튼, 시간 초과 등)
+ * - 정답률 계산 및 결과 객체 생성 (OxGameResult)
+ * - 게임 종료 시 결과 화면 전환 또는 설정 화면 복귀
+ * - 오답 저장 및 오답노트와 연동
+ *
+ * UI는 JavaFX + FXML을 기반으로 하며, 타이머 처리(Timeline, PauseTransition), 시각 효과(ImageView)와
+ * 함께 사용자 경험을 제공합니다.
+ *
+ * @author 김슬기
+ * @version 1.0
+ */
+
 public class OxPlayController {
 
     private static final OxPlayService oxPlayService = OxPlayService.getInstance();

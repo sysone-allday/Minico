@@ -1,5 +1,7 @@
 package allday.minico.sql.oxgame;
 
+
+// 김슬기
 public class OxGameSQL {
 
     // 모든 문제 타입을 찾는 쿼리
