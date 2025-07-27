@@ -1,3 +1,9 @@
+/*
+@author 최온유
+LoginLogService 클래스는 로그인, 로그아웃, 회원가입 시
+로그 기록을 DB에 저장하고 관련 ID를 반환하거나 갱신하는 기능을 담당합니다.
+LoginLogDAO를 통해 DB와 통신하며, 각 로그 기록의 성공 여부를 처리합니다.
+ */
 package allday.minico.service.member;
 
 import allday.minico.dao.member.LoginLogDAO;

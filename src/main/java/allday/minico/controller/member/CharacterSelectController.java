@@ -1,3 +1,10 @@
+/*
+@author 최온유
+CharacterSelectController 클래스는 회원가입 중 사용자에게 성별과 미니미 캐릭터(대호, 마리오, 온유, 민서, 소영, 슬기)를
+선택할 수 있는 UI를 제공하고, 선택한 캐릭터 정보를 미리보기로 표시하며,
+최종적으로 선택된 성별과 캐릭터 정보를 기반으로 회원가입과 기본 스킨 생성을 처리하는 컨트롤러입니다.
+ */
+
 package allday.minico.controller.member;
 
 import allday.minico.dto.member.Member;

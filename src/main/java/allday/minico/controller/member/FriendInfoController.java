@@ -1,3 +1,12 @@
+/*
+@author 최온유
+FriendInfoController 클래스는 로그인한 사용자의 친구 목록과
+받은 친구 요청 목록을 조회하여 각각 ListView에 표시하고,
+친구 삭제, 요청 수락/거절 등의 상호작용을 처리합니다.
+각 항목은 닉네임, 레벨, ID, 마지막 접속 시간 또는 요청 시간과 함께
+삭제/수락/거절 버튼이 포함된 UI로 구성되며, FriendService를 통해 서버와 연동됩니다.
+ */
+
 package allday.minico.controller.member;
 
 import allday.minico.dto.member.Friend;

@@ -1,3 +1,12 @@
+/*
+@author 최온유
+MemberDAO 클래스는 회원가입, 로그인, ID 중복 확인,
+회원정보 수정/삭제, 비밀번호 힌트 조회, 닉네임 기반 회원 검색,
+중복 로그인 여부 확인 등의 DB 작업을 수행하는 DAO 클래스입니다.
+각 기능은 MemberSQL에 정의된 SQL 문을 기반으로
+PreparedStatement를 활용하여 안전하게 DB와 통신합니다.
+ */
+
 package allday.minico.dao.member;
 
 import allday.minico.dto.member.Member;

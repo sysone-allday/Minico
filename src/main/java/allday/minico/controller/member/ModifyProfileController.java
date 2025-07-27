@@ -1,3 +1,10 @@
+/*
+@author 최온유
+ModifyProfileController 클래스는 사용자가 입력한 새로운 닉네임, 이메일, 비밀번호 등의 정보를 검증한 후
+DB에 반영하여 회원 정보를 수정하고, 수정된 내용을 현재 세션(AppSession)에 반영합니다.
+수정 완료 시 현재 창과 내 정보 창을 함께 닫으며, 입력값 유효성 검사는 Validator 클래스를 활용합니다.
+ */
+
 package allday.minico.controller.member;
 
 import allday.minico.service.member.MemberService;

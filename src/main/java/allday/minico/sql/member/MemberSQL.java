@@ -1,3 +1,12 @@
+/*
+@author 최온유
+MemberSQL 클래스는 회원 기능에 필요한 SQL 쿼리문들을
+정적 문자열로 정의한 클래스입니다.
+ID 중복 확인, 회원가입, 로그인, 비밀번호 힌트 조회,
+회원정보 수정/삭제, 중복 로그인 검사, 닉네임 기반 조회 등을
+처리하는 SQL 구문을 포함합니다.
+ */
+
 package allday.minico.sql.member;
 
 public class MemberSQL {

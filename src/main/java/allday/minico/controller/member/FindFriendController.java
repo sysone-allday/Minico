@@ -1,3 +1,10 @@
+/*
+@author 최온유
+FindFriendController 클래스는 친구 ID를 입력받아 검색하고,
+해당 유저의 친구 상태에 따라 결과를 안내하며 친구 요청을 보낼 수 있도록 처리합니다.
+검색 결과는 ListView에 사용자 정보와 요청 버튼 형태로 표시되며,
+사용자가 버튼을 누르면 FriendService를 통해 친구 요청을 전송합니다.
+ */
 package allday.minico.controller.member;
 
 import allday.minico.dto.member.Friend;

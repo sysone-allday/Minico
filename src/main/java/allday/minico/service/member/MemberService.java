@@ -1,3 +1,10 @@
+/*
+@author 최온유
+MemberService 클래스는 회원가입, 로그인, ID 중복 검사,
+회원정보 수정 및 삭제, 비밀번호 힌트 조회, 중복 로그인 방지 등
+회원 관련 비즈니스 로직을 처리하는 서비스 계층입니다.
+MemberDAO를 통해 DB와 통신하며, 각 기능의 성공 여부와 예외를 관리합니다.
+ */
 package allday.minico.service.member;
 
 

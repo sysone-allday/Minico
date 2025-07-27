@@ -1,3 +1,10 @@
+/*
+@author 최온유
+FriendDAO 클래스는 친구 검색, 친구 요청 삽입, 수락/거절 처리,
+친구 목록 및 받은 요청 목록 조회, 친구 삭제 등의 DB 접근 기능을 제공합니다.
+SQL 실행은 FriendSQL에 정의된 쿼리를 기반으로 수행되며,
+모든 메서드는 Connection과 PreparedStatement를 활용하여 안정적으로 DB와 통신합니다.
+ */
 package allday.minico.dao.member;
 
 import allday.minico.dto.member.Friend;
