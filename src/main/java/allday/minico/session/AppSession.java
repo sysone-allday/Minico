@@ -1,3 +1,12 @@
+/*
+@author 최온유
+AppSession 클래스는 로그인한 사용자의 세션 정보를
+전역적으로 관리하는 싱글톤 클래스입니다.
+로그인 유저(Member), 로그인 로그 ID, 닉네임,
+OX 게임용 캐릭터 이미지 URL 등을 저장하며,
+로그아웃 시 로그 기록을 DB에 반영하고 세션 정보를 초기화합니다.
+ */
+
 package allday.minico.session;
 
 import allday.minico.dto.member.Member;
