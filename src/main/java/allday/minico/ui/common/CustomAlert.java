@@ -8,9 +8,9 @@ import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 import javafx.scene.text.TextAlignment;
 
-/**
- * 사용자 정의 알림 모달 - 통일된 UI 시스템
- */
+
+//사용자 정의 알림 모달 - 통일된 UI 시스템
+
 public class CustomAlert {
     
     public enum AlertType {

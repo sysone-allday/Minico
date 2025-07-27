@@ -1,5 +1,12 @@
 package allday.minico.network;
 
+/*
+@author 김대호
+MiniRoomServer 클래스는 미니룸 서버의 네트워크 통신을 관리하는 클래스입니다.
+클라이언트 연결 관리, 메시지 송수신, 방문자 정보 업데이트 등
+미니룸 서버와 관련된 다양한 네트워크 작업을 수행합니다.
+ */
+
 import java.io.*;
 import java.net.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,5 +1,11 @@
 package allday.minico.network;
 
+/*
+@author 김대호
+MiniRoomDiscovery 클래스는 미니룸의 네트워크 검색 및 발견을 관리하는 클래스입니다.
+멀티캐스트 소켓을 활용하여 네트워크 상의 미니룸을 검색하고, 발견된 방 정보를 제공합니다.
+ */
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;

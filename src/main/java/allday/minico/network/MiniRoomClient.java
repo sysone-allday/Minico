@@ -6,6 +6,16 @@ import allday.minico.utils.skin.SkinUtil;
 import java.io.*;
 import java.net.*;
 
+/*
+@author 김대호
+MiniRoomClient 클래스는 미니룸 클라이언트의 네트워크 통신을 관리하는 클래스입니다.
+소켓 연결, 메시지 송수신, 방문자 정보 업데이트, 채팅 메시지 처리 등
+미니룸과 관련된 다양한 네트워크 작업을 수행합니다.
+
+깃히스토리를 통해서 코드 작성자를 모두 추적 가능합니다.
+버전 관리툴을 사용하는 만큼 작성자가 누군지에 대한 주석은 네트워크 관련코드 외에는 지양하겠습니다.
+ */
+
 public class MiniRoomClient {
     private Socket socket;
     private BufferedReader reader;

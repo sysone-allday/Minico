@@ -1,5 +1,12 @@
 package allday.minico.network;
 
+/*
+@author 김대호
+RoomNetworkManager 클래스는 미니룸의 네트워크 상태를 관리하는 클래스입니다.
+호스트 및 방문자 상태 관리, 캐릭터 정보 업데이트, 채팅 메시지 처리 등
+미니룸 네트워크의 전반적인 동작을 제어합니다.
+ */
+
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import allday.minico.ui.miniroom.CharacterManager;

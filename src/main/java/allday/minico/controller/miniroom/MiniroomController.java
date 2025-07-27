@@ -1,5 +1,11 @@
 package allday.minico.controller.miniroom;
 
+/*
+@author 김대호
+MiniroomController 클래스는 미니룸 화면의 UI와 이벤트를 관리하는 컨트롤러 클래스입니다.
+방문자 관리, 메뉴 버튼 동작, 배경 음악 제어 등의 기능을 제공합니다.
+ */
+
 import allday.minico.ui.miniroom.CharacterManager;
 import allday.minico.utils.member.SceneManager;
 import allday.minico.utils.audio.BackgroundMusicManager;

@@ -5,6 +5,12 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 
+/*
+@author 김대호
+MovementOptimizer 클래스는 네트워크 통신과 UI 업데이트를 최적화하는 클래스입니다.
+스레드 풀을 활용하여 메시지 처리 및 UI 업데이트를 효율적으로 관리합니다.
+*/
+
 //  네트워크 통신과 UI 업데이트를 최적화하는 스레드 풀 관리자
 // 네트워크 메시지 처리와 UI 업데이트를 분리
 //  Platform.runLater 호출 최소화

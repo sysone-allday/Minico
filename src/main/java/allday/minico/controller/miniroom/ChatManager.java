@@ -15,6 +15,11 @@ import javafx.scene.image.ImageView;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+@author 김대호
+ChatManager 클래스는 미니룸에서 채팅 말풍선을 관리하는 클래스입니다.
+말풍선 생성, 위치 설정, 자동 제거 등의 기능을 제공합니다.
+ */
 @SuppressWarnings("unused")
 public class ChatManager {
 

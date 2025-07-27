@@ -1,5 +1,11 @@
 package allday.minico.controller.miniroom;
 
+/*
+@author 김대호
+CharacterMovementController 클래스는 미니룸에서 캐릭터의 움직임을 제어하는 클래스입니다.
+키보드 입력 처리, 캐릭터 위치 업데이트, 콜백 호출 등의 기능을 제공합니다.
+ */
+
 import allday.minico.session.AppSession;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
