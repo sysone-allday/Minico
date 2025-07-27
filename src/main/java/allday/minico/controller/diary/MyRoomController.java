@@ -148,10 +148,10 @@ public class MyRoomController {
             JsonObject json = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
             String weather = json.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
 
-            // ★ 1) 전체 응답 찍기
+            // 전체 응답 찍기
             System.out.println("[RAW] " + json);
 
-// ★ 2) 데이터 타임스탬프 → 현지 시각으로 변환
+            // 데이터 타임스탬프 → 현지 시각으로 변환
             long dt   = json.get("dt").getAsLong();        // UTC epoch
             int tzSec = json.get("timezone").getAsInt();   // 예: +32400 = KST
             ZonedDateTime obsTime = Instant.ofEpochSecond(dt)
