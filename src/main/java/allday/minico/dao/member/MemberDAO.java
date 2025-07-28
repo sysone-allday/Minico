@@ -1,43 +1,28 @@
+/*
+@author 최온유
+MemberDAO 클래스는 회원가입, 로그인, ID 중복 확인,
+회원정보 수정/삭제, 비밀번호 힌트 조회, 닉네임 기반 회원 검색,
+중복 로그인 여부 확인 등의 DB 작업을 수행하는 DAO 클래스입니다.
+각 기능은 MemberSQL에 정의된 SQL 문을 기반으로
+PreparedStatement를 활용하여 안전하게 DB와 통신합니다.
+ */
+
 package allday.minico.dao.member;
 
 import allday.minico.dto.member.Member;
 import allday.minico.sql.member.MemberSQL;
+import allday.minico.utils.DBUtil;
+
 import java.sql.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static allday.minico.utils.DBUtil.getConnection;
+
 public class MemberDAO {
 
     private static MemberDAO instance;
-    
-    // DB 접속 정보를 Properties에서 로드
-    private static final Properties dbProps = new Properties();
-    private static String url;
-    private static String dbUsername;
-    private static String dbPassword;
-    
-    static {
-        try (InputStream input = MemberDAO.class.getResourceAsStream("/database.properties")) {
-            if (input != null) {
-                dbProps.load(input);
-                url = dbProps.getProperty("db.url");
-                dbUsername = dbProps.getProperty("db.username");
-                dbPassword = dbProps.getProperty("db.password");
-                // System.out.println("✅ database.properties 로드 성공");
-            } else {
-                url = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-                dbUsername = "ace";
-                dbPassword = "ace";
-            }
-        } catch (IOException e) {
-            // Fallback to hardcoded values
-            url = "jdbc:oracle:thin:@//localhost:1521/xepdb1";
-            dbUsername = "ace";
-            dbPassword = "ace";
-            System.out.println("⚠️ database.properties 로드 실패: " + e.getMessage());
-        }
-    }
 
     private MemberDAO(){}
     public static MemberDAO getInstance() {
@@ -46,22 +31,6 @@ public class MemberDAO {
         }
         return instance;
     }
-
-    // DB 에 접근하기 위해 필요한 통로역할을 하는 Connection 객체
-    private Connection getConnection() throws SQLException {
-        try {
-            Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
-            return conn;
-        } catch (SQLException e) {
-            System.err.println("❌ DB 연결 실패!");
-            System.err.println("URL: " + url);
-            System.err.println("사용자명: " + dbUsername);
-            System.err.println("오류 코드: " + e.getErrorCode());
-            System.err.println("오류 메시지: " + e.getMessage());
-            throw e;
-        }
-    }
-
 
     public boolean isIdExists(String memberId) throws SQLException { // 중복 ID 인지 조회
         String idCheckSQL = MemberSQL.idCheakSQL;
@@ -117,6 +86,34 @@ public class MemberDAO {
 
     }
 
+    public Member getMemberByNickname(String nickname) throws SQLException {
+        String getMemberByNicknameSQL = MemberSQL.getMemberByNicknameSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(getMemberByNicknameSQL)) {
+            pstmt.setString(1, nickname);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Member member = new Member();
+                member.setMemberId(rs.getString("MEMBER_ID"));
+                member.setPassword(rs.getString("MEMBER_PASSWORD"));
+                member.setMinimi(rs.getString("MINIMI_TYPE"));
+                member.setCoin(rs.getInt("COIN"));
+                member.setEmail(rs.getString("EMAIL"));
+                member.setExperience(rs.getInt("EXPERIENCE"));
+                member.setLevel(rs.getInt("LV"));
+                member.setNickname(rs.getString("NICKNAME"));
+                member.setJoinDate(rs.getTimestamp("JOIN_DATE").toLocalDateTime());
+                member.setPasswordHint(rs.getString("PW_HINT"));
+                member.setVisitCount(rs.getInt("VISIT_COUNT"));
+                return member;
+            } else {
+                return null;
+            }
+        }
+    }
+
     public Member tryLogin(String memberId, String memberPw) throws SQLException { // 로그인 시도
         String getAllMemberInfoSQL = MemberSQL.getAllMemberInfoSQL;
         try (Connection conn = getConnection();
@@ -144,5 +141,60 @@ public class MemberDAO {
                 return null;
             }
         }
+    }
+
+    public boolean updateMemberInfo(String modifyInfoMemberId, String nickname, String email, String password, String passwordHint) throws SQLException {
+        String updateMemberInfoSQL = MemberSQL.updateMemberInfoSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateMemberInfoSQL)) {
+
+            // 닉네임, 이메일, 비밀번호, 힌트, ID 순
+            pstmt.setString(1, nickname);
+            pstmt.setString(2, email);
+            pstmt.setString(3, password);
+            pstmt.setString(4, passwordHint);
+            pstmt.setString(5, modifyInfoMemberId);
+
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteMember(String deleteId) throws SQLException {
+        String deleteMemberSQL = MemberSQL.deleteMemberSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(deleteMemberSQL)) {
+            pstmt.setString(1, deleteId);
+
+            if(pstmt.executeUpdate() > 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean checkMultipleLogin(String checkId) throws SQLException {
+        String checkMultipleLoginSQL = MemberSQL.checkMultipleLoginSQL;
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(checkMultipleLoginSQL)) {
+
+            pstmt.setString(1, checkId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) { // 결과가 존재할때(해당 MEMBER_ID가 존재할때) 실행
+                String result = rs.getString("LOGOUT_TIME");
+                if(result != null){
+                    System.out.println("로그인 중 아님, 로그인 가능");
+                    return true; // LOGOUT_TIME 컬럼이 null 아니면 로그아웃 한 것이므로 로그인 가능
+                } else{
+                    System.out.println("다른 곳에서 로그인 중이므로 로그인 불가");
+                    return false; // LOGOUT_TIME 컬럼이 null 이면 로그아웃을 하지 않은 것이므로 로그인 불가
+                }
+            }
+        }
+        System.out.println("없는 멤버거나 회원가입 후 로그인 기록 없는 ID");
+        return null; // 조회된 행이 아예 없으면 없는 MEMBER_ID
     }
 }

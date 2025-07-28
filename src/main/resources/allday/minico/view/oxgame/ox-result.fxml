@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<!-- 김슬기 -->
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@../../css/ox-game.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.oxgame.OxResultController">
+
+    <children>
+            <ImageView fitHeight="800.0" fitWidth="1280.0" layoutY="-1.0" mouseTransparent="true" pickOnBounds="false">
+                <image>
+                    <Image url="@../../images/background1.png" />
+                </image>
+            </ImageView>
+<!--         <ImageView fitHeight="800.0" fitWidth="1280.0" mouseTransparent="true">-->
+<!--            <image>-->
+<!--               <Image url="@../../images/oxgame/background1-2.png" />-->
+<!--            </image>-->
+<!--         </ImageView>-->
+            <AnchorPane layoutX="52.0" layoutY="46.0" maxHeight="708.0" maxWidth="1175.0" minHeight="708.0" minWidth="1175.0" prefHeight="708.0" prefWidth="1175.0">
+                <children>
+<!--                    <ImageView fitHeight="708.0" fitWidth="1175.0" layoutY="-2.0" mouseTransparent="true">-->
+<!--                        <image>-->
+<!--                            <Image url="@../../images/oxgame/background2.png" />-->
+<!--                        </image>-->
+<!--                    </ImageView>-->
+                    <AnchorPane layoutX="374.0" layoutY="125.0" prefHeight="530.0" prefWidth="748.0">
+                        <children>
+                            <ImageView fitHeight="543.0" fitWidth="755.0" layoutY="-7.0" mouseTransparent="true" AnchorPane.leftAnchor="0.0">
+                                <image>
+                                    <Image url="@../../images/oxgame/box1.png" />
+                                </image>
+                            </ImageView>
+                            <AnchorPane layoutX="6.0" prefHeight="522.0" prefWidth="743.0">
+                                <children>
+                                    <VBox prefHeight="522.0" prefWidth="749.0" spacing="20.0">
+                                        <padding>
+                                            <Insets top="30.0" />
+                                        </padding>
+                                        <children>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="748.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="정답률 :    " textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="accuracy" fill="#f06072" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="00" textAlignment="RIGHT">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text=" %" textAlignment="RIGHT">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="748.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="70.0" prefWidth="255.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="맞춘 횟수" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="255.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text fx:id="correctCount" fill="#f06072" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" text="00" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text=" / " textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                          <Text fx:id="totalQuestion" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="00" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                                            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="주제" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text fx:id="typeName" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="주제" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                            </HBox>
+                              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="749.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="난도" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text fx:id="difficulty" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;NeoDunggeunmo&quot;;" styleClass="result-view-text" text="난이도" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="40.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <children>
+                                    <HBox alignment="CENTER" prefHeight="132.0" prefWidth="748.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="132.0" prefWidth="378.0" HBox.hgrow="ALWAYS">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+<!--                                             <children>-->
+<!--                                                <ImageView fx:id="btnRetry" fitHeight="100.0" fitWidth="254.0">-->
+<!--                                                   <image>-->
+<!--                                                      <Image url="@../../images/oxgame/btn_retry.png" />-->
+<!--                                                   </image>-->
+<!--                                                   <cursor>-->
+<!--                                                      <Cursor fx:constant="HAND" />-->
+<!--                                                   </cursor>-->
+<!--                                                   <HBox.margin>-->
+<!--                                                      <Insets left="30.0" />-->
+<!--                                                   </HBox.margin>-->
+<!--                                                </ImageView>-->
+<!--                                             </children>-->
+                                              <Button fx:id="btnRetry" prefHeight="75.0" prefWidth="165.0" style="-fx-background-insets: 1;" styleClass="skip-button" text="다시하기" />
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="378.0" HBox.hgrow="ALWAYS">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+<!--                                             <children>-->
+<!--                                                <ImageView fx:id="btnStopGame" fitHeight="100.0" fitWidth="254.0">-->
+<!--                                                   <image>-->
+<!--                                                      <Image url="@../../images/oxgame/btn_stop.png" />-->
+<!--                                                   </image>-->
+<!--                                                   <cursor>-->
+<!--                                                      <Cursor fx:constant="HAND" />-->
+<!--                                                   </cursor>-->
+<!--                                                   <HBox.margin>-->
+<!--                                                      <Insets right="30.0" />-->
+<!--                                                   </HBox.margin>-->
+<!--                                                </ImageView>-->
+<!--                                             </children>-->
+                                              <Button fx:id="btnStopGame" prefHeight="75.0" prefWidth="165.0" style="-fx-background-insets: 1;" styleClass="skip-button" text="그만하기" />
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                                </children>
+                                            </AnchorPane>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </AnchorPane>
+                        </children>
+                    </AnchorPane>
+                    <Pane layoutX="374.0" prefHeight="125.0" prefWidth="749.0">
+<!--                        <children>-->
+<!--                          <ImageView fitHeight="78.0" fitWidth="358.0" layoutX="196.0" layoutY="24.0">-->
+<!--                             <image>-->
+<!--                                <Image url="@../../images/oxgame/title_result.png" />-->
+<!--                             </image>-->
+<!--                          </ImageView>-->
+<!--                        </children>-->
+
+                    </Pane>
+                    <Pane layoutX="63.0" layoutY="149.0" mouseTransparent="true" prefHeight="198.0" prefWidth="252.0">
+                        <children>
+                            <AnchorPane layoutY="-18.0" maxHeight="252.0" maxWidth="252.0" minHeight="198.0" minWidth="252.0" mouseTransparent="true" prefHeight="216.0" prefWidth="252.0">
+                                <children>
+                        <ImageView fitHeight="192.0" fitWidth="252.0" layoutY="12.0">
+                           <image>
+                              <Image url="@../../images/oxgame/speech_bubble2.png" />
+                           </image>
+                        </ImageView>
+                                </children>
+                            </AnchorPane>
+                        </children>
+                    </Pane>
+                    <ImageView id="minimiGif" fx:id="minimi" fitHeight="241.0" fitWidth="217.0" layoutX="81.0" layoutY="347.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
+                    <StackPane fx:id="hoverContainer" layoutX="1" layoutY="2.0" minHeight="100" minWidth="200" prefHeight="100" prefWidth="200">
+<!--                        <children>-->
+<!--                            <ImageView fx:id="imageHover" onMouseClicked="#handleBackToMiniroom" visible="false">-->
+<!--                                <image>-->
+<!--                                    <Image url="@../../images/oxgame/back_ver2.png" />-->
+<!--                                </image>-->
+<!--                            </ImageView>-->
+<!--                            <ImageView fx:id="imageNormal" onMouseClicked="#handleBackToMiniroom">-->
+<!--                                <image>-->
+<!--                                    <Image url="@../../images/oxgame/back_ver1.png" />-->
+<!--                                </image>-->
+<!--                            </ImageView>-->
+<!--                        </children>-->
+                    </StackPane>
+                </children>
+            </AnchorPane>
+        </children>
+    </AnchorPane>

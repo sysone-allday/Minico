@@ -1,10 +1,17 @@
+/*
+Validator 클래스는 회원가입 및 로그인 시
+사용자 입력값의 유효성을 검사하는 정적 유틸리티 클래스입니다.
+입력값 존재 여부, 이메일/ID/비밀번호/닉네임 형식 검증,
+비밀번호 일치 여부, ID 중복 확인 여부 등을 정규식을 통해 검사합니다.
+ */
+
 package allday.minico.utils.member;
 
 /// 회원가입 양식 검증 클래스
 
 public class Validator {
 
-    public static boolean isInfoFill(String... memberInfo){
+    public static boolean isInfoFill(String... memberInfo){ // 멤버 정보가 모두 입력되었으면 true
         for(String info : memberInfo){
             if(info == null || info.isEmpty()) return false;
         }
@@ -33,18 +40,29 @@ public class Validator {
         else { System.out.println("ID 중복확인을 하지않음"); return false;}
     }
 
-    public static boolean isIdFormat(String memberId) { // ID 는 소문자와 숫자 혼용, 8자 이상 조건
-        if (memberId.matches("^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,}$")) {return true;}
+    public static boolean isIdFormat(String memberId) { // ID 는 소문자와 숫자 혼용, 8-30자 조건
+        if (memberId.matches("^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,30}$")) {return true;}
         else {return false;}
     }
 
-    public static boolean isPwFormatMatch(String password){ // 비밀번호는 숫자나 영어로 8자 이상이어야 true
-        if(password.matches("^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,}$")) {return true;}
-        else {return false;}
+    public static boolean isPwFormatMatch(String password) { // 비밀번호는 소문자와 숫자를 포함하고 8~20자 이내
+        if (password.matches("^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{8,20}$")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static boolean isNicknameFormatMatch(String nickname){ // 닉네임은 대,소문자,한글,숫자 2~10 자
         if(nickname.matches("^[a-zA-Z0-9가-힣]{2,10}$")) {return true;}
         else {return false;}
+    }
+
+    public static boolean isPwHintFormatMatch(String text) { // 비밀번호 힌트는 특수문자,영어,한글 20자 이하
+        if (text != null && text.matches("^.{1,20}$")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

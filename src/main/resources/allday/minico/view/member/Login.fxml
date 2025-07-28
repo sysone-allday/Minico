@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!-- @author 최온유 -->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500" prefWidth="800" styleClass="login-root" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.LoginController">
+<AnchorPane fx:id="rootPane" prefHeight="500" prefWidth="800" styleClass="login-root" stylesheets="@../../css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.LoginController">
 
     <VBox alignment="CENTER" spacing="30" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50">
 
@@ -16,9 +16,9 @@
 
             <Label styleClass="login-title" text="로그인" />
 
-            <TextField fx:id="idField" promptText="아이디" styleClass="login-input" />
+            <TextField fx:id="idField" promptText="아이디" styleClass="login-input" onAction="#login"/>
 
-            <PasswordField fx:id="pwField" promptText="비밀번호" styleClass="login-input" />
+            <PasswordField fx:id="pwField" promptText="비밀번호" styleClass="login-input"  onAction="#login"/>
 
             <Button fx:id="loginButton" onAction="#login" prefHeight="72" prefWidth="373" styleClass="login-btn" text="로그인하기" />
 

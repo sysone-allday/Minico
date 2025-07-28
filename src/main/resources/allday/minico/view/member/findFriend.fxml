@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @author 최온유 -->
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="300.0" prefWidth="500.0" styleClass="findfriend-root" stylesheets="@../../css/findFriend.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.FindFriendController">
+
+   <VBox alignment="TOP_CENTER" spacing="15" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
+
+      <!-- 타이틀 -->
+      <Label fx:id="searchFriendTitle" styleClass="findfriend-title" text="친구 찾기" />
+
+      <!-- 검색 영역 -->
+      <HBox alignment="CENTER" spacing="10">
+         <Label styleClass="findfriend-label" text="친구 ID :" />
+         <TextField fx:id="searchFrinedTextField" promptText="친구 ID 를 입력하세요." styleClass="findfriend-input" />
+         <Button fx:id="searchFriendButton" onAction="#searchFriendButton" styleClass="findfriend-button" text="검색" />
+      </HBox>
+
+      <!-- 결과 메시지 -->
+      <Label fx:id="searchResultText" styleClass="findfriend-result-text" text=" " />
+
+      <!-- 검색 결과 리스트 -->
+      <ListView fx:id="searchResultListView" prefHeight="100.0" styleClass="findfriend-list" />
+   </VBox>
+</AnchorPane>

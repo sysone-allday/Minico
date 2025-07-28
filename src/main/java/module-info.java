@@ -13,10 +13,13 @@ module allday.minico {
     requires java.sql;
     requires static lombok;
     requires java.desktop;
+    requires java.net.http;
+    requires annotations;
 
     opens allday.minico.controller.member to javafx.fxml;
     opens allday.minico.controller.miniroom to javafx.fxml;
     opens allday.minico.controller.oxgame to javafx.fxml;
+    opens allday.minico.controller.note to javafx.fxml;
     opens allday.minico to javafx.fxml;
     
     exports allday.minico;
@@ -26,4 +29,11 @@ module allday.minico {
     // 타자게임
     opens allday.minico.controller.typinggame to javafx.fxml;
     exports allday.minico.controller.typinggame;
+
+    //날씨 연동 관련
+    requires com.google.gson;
+
+    exports allday.minico.controller.diary to javafx.fxml;
+    opens allday.minico.controller.diary to javafx.fxml;
+
 }

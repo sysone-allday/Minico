@@ -1,5 +1,11 @@
 package allday.minico.network;
 
+/*
+@author 김대호
+MiniRoomDiscovery 클래스는 미니룸의 네트워크 검색 및 발견을 관리하는 클래스입니다.
+멀티캐스트 소켓을 활용하여 네트워크 상의 미니룸을 검색하고, 발견된 방 정보를 제공합니다.
+ */
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -9,43 +15,43 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MiniRoomDiscovery {
     private static final int DISCOVERY_PORT = 8081;
     private static final String MULTICAST_ADDRESS = "230.0.0.1";
-    
+
     private MulticastSocket multicastSocket;
     private InetAddress multicastGroup;
     private boolean isRunning = false;
     private Thread discoveryThread;
     private ConcurrentHashMap<String, RoomInfo> availableRooms;
     private DiscoveryListener listener;
-    
+
     public interface DiscoveryListener {
         void onRoomDiscovered(RoomInfo roomInfo);
         void onRoomLost(String roomOwner);
     }
-    
+
     public static class RoomInfo {
         public String owner;
         public String ipAddress;
         public int port;
         public long lastSeen;
-        
+
         public RoomInfo(String owner, String ipAddress, int port) {
             this.owner = owner;
             this.ipAddress = ipAddress;
             this.port = port;
             this.lastSeen = System.currentTimeMillis();
         }
-        
+
         @Override
         public String toString() {
             return owner + " (" + ipAddress + ":" + port + ")";
         }
     }
-    
+
     public MiniRoomDiscovery(DiscoveryListener listener) {
         this.listener = listener;
         this.availableRooms = new ConcurrentHashMap<>();
     }
-    
+
     public void startDiscovery() {
         try {
             multicastSocket = new MulticastSocket(DISCOVERY_PORT);
@@ -67,7 +73,7 @@ public class MiniRoomDiscovery {
             System.out.println("탐색 시작 오류: " + e.getMessage());
         }
     }
-    
+
     public void stopDiscovery() {
         isRunning = false;
         try {
@@ -86,54 +92,60 @@ public class MiniRoomDiscovery {
             System.out.println("탐색 중지 오류: " + e.getMessage());
         }
     }
-    
+
     public void broadcastRoom(String roomOwner, int port) {
         try {
-            String message = "ROOM_BROADCAST:" + roomOwner + ":" + port;
-            byte[] buffer = message.getBytes();
+            // StringBuilder를 사용하여 성능 최적화
+            StringBuilder message = new StringBuilder("ROOM_BROADCAST:")
+                .append(roomOwner).append(":")
+                .append(port);
             
+            byte[] buffer = message.toString().getBytes();
+
             DatagramPacket packet = new DatagramPacket(
-                buffer, buffer.length, multicastGroup, DISCOVERY_PORT
+                    buffer, buffer.length, multicastGroup, DISCOVERY_PORT
             );
-            
+
             multicastSocket.send(packet);
-            // System.out.println("방 정보 브로드캐스트: " + message);
-            
+
         } catch (IOException e) {
             System.out.println("브로드캐스트 오류: " + e.getMessage());
         }
     }
-    
+
     public void broadcastRoomClosed(String roomOwner) {
         try {
-            String message = "ROOM_CLOSED:" + roomOwner;
-            byte[] buffer = message.getBytes();
+            // StringBuilder를 사용하여 성능 최적화
+            StringBuilder message = new StringBuilder("ROOM_CLOSED:")
+                .append(roomOwner);
             
+            byte[] buffer = message.toString().getBytes();
+
             DatagramPacket packet = new DatagramPacket(
-                buffer, buffer.length, multicastGroup, DISCOVERY_PORT
+                    buffer, buffer.length, multicastGroup, DISCOVERY_PORT
             );
-            
+
             multicastSocket.send(packet);
             System.out.println("방 종료 브로드캐스트: " + message);
-            
+
         } catch (IOException e) {
             System.out.println("방 종료 브로드캐스트 오류: " + e.getMessage());
         }
     }
-    
+
     private void discoveryLoop() {
         byte[] buffer = new byte[1024];
-        
+
         while (isRunning) {
             try {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 multicastSocket.receive(packet);
-                
+
                 String message = new String(packet.getData(), 0, packet.getLength());
                 String senderIP = packet.getAddress().getHostAddress();
-                
+
                 handleDiscoveryMessage(message, senderIP);
-                
+
             } catch (IOException e) {
                 if (isRunning) {
                     System.out.println("탐색 메시지 수신 오류: " + e.getMessage());
@@ -141,26 +153,26 @@ public class MiniRoomDiscovery {
             }
         }
     }
-    
+
     private void handleDiscoveryMessage(String message, String senderIP) {
         String[] parts = message.split(":");
         if (parts.length < 2) return;
-        
+
         String messageType = parts[0];
         if ("ROOM_BROADCAST".equals(messageType)) {
             if (parts.length < 3) return;
             String roomOwner = parts[1];
             int port = Integer.parseInt(parts[2]);
-            
+
             RoomInfo roomInfo = new RoomInfo(roomOwner, senderIP, port);
             availableRooms.put(roomOwner, roomInfo);
-            
+
             if (listener != null) {
                 listener.onRoomDiscovered(roomInfo);
             }
         } else if ("ROOM_CLOSED".equals(messageType)) {
             String roomOwner = parts[1];
-            
+
             // 방 정보 즉시 제거
             RoomInfo removedRoom = availableRooms.remove(roomOwner);
             if (removedRoom != null && listener != null) {
@@ -169,25 +181,25 @@ public class MiniRoomDiscovery {
             }
         }
     }
-    
+
     public List<RoomInfo> getAvailableRooms() {
         // 오래된 방 정보 제거 (10초 이상 응답 없음)
         long currentTime = System.currentTimeMillis();
         List<String> toRemove = new ArrayList<>();
-        
+
         for (RoomInfo room : availableRooms.values()) {
             if (currentTime - room.lastSeen > 10000) {
                 toRemove.add(room.owner);
             }
         }
-        
+
         for (String owner : toRemove) {
             availableRooms.remove(owner);
             if (listener != null) {
                 listener.onRoomLost(owner);
             }
         }
-        
+
         return new ArrayList<>(availableRooms.values());
     }
 }

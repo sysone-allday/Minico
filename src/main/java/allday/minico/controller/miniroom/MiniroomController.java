@@ -1,19 +1,24 @@
 package allday.minico.controller.miniroom;
 
-import allday.minico.controller.oxgame.OxGameSettingController;
+/*
+@author 김대호
+MiniroomController 클래스는 미니룸 화면의 UI와 이벤트를 관리하는 컨트롤러 클래스입니다.
+방문자 관리, 메뉴 버튼 동작, 배경 음악 제어 등의 기능을 제공합니다.
+ */
+
+import allday.minico.ui.miniroom.CharacterManager;
+import allday.minico.utils.member.SceneManager;
+import allday.minico.utils.audio.BackgroundMusicManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-// import javafx.scene.control.DialogPane;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
@@ -44,12 +49,34 @@ public class MiniroomController implements Initializable {
     private Button typingBtn;
     @FXML
     private Button oxBtn;
+    @FXML
+    private Button friendsButton;
+    @FXML
+    private Button myProfileButton;
+    @FXML
+    private ImageView oxGameIcon;
+    @FXML
+    private ImageView typingGameIcon;
+    @FXML
+    private ImageView spaceTooltipOx;
+    @FXML
+    private ImageView spaceTooltipTyping;
+
+    @FXML
+    private void friendsButtonClick(){
+        SceneManager.showModal("FriendInfo", "친구 찾기");
+    }
+
+    @FXML
+    private void myProfileButtonClick(){SceneManager.showModal("myProfile", "내 정보");}
+
+
 
     private ImageView character;
     private CharacterMovementController movementController;
 
     // 네트워크 관련 변수
-    private RoomNetworkManager networkManager;
+    private RoomNetworkManager networkManager; // 로그인 완료시 자동 호출
     private String playerName = "Player1";
     private boolean isHosting = false;
     private boolean isVisiting = false;
@@ -121,9 +148,9 @@ public class MiniroomController implements Initializable {
         javafx.application.Platform.runLater(() -> {
             this.setupPlayerName();
 
-            // 미니룸의 모든 버튼에 클릭 효과음 추가
+            // 미니룸 배경음악 연속 재생 (이미 재생 중이면 유지)
             if (roomPane.getScene() != null) {
-                ButtonSoundHandler.addButtonSounds(roomPane.getScene());
+                BackgroundMusicManager.ensureMainMusicPlaying(roomPane.getScene());
             }
         });
     }
@@ -131,6 +158,11 @@ public class MiniroomController implements Initializable {
     private void onCharacterInitialized(ImageView character) {
         this.character = character;
         initializeMovementController();
+        
+        // 초기 툴팁 상태 업데이트
+        if (character != null) {
+            updateSpaceTooltips(character.getLayoutX(), character.getLayoutY());
+        }
     }
 
     private void handleChatMessage(String message) {
@@ -152,7 +184,7 @@ public class MiniroomController implements Initializable {
 
     private void setupPlayerName() {
         // AppSession에서 로그인한 사용자의 닉네임 가져오기
-        String nickname = allday.minico.sesstion.AppSession.getPlayerNickname();
+        String nickname = allday.minico.session.AppSession.getPlayerNickname();
 
         if (nickname != null && !nickname.trim().isEmpty()) {
             playerName = nickname.trim();
@@ -161,18 +193,34 @@ public class MiniroomController implements Initializable {
             playerName = "Player" + (System.currentTimeMillis() % 1000);
         }
 
-        System.out.println("플레이어 이름 설정됨: " + playerName);
+        // System.out.println("플레이어 이름 설정됨: " + playerName);
 
         // 플레이어 이름이 설정된 후 네트워크 매니저 초기화
         initializeNetworkManager();
+
+        // 로그인 완료 시 자동으로 서버 호스팅 시작
+        Platform.runLater(() -> {
+            if (networkManager != null && !isHosting) {
+                // System.out.println("로그인 완료 - 자동으로 서버 호스팅 시작");
+                networkManager.startHosting();
+            }
+
+            // 버튼 텍스트 초기화
+            updateVisitButtonText();
+        });
     }
 
     private void initializeNetworkManager() {
         networkManager = new RoomNetworkManager(playerName, characterManager, character,
-                new RoomNetworkManager.NetworkCallback() {
+                new RoomNetworkManager.NetworkCallbackWithCharacterInfo() {
                     @Override
                     public void onHostCharacterCreate(double x, double y, String direction) {
                         createHostCharacter(x, y, direction);
+                    }
+                    
+                    @Override
+                    public void onHostCharacterCreateWithCharacterInfo(double x, double y, String direction, String characterInfo) {
+                        createHostCharacterWithInfo(x, y, direction, characterInfo);
                     }
 
                     @Override
@@ -184,10 +232,20 @@ public class MiniroomController implements Initializable {
                     public void onVisitorCharacterCreate(String visitorName, double x, double y, String direction) {
                         createVisitorCharacter(visitorName, x, y, direction);
                     }
+                    
+                    @Override
+                    public void onVisitorCharacterCreateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                        createVisitorCharacterWithInfo(visitorName, x, y, direction, characterInfo);
+                    }
 
                     @Override
                     public void onVisitorCharacterUpdate(String visitorName, double x, double y, String direction) {
                         updateVisitorCharacter(visitorName, x, y, direction);
+                    }
+                    
+                    @Override
+                    public void onVisitorCharacterUpdateWithCharacterInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+                        updateVisitorCharacterWithInfo(visitorName, x, y, direction, characterInfo);
                     }
 
                     @Override
@@ -209,7 +267,22 @@ public class MiniroomController implements Initializable {
                     @Override
                     public void onVisitingStatusChanged(boolean isVisiting) {
                         MiniroomController.this.isVisiting = isVisiting;
-                        System.out.println("방문 상태 변경: " + isVisiting); // 디버깅용 로그 추가
+                        // System.out.println("방문 상태 변경: " + isVisiting);
+
+                        // 버튼 변경
+                        Platform.runLater(() -> {
+                            MiniroomController.this.updateVisitButtonText();
+                        });
+
+                        // 방문이 끝 호스팅 시작
+                        if (!isVisiting && !MiniroomController.this.isHosting) {
+                            // System.out.println("방문 종료 - 자동으로 호스팅 재시작");
+                            Platform.runLater(() -> {
+                                if (networkManager != null) {
+                                    networkManager.startHosting();
+                                }
+                            });
+                        }
                         // 네트워크 기능 제거됨
                     }
 
@@ -233,6 +306,8 @@ public class MiniroomController implements Initializable {
                         if (networkManager != null) {
                             networkManager.updateCharacterPosition(x, y, direction);
                         }
+                        // 툴팁 업데이트
+                        updateSpaceTooltips(x, y);
                     }
 
                     @Override
@@ -249,14 +324,38 @@ public class MiniroomController implements Initializable {
                     public java.util.Map<String, Text> getCharacterNameLabels() {
                         return characterNameLabels;
                     }
+
+                    @Override
+                    public void onSpacebarPressed(double charX, double charY) {
+                        // 거리 확인
+                        if (isNearIcon(charX, charY, oxGameIcon)) {
+                            System.out.println("OX게임 아이콘 근처에서 스페이스바 눌림");
+                            onOxClick(new ActionEvent(oxGameIcon, null));
+                            return;
+                        }
+                        
+        
+                        if (isNearIcon(charX, charY, typingGameIcon)) {
+                            System.out.println("타자게임 아이콘 근처에서 스페이스바 눌림");
+                            onTypingClick();
+                            return;
+                        }
+                    }
                 });
     }
 
     private void createHostCharacter(double x, double y, String direction) {
         hostCharacter = characterManager.createHostCharacter(hostName, x, y, direction);
-        System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction + ", 호스트명=" + hostName);
+        // System.out.println("호스트 캐릭터 생성: X=" + x + ", Y=" + y + ", 방향=" + direction +
+        // ", 호스트명=" + hostName);
     }
-
+    
+    private void createHostCharacterWithInfo(double x, double y, String direction, String characterInfo) {
+        hostCharacter = characterManager.createHostCharacterWithInfo(hostName, x, y, direction, characterInfo);
+        System.out.println("호스트 캐릭터 생성 (캐릭터 정보 포함): X=" + x + ", Y=" + y + ", 방향=" + direction + 
+                         ", 호스트명=" + hostName + ", 캐릭터:" + characterInfo);
+    }
+    
     private void updateHostCharacter(double x, double y, String direction) {
         if (hostCharacter == null) {
             createHostCharacter(x, y, direction);
@@ -271,6 +370,14 @@ public class MiniroomController implements Initializable {
 
     private void createVisitorCharacter(String visitorName, double x, double y, String direction) {
         characterManager.createVisitorCharacter(visitorName, x, y, direction, isHosting);
+    }
+    
+    private void createVisitorCharacterWithInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+        characterManager.createVisitorCharacter(visitorName, x, y, direction, isHosting, null, characterInfo);
+    }
+    
+    private void updateVisitorCharacterWithInfo(String visitorName, double x, double y, String direction, String characterInfo) {
+        characterManager.updateVisitorCharacter(playerName, visitorName, x, y, direction, isHosting, null, characterInfo);
     }
 
     public void showChatBubble(String senderName, String message) {
@@ -288,10 +395,9 @@ public class MiniroomController implements Initializable {
             targetCharacter = visitorCharacters.get(senderName);
         }
 
-        // 디버그 출력 (임시)
-        System.out.println("채팅 메시지 - 발신자: " + senderName + ", 플레이어: " + playerName +
-                ", 호스트명: " + hostName + ", 호스팅: " + isHosting + ", 방문: " + isVisiting +
-                ", 타겟 캐릭터: " + (targetCharacter != null ? "찾음" : "null"));
+        // System.out.println("채팅 메시지 - 발신자: " + senderName + ", 플레이어: " + playerName +
+        // ", 호스트명: " + hostName + ", 호스팅: " + isHosting + ", 방문: " + isVisiting +
+        // ", 타겟 캐릭터: " + (targetCharacter != null ? "찾음" : "null"));
 
         chatManager.showChatBubble(senderName, message, targetCharacter);
     }
@@ -303,21 +409,21 @@ public class MiniroomController implements Initializable {
     private void removeCharacterAndLabels(String characterName) {
         // 특별한 신호를 받으면 모든 캐릭터 제거
         if ("__REMOVE_ALL__".equals(characterName)) {
-            System.out.println("__REMOVE_ALL__ 신호 수신 - 모든 캐릭터 제거 시작");
+            // System.out.println("__REMOVE_ALL__ 신호 수신 - 모든 캐릭터 제거 시작");
 
             // 호스트 캐릭터 제거 (방문 모드에서 볼 수 있는 호스트)
             if (hostCharacter != null) {
-                System.out.println("호스트 캐릭터 제거: " + hostName);
+                // System.out.println("호스트 캐릭터 제거: " + hostName);
                 characterManager.removeHostCharacter(hostCharacter, hostName);
                 hostCharacter = null;
             }
 
             // 모든 방문자 캐릭터들 제거
-            System.out.println("모든 방문자 캐릭터 제거");
+            // System.out.println("모든 방문자 캐릭터 제거");
             characterManager.removeAllVisitorCharacters();
 
             // 모든 말풍선 제거 (자신의 말풍선 제외)
-            System.out.println("다른 플레이어 말풍선 제거");
+            // System.out.println("다른 플레이어 말풍선 제거");
             for (String name : chatBubbles.keySet()) {
                 if (!name.equals(playerName)) {
                     javafx.scene.Group bubble = chatBubbles.get(name);
@@ -332,7 +438,7 @@ public class MiniroomController implements Initializable {
             // 캐릭터가 사라진 즉시 스피너 숨김
             loadingSpinner.hide();
 
-            System.out.println("__REMOVE_ALL__ 신호 처리 완료");
+            // System.out.println("__REMOVE_ALL__ 신호 처리 완료");
             return;
         }
 
@@ -373,18 +479,32 @@ public class MiniroomController implements Initializable {
 
     @FXML
     protected void onGuestbookClick() {
-        System.out.println("게시판 버튼 클릭");
+        // System.out.println("게시판 버튼 클릭");
         // 게시판 기능 구현
+        try {
+            Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/allday/minico/view/note/note-view.fxml")));
+
+            // 현재 Stage와 Scene 가져오기
+            Stage stage = (Stage) typingBtn.getScene().getWindow();
+            Scene scene = stage.getScene();
+
+            // Root 교체
+            scene.setRoot(gameRoot);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onVisitClick() {
-        System.out.println("방문 버튼 클릭됨");
+        // System.out.println("방문 버튼 클릭됨");
 
         try {
             if (isVisiting) {
                 // 현재 방문 중이면 나가기 - 로딩 스피너 표시
-                System.out.println("현재 방문 중 - 방 나가기 시도");
+                // System.out.println("현재 방문 중 - 방 나가기 시도");
                 loadingSpinner.show();
 
                 // 백그라운드에서 방 나가기 처리
@@ -392,7 +512,7 @@ public class MiniroomController implements Initializable {
                     try {
                         networkManager.leaveRoom();
                     } catch (Exception e) {
-                        System.out.println("방 나가기 처리 중 오류: " + e.getMessage());
+                        // System.out.println("방 나가기 처리 중 오류: " + e.getMessage());
                         e.printStackTrace();
 
                         Platform.runLater(() -> {
@@ -410,12 +530,34 @@ public class MiniroomController implements Initializable {
                 leaveThread.start();
 
             } else if (isHosting) {
-                // 호스팅 중에는 다른 방을 방문할 수 없음
-                CustomAlert.showWarning(roomPane, "경고",
-                        "현재 서버를 호스팅 중입니다. 먼저 호스팅을 중지해주세요.");
+                // 호스팅 중일 때는 자동으로 호스팅을 중지하고 방문 모드로 전환
+                System.out.println("호스팅 중지 후 방 선택 다이얼로그 표시");
+
+                // 백그라운드에서 호스팅 중지 처리
+                Thread stopHostingThread = new Thread(() -> {
+                    try {
+                        networkManager.stopHosting();
+
+                        // 호스팅 중지 완료 후 방 선택 다이얼로그 표시
+                        Platform.runLater(() -> {
+                            networkManager.showRoomSelectionDialog();
+                        });
+
+                    } catch (Exception e) {
+                        // System.out.println("호스팅 중지 중 오류: " + e.getMessage());
+                        e.printStackTrace();
+
+                        Platform.runLater(() -> {
+                            CustomAlert.showError(roomPane, "오류",
+                                    "호스팅 중지 중 오류가 발생했습니다: " + e.getMessage());
+                        });
+                    }
+                });
+                stopHostingThread.setDaemon(true);
+                stopHostingThread.start();
             } else {
                 // 사용 가능한 방 목록 표시
-                System.out.println("방 선택 다이얼로그 표시");
+                // System.out.println("방 선택 다이얼로그 표시");
                 networkManager.showRoomSelectionDialog();
             }
         } catch (Exception e) {
@@ -433,15 +575,9 @@ public class MiniroomController implements Initializable {
     protected void onDiaryClick() {
         System.out.println("다이어리 버튼 클릭");
         // 다이어리 기능 구현
-    }
-
-    @FXML
-    protected void onTypingClick() {
-        System.out.println("타자게임 버튼 클릭");
-        // 타자게임 기능 구현
         try {
             Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
-                    getClass().getResource("/allday/minico/view/typinggame/typing_game.fxml")
+                    getClass().getResource("/allday/minico/view/diary/myroom.fxml")
             ));
 
             // 현재 Stage와 Scene 가져오기
@@ -451,8 +587,29 @@ public class MiniroomController implements Initializable {
             // Root 교체
             scene.setRoot(gameRoot);
 
+            scene.getStylesheets().add(getClass().getResource("/allday/minico/css/diary.css").toExternalForm());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    protected void onTypingClick() {
+        System.out.println("타자게임 버튼 클릭");
+        // 타자게임 기능 구현
+        try {
+            Parent gameRoot = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/allday/minico/view/typinggame/typing_game.fxml")));
+
+            // 현재 Stage와 Scene 가져오기
+            Stage stage = (Stage) typingBtn.getScene().getWindow();
+            Scene scene = stage.getScene();
+
+            // Root 교체
+            scene.setRoot(gameRoot);
+
             // ✅ 타자게임 CSS 적용
-            scene.getStylesheets().clear(); // 기존 main.css 제거
+            scene.getStylesheets().clear(); 
             scene.getStylesheets().add(getClass().getResource("/allday/minico/css/typinggame.css").toExternalForm());
 
         } catch (Exception e) {
@@ -463,25 +620,77 @@ public class MiniroomController implements Initializable {
     @FXML
     public void onOxClick(ActionEvent event) {
         System.out.println("OX게임 버튼 클릭");
-        try {
-            FXMLLoader oxGameRoot = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
-            Parent root = oxGameRoot.load();
 
-            OxGameSettingController controller = oxGameRoot.getController();
-            Scene oxScene = new Scene(root);
+        try {
+            // 1. FXML 로드
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/allday/minico/view/oxgame/ox-setting.fxml"));
+            Parent root = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof allday.minico.controller.oxgame.OxGameSettingController oxController) {
+
+                // ✅ 현재 minimi 이미지에서 직접 경로 추출
+                String imageUrl = character.getImage().getUrl(); // character는 내 ImageView
+                if (imageUrl != null) {
+                    oxController.setCharacterImageUrl(imageUrl);
+                    System.out.println("OX 컨트롤러에 현재 캐릭터 이미지 URL 전달: " + imageUrl);
+                } else {
+                    System.out.println("현재 캐릭터 이미지가 설정되어 있지 않음.");
+                }
+            }
+
+            // 3. Scene 전환
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene oxScene = new Scene(root);
             stage.setScene(oxScene);
 
-            // layout 강제 적용 (전체화면 안 가도 정상 동작하게)
+            // 4. CSS 및 레이아웃 적용
             Platform.runLater(() -> {
                 root.applyCss();
                 root.layout();
             });
 
             stage.show();
+
         } catch (IOException e) {
+            System.err.println("OX 게임 화면 로딩 실패: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+    private void updateSpaceTooltips(double charX, double charY) {
+        // 근처 체크
+        boolean nearOx = isNearIcon(charX, charY, oxGameIcon);
+        if (spaceTooltipOx != null) {
+            spaceTooltipOx.setVisible(nearOx);
+            if (nearOx) {
+
+                spaceTooltipOx.setLayoutX(charX + 15); 
+                spaceTooltipOx.setLayoutY(charY + 105); 
+            }
+        }
+        
+        boolean nearTyping = isNearIcon(charX, charY, typingGameIcon);
+        if (spaceTooltipTyping != null) {
+            spaceTooltipTyping.setVisible(nearTyping);
+            if (nearTyping) {
+
+                spaceTooltipTyping.setLayoutX(charX + 15); 
+                spaceTooltipTyping.setLayoutY(charY + 105);
+            }
+        }
+    }
+
+    private boolean isNearIcon(double charX, double charY, ImageView icon) {
+        if (icon == null) return false;
+        
+        double iconX = icon.getLayoutX();
+        double iconY = icon.getLayoutY();
+        double distance = Math.sqrt(Math.pow(charX - iconX, 2) + Math.pow(charY - iconY, 2));
+
+        //80픽셀 이내일 시 
+        return distance <= 80;
     }
 
     public void cleanup() {
@@ -498,6 +707,19 @@ public class MiniroomController implements Initializable {
         // 채팅 입력 관리자 정리
         if (chatInputManager != null) {
             chatInputManager.cleanup();
+        }
+    }
+
+    private void updateVisitButtonText() {
+        if (visitBtn != null) {
+            javafx.scene.control.Label label = (javafx.scene.control.Label) ((javafx.scene.layout.StackPane) visitBtn
+                    .getGraphic()).getChildren().get(0);
+
+            if (isVisiting) {
+                label.setText("미니룸 나가기");
+            } else {
+                label.setText("미니룸 방문");
+            }
         }
     }
 }

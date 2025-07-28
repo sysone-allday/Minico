@@ -1,0 +1,61 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.my-profile-root {
+    -fx-background-color: #ffffffff;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo", "Segoe UI", sans-serif;
+}
+
+/* signup-form-container와 동일한 흰 배경 효과 */
+.my-profile-container {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-padding: 38;
+    -fx-max-width: 635px;
+    -fx-max-height: 739px;
+}
+
+/* "내 정보" 타이틀 텍스트 */
+.my-profile-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+/* 좌측 텍스트 레이블 */
+.my-profile-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+/* 실제 사용자 정보 값 */
+.my-profile-value {
+    -fx-font-size: 20px;
+    -fx-text-fill: black;
+    -fx-padding: 2 4;
+}
+
+/* 버튼 스타일 */
+.my-profile-btn {
+    -fx-pref-width: 169;
+    -fx-pref-height: 53;
+    -fx-min-width: 169;
+    -fx-min-height: 53;
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-font-size: 15px;
+    -fx-text-fill: white;
+}
+
+.my-profile-btn:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255,20,147,0.4), 8, 0, 0, 2);
+}

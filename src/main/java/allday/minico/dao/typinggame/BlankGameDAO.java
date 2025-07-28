@@ -1,0 +1,104 @@
+package allday.minico.dao.typinggame;
+
+import allday.minico.dto.typinggame.BlankGame;
+import allday.minico.sql.typinggame.BlankGameSQL;
+import allday.minico.utils.DBUtil;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class BlankGameDAO {
+
+    // 현재 word_id의 문제가 몇개 있는지 확인
+    public int getProblemCountByWordId(int wordId) {
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(BlankGameSQL.COUNT_BY_WORD_ID)) {
+            pstmt.setInt(1, wordId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // word_id의 문제가 3개 이하면 문제 생성
+    public void insertBlankGame(int wordId, String questionText, int typeId) {
+        try (Connection conn = DBUtil.getConnection();
+             CallableStatement cs = conn.prepareCall("{call insert_blank_question(?, ?, ?)}")) {
+
+            cs.setInt(1, wordId);
+            cs.setString(2, questionText);
+            cs.setInt(3, typeId);
+
+            cs.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+//        public void insertBlankGame(int wordId, String questionText, int typeId) {
+//            try (Connection conn = DBUtil.getConnection();
+//                 PreparedStatement pstmt = conn.prepareStatement(BlankGameSQL.INSERT_BLANK_GAME)) {
+//
+//                System.out.println("✅ 삽입 전 확인: word_id=" + wordId + ", type_id=" + typeId);
+//
+//                pstmt.setInt(1, wordId);
+//                pstmt.setString(2, questionText);
+//                pstmt.setInt(3, typeId);
+//                pstmt.executeUpdate();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+    }
+
+    // 문제 5개 가져오는 로직
+    public List<BlankGame> selectBlankProblems(List<BlankGame> blankGameList) {
+        List<BlankGame> problemList = new ArrayList<>();
+
+        List<Integer> wordIds = blankGameList.stream()
+                .map(BlankGame::getWordId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        if (wordIds.isEmpty()) return problemList;
+
+        // IN 조건의 ? 개수만큼 placeholders 생성
+        String placeholders = wordIds.stream()
+                .map(id -> "?")
+                .collect(Collectors.joining(", "));
+
+        // SQL 생성
+        String sql = String.format(BlankGameSQL.SELECT_BLANK_PROBLEM, placeholders);
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            for (int i = 0; i < wordIds.size(); i++) {
+                pstmt.setInt(i + 1, wordIds.get(i));
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    BlankGame blankGame = new BlankGame();
+                    blankGame.setBlankId(rs.getInt("blank_id"));
+                    blankGame.setWordId(rs.getInt("word_id"));
+                    blankGame.setQuestionText(rs.getString("question_text"));
+                    blankGame.setTypeId(rs.getInt("type_id"));
+
+                    problemList.add(blankGame);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return problemList;
+    }
+}

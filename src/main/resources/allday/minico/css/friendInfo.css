@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "NeoDunggeunmo";
+    src: url("../fonts/NEODGM.ttf");
+}
+
+.friendinfo-root {
+    -fx-background-color: #ffffff;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-font-family: "NeoDunggeunmo";
+}
+
+.friendinfo-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+.friendinfo-subtitle {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #FFA6BA, 3, 1, 1, 1);
+}
+
+.friendinfo-button {
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-padding: 6 18;
+}
+
+.friendinfo-button:hover {
+    -fx-background-color: #ff1493;
+    -fx-effect: dropshadow(gaussian, rgba(255, 20, 147, 0.4), 8, 0, 0, 2);
+}
+
+.friendinfo-list {
+    -fx-background-radius: 15;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 15;
+    -fx-font-size: 18px;
+}
+
+/* ========== 추가된 액션 버튼들 스타일 ========== */
+.friendinfo-action-btn {
+    -fx-background-color: #FFABBD;
+    -fx-background-radius: 30;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 4 16;
+    -fx-cursor: hand;
+}
+
+/* 삭제 버튼 */
+.delete-btn:hover {
+    -fx-background-color: #ff7070;
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.4), 8, 0, 0, 2);
+}
+
+/* 수락 버튼 */
+.accept-btn {
+    -fx-background-color: #A8E6CF;
+}
+.accept-btn:hover {
+    -fx-background-color: #4CAF50;
+    -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.4), 8, 0, 0, 2);
+}
+
+/* 거절 버튼 */
+.reject-btn {
+    -fx-background-color: #FF8A80;
+}
+.reject-btn:hover {
+    -fx-background-color: #E53935;
+    -fx-effect: dropshadow(gaussian, rgba(229, 57, 53, 0.4), 8, 0, 0, 2);
+}

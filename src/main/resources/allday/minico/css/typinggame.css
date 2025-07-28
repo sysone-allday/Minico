@@ -1,3 +1,4 @@
+/* ==================== common ======================== */
 @font-face {
     font-family: "NeoDunggeunmo";
     src: url("../fonts/NEODGM.ttf");
@@ -5,52 +6,121 @@
 
 .root {
     -fx-background-color: #ffffffff;
-    -fx-background-image: url("../images/background.png");
+    -fx-background-image: url("../images/background1.png");
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
     -fx-font-family: "NeoDunggeunmo", "Segoe UI",sans-serif;
+    -fx-padding: 30px 0 0 0;
 }
 
 /* back 버튼 */
 .back-button {
-    -fx-font-size: 20px;
-    -fx-text-fill: #6E6363;
-    -fx-background-color: #fff;
+    -fx-font-size: 25px;
+    -fx-text-fill: #FFF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: #FFC9D8;
     -fx-background-radius: 15;
     /* ✅ 테두리 스타일 */
-    -fx-border-color: #DAD9D8;     /* 테두리 색상 */
+    -fx-border-color: #E48AA3;     /* 테두리 색상 */
     -fx-border-width: 3;           /* 테두리 두께 */
     -fx-border-style: solid;       /* 실선 */
     -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
 }
+.back-button:hover {
+    -fx-background-color : #FFB1C8;
+}
+
+/* ==================== typing-game ======================== */
 
 .start-button {
-    -fx-font-size: 20px;
-    -fx-text-fill: #6E6363;
-    -fx-background-color: #fff;
+    -fx-font-size: 25px;
+    -fx-text-fill: #FFF;
+    -fx-background-color: #FFC9D8;
     -fx-background-radius: 15;
     /* ✅ 테두리 스타일 */
-    -fx-border-color: #DAD9D8;     /* 테두리 색상 */
+    -fx-border-color: #E48AA3;     /* 테두리 색상 */
     -fx-border-width: 3;           /* 테두리 두께 */
     -fx-border-style: solid;       /* 실선 */
     -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+.start-button:hover {
+    -fx-background-color : #FFB1C8;
 }
 
 /* 단어 게임 단어 떨어지는 영역 */
 .word-game-pane {
     -fx-background-color: rgba(255, 255, 255, 0.5);
-    /*-fx-background-color: #aaffaa;*/
-    -fx-background-radius: 8;
+    -fx-background-color: #FFF;
+    -fx-border-color: #B3B3B3 ;
+    -fx-border-width: 5px;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
 }
 
-.word-game-input {
+.word-input {
     -fx-font-size: 20px;
     -fx-text-fill: #6E6363;
     -fx-background-color: #fff;
     -fx-background-radius: 15;
-    -fx-border-color: #DAD9D8;     /* 테두리 색상 */
+    -fx-border-color: #B3B3B3;     /* 테두리 색상 */
     -fx-border-width: 3;           /* 테두리 두께 */
     -fx-border-style: solid;       /* 실선 */
     -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+
+.result-box {
+    -fx-pref-width: 400;
+    -fx-pref-height: 400;
+    -fx-max-width: 400;
+    -fx-max-height: 400;
+    -fx-border-color: #B3B3B3;
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 8;          /* 둥근 테두리 (선택) */
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5);
+}
+
+.next-button {
+    -fx-prefHeight: 55;
+    -fx-prefWidth: 150;
+    -fx-font-size: 25px;
+    -fx-text-fill: #fff;
+    -fx-background-color: #FFC9D8;
+    -fx-background-radius: 15;
+    /* ✅ 테두리 스타일 */
+    -fx-border-color: #E48AA3;     /* 테두리 색상 */
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 15;          /* 둥근 테두리 (선택) */
+}
+
+.next-button:hover {
+-fx-background-color : #FFB1C8;
+}
+
+
+/* ==================== blank-game ======================== */
+.word-list-pane {
+    -fx-border-color: #B3B3B3;
+    -fx-border-width: 3;           /* 테두리 두께 */
+    -fx-border-style: solid;       /* 실선 */
+    -fx-border-radius: 8;          /* 둥근 테두리 (선택) */
+    -fx-background-color: #fff;
+    -fx-background-radius: 8;
+}
+
+.hint-text {
+    -fx-font-size: 24px;
+    -fx-text-fill: #5F5F5F;
+}
+
+.list-box {
+    -fx-background-image: url('../images/typinggame/list-box.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
 }

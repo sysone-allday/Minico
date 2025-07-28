@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @author 최온유 -->
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="friendinfo-root" stylesheets="@../../css/friendInfo.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.member.FriendInfoController">
+
+   <VBox alignment="TOP_CENTER" spacing="30" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="30.0">
+
+      <!-- 상단 타이틀과 버튼 -->
+      <HBox alignment="CENTER_RIGHT" spacing="10" />
+
+      <!-- 친구 목록 리스트 -->
+      <ListView fx:id="friendListView" prefHeight="300" styleClass="friendinfo-list" />
+
+      <!-- 하단 친구 요청 -->
+      <Label fx:id="receivedFriendRequestsLabel" styleClass="friendinfo-subtitle" text="받은 친구 요청" />
+      <ListView fx:id="receivedFriendRequestsListView" prefHeight="200" styleClass="friendinfo-list" />
+   </VBox>
+   <Label fx:id="friendListLabel" layoutX="370.0" styleClass="friendinfo-title" text="친구목록" />
+   <Button fx:id="searchFriendButton" layoutX="729.0" layoutY="13.0" onAction="#searchFriend" styleClass="friendinfo-button" text="친구 찾기" />
+</AnchorPane>

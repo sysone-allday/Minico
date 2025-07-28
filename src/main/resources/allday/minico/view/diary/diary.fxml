@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.layout.HBox?>
+
+<!-- 김민서 파트 -->
+<AnchorPane styleClass="diary-root" stylesheets="@../../css/diary.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="allday.minico.controller.diary.DiaryController">
+   <children>
+      <!-- 메인 패널 -->
+      <AnchorPane
+              styleClass="board-pane"
+              AnchorPane.topAnchor="40.0"
+              AnchorPane.leftAnchor="40.0"
+              AnchorPane.rightAnchor="40.0"
+              AnchorPane.bottomAnchor="40.0">
+         <!-- ★ 인라인 style 제거 -->
+         <Button fx:id="diaryRegisterButton" layoutX="866" layoutY="630" mnemonicParsing="false"
+                 styleClass="action-button" text="등록"
+                 visible="false"/>
+         <Button fx:id="diaryEditButton" layoutX="866" layoutY="630" mnemonicParsing="false"
+                 styleClass="action-button" text="수정"
+                 visible="false"/>
+         <Button fx:id="diaryEditDoneButton" layoutX="836" layoutY="630" mnemonicParsing="false"
+                 styleClass="action-button" text="수정완료"
+                 visible="false"/>
+      </AnchorPane>
+      <fx:include fx:id="todolist" source="todolist.fxml" />
+      <!-- ★ TextArea에 스타일 클래스 추가 -->
+      <TextArea fx:id="diaryTextArea" layoutX="719" layoutY="265" prefHeight="394" prefWidth="459" wrapText="true" styleClass="text-field" />
+
+      <Text fx:id="diaryContentText" layoutX="719" layoutY="265" visible="false" wrappingWidth="459"  />
+      <HBox layoutX="710" layoutY="180" spacing="8">
+         <Text text="Today's emotion" styleClass="text-emoji"/>
+         <Text fx:id="emotionEmoji" text="😐" styleClass="emoji"/> <!-- 기본값은 무표정 -->
+      </HBox>
+      <Text fx:id="dateText" layoutX="547" layoutY="105" styleClass="text" text="오늘" />
+
+      <Button fx:id="dateBackButton" layoutX="386" layoutY="69" styleClass="date-nav" text="◁" />
+      <Button fx:id="dateNextButton" layoutX="775" layoutY="69" styleClass="date-nav" text="▷" />
+
+      <Button layoutX="1122" layoutY="69" onAction="#openCalendarModal" styleClass="action-button" text="달력" />
+
+      <!-- 달력 모달 -->
+      <StackPane fx:id="calendarModalContainer" styleClass="modal-dim" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <!-- ★ 인라인 배경 제거 -->
+
+      <Button fx:id="backButton"
+              layoutX="70" layoutY="66"
+              prefHeight="55.0" prefWidth="150"
+              text="〈 Back"
+              styleClass="back-button"
+              onAction="#goToMyRoom" />
+   </children>
+</AnchorPane>
