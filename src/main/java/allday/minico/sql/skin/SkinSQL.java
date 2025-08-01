@@ -1,41 +1,7 @@
 package allday.minico.sql.skin;
 
 public class SkinSQL {
-    
-    // 사용자가 보유한 스킨 목록 조회
-    public static String selectUserSkinsSQL = """
-        SELECT MINIMI_TYPE, LEVEL_NO, IMAGE_PATH, MEMBER_ID
-        FROM SKIN
-        WHERE MEMBER_ID = ?
-        ORDER BY MINIMI_TYPE, LEVEL_NO
-        """;
-    
-    // 특정 미니미 타입의 스킨 조회
-    public static String selectSkinsByTypeSQL = """
-        SELECT MINIMI_TYPE, LEVEL_NO, IMAGE_PATH, MEMBER_ID
-        FROM SKIN
-        WHERE MEMBER_ID = ? AND MINIMI_TYPE = ?
-        ORDER BY LEVEL_NO
-        """;
-    
-    // 새로운 스킨 추가
-    public static String insertSkinSQL = """
-        INSERT INTO SKIN (MINIMI_TYPE, LEVEL_NO, IMAGE_PATH, MEMBER_ID)
-        VALUES (?, ?, ?, ?)
-        """;
-    
-    // 스킨 삭제
-    public static String deleteSkinSQL = """
-        DELETE FROM SKIN
-        WHERE MEMBER_ID = ? AND MINIMI_TYPE = ? AND LEVEL_NO = ?
-        """;
 
-    public static String checkSkinOwnershipSQL = """
-        SELECT COUNT(*)
-        FROM SKIN
-        WHERE MEMBER_ID = ? AND MINIMI_TYPE = ? AND LEVEL_NO = ?
-        """;
-    
     // 회원가입 시 선택한 미니미의 레벨 1 스킨 추가
     public static String insertDefaultSkinSQL = """
         INSERT INTO SKIN (MINIMI_TYPE, LEVEL_NO, IMAGE_PATH, MEMBER_ID)

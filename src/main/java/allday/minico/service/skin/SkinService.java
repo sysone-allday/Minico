@@ -17,64 +17,6 @@ public class SkinService {
     public static SkinService getInstance() {
         return instance;
     }
-
-    // 사용자의 모든 스킨 조회
-    public List<Skin> getUserSkins(String memberId) {
-        try {
-            return skinDAO.selectUserSkins(memberId);
-        } catch (SQLException e) {
-            System.out.println("스킨 목록 조회 중 예외 발생");
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // 특정 미니미 타입의 스킨 조회
-    public List<Skin> getSkinsByType(String memberId, String minimiType) {
-        try {
-            return skinDAO.selectSkinsByType(memberId, minimiType);
-        } catch (SQLException e) {
-            System.out.println("미니미 타입별 스킨 조회 중 예외 발생");
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    // 새로운 스킨 획득
-    public boolean acquireSkin(String minimiType, int levelNo, String imagePath) {
-        String memberId = AppSession.getLoginMember().getMemberId();
-
-        try {
-            // 이미 보유한 스킨인지 확인
-            if (skinDAO.checkSkinOwnership(memberId, minimiType, levelNo)) {
-                // System.out.println("이미 보유한 스킨입니다.");
-                return false;
-            }
-
-            Skin skin = new Skin();
-            skin.setMemberId(memberId);
-            skin.setMinimiType(minimiType);
-            skin.setLevelNo(levelNo);
-            skin.setImagePath(imagePath);
-
-            return skinDAO.insertSkin(skin);
-        } catch (SQLException e) {
-            System.out.println("스킨 획득 중 예외 발생");
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // 스킨 소유 여부 확인
-    public boolean hasSkin(String memberId, String minimiType, int levelNo) {
-        try {
-            return skinDAO.checkSkinOwnership(memberId, minimiType, levelNo);
-        } catch (SQLException e) {
-            System.out.println("스킨 소유 여부 확인 중 예외 발생");
-            e.printStackTrace();
-            return false;
-        }
-    }
     
     // 회원가입 시 선택한 미니미의 기본 스킨 생성
     public boolean createDefaultSkin(String memberId, String minimiType, String minimiVariant) {
