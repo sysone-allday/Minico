@@ -1,7 +1,7 @@
 # 🎮 Minico
-
+<div align="center">
 ![minico_logo](https://github.com/user-attachments/assets/5fe5912e-28eb-4e03-af74-bf99737f84e5)
-
+</div>
 > 가상의 미니룸 게임을 즐길 수 있는 JavaFX 기반 데스크톱 애플리케이션
 
 ## 📖 프로젝트 소개
@@ -125,7 +125,7 @@ src\main\java\allday\minico\Main.java 실행
 - **친구 추가**: 친구 검색 기능을 통해 친구 추가
 - **다이어리 작성**: 다이어리 메뉴에서 새 일기 작성
 
-## 👥 팀원 소개
+## 😍 팀원 소개
 
 | 이름 | 역할 | GitHub | 담당 기능 |
 |------|------|--------|-----------|
