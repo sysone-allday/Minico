@@ -4,6 +4,9 @@
 
 > 가상의 미니룸 게임을 즐길 수 있는 JavaFX 기반 데스크톱 애플리케이션
 
+![Java](https://img.shields.io/badge/Java-21-orange.svg)
+![JavaFX](https://img.shields.io/badge/JavaFX-21-brightgreen.svg)
+
 ## 📖 프로젝트 소개
 
 Minico는 사용자들이 가상의 미니룸에서 다양한 게임과 소셜 기능을 즐길 수 있는 데스크톱 애플리케이션입니다.
