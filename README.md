@@ -1,5 +1,7 @@
 # 🎮 Minico
 
+![minico_logo](https://github.com/user-attachments/assets/5fe5912e-28eb-4e03-af74-bf99737f84e5)
+
 > 가상의 미니룸 게임을 즐길 수 있는 JavaFX 기반 데스크톱 애플리케이션
 
 ## 📖 프로젝트 소개
