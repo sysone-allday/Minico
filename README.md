@@ -132,11 +132,11 @@ src\main\java\allday\minico\Main.java 실행
 
 | 이름 | 역할 | GitHub | 담당 기능 |
 |------|------|--------|-----------|
-| [정소영] | 팀장/풀스택 개발 | [@so2043](https://github.com/so2043) | UI 디자인, 타자게임, 빈칸게임, OCI관리|
-| [김대호] | 풀스택 개발 | [@DHowor1d](https://github.com/DHowor1d) | UX 설계, 네트워크 통신, 미니룸, UI 구현 |
-| [김민서] | 풀스택 개발 | [@mimmimkim](https://github.com/mimmimkim) | 다이어리 기능 구현, 일기장, 날씨, 오늘의 기분 |
-| [김슬기] | 풀스택 개발 | [@ksks1234](https://github.com/ksks1234) | 데이터베이스 설계, OX게임, UI/UX 디자인 |
-| [최온유] | 풀스택 개발 | [@onu96](https://github.com/onu96) | 회원가입 및 회원관련 로직 구현 |
+| 정소영 | 팀장/풀스택 개발 | [@so2043](https://github.com/so2043) | UI 디자인, 타자게임, 빈칸게임, OCI관리|
+| 김대호 | 풀스택 개발 | [@DHowor1d](https://github.com/DHowor1d) | UX 설계, 네트워크 통신, 미니룸, UI 구현 |
+| 김민서 | 풀스택 개발 | [@mimmimkim](https://github.com/mimmimkim) | 다이어리 기능 구현, 일기장, 날씨, 오늘의 기분 |
+| 김슬기 | 풀스택 개발 | [@ksks1234](https://github.com/ksks1234) | 데이터베이스 설계, OX게임, UI/UX 디자인 |
+| 최온유 | 풀스택 개발 | [@onu96](https://github.com/onu96) | 회원가입 및 회원관련 로직 구현 |
 
 ## 📋 개발
 
